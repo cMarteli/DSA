@@ -11,6 +11,7 @@ public class TestHarness {
     {
         //Testing Stack
 
+        /*
         DSAStack nums = new DSAStack();
         System.out.println("Checking if stack is empty Expected |TRUE| \n Result: "+ nums.isEmpty());
         nums.pop();
@@ -22,6 +23,20 @@ public class TestHarness {
         System.out.println(nums.pop());
 
         nums.show();
+        */
+
+        DSACircularQueue q = new DSACircularQueue(5); //default size 5
+        q.enqueue(1.7);
+        q.enqueue(2.0);
+        q.enqueue(3.69);
+        q.enqueue(4.0);
+        q.enqueue(5.0);
+        q.show();
+        q.dequeue();
+        q.enqueue(7.77);
+        q.show();
+        //q.dequeue();
+
     }//end main
 
 }
