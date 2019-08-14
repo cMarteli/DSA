@@ -3,18 +3,26 @@ import java.util.Arrays;
  *
  * @author Caio Marteli
  */
-public class DSACircularQueue {
-    protected int DEFAULT_CAPACITY = 5;
-    protected int currentSize; //Current Circular Queue Size
-    protected double[] queue;
-    protected int maxSize; //Circular Queue maximum size
-
+public class DSACircularQueue extends DSAQueue{
     protected int rear;//rear position of Circular queue(new element enqueued at rear).
     protected int front; //front position of Circular queue(element will be dequeued from front).      
 
-    protected DSACircularQueue(int maxSize) {
-        this.maxSize = maxSize;
-        queue = (double[]) new double[this.maxSize];
+    /**
+     * Default constructor.
+     */
+    protected DSACircularQueue() 
+    {
+        queue = (double[]) new double[DEFAULT_CAPACITY];
+        currentSize = 0;
+        front = -1;
+        rear = -1;
+    }
+     /**
+     * Alternate constructor.
+     */
+    protected DSACircularQueue(int maxSize) 
+    {
+        queue = (double[]) new double[maxSize];
         currentSize = 0;
         front = -1;
         rear = -1;
@@ -27,14 +35,16 @@ public class DSACircularQueue {
         {
         if (isFull()) 
         {
-            System.out.println("Circular Queue is full. Element cannot be added");
+            System.out.println("Circular Queue is full.");
         }
-        else {
+        else 
+        {
             rear = (rear + 1) % queue.length;
             queue[rear] = item;
             currentSize++;
             
-            if (front == -1) {
+            if (front == -1) 
+            {
 				front = rear;
 			}
         }
@@ -48,9 +58,10 @@ public class DSACircularQueue {
         double data = 0.0;
         if (isEmpty()) 
         {
-            System.out.println("Circular Queue is empty. Element cannot be retrieved");
+            System.out.println("Circular Queue is empty.");
         }
-        else {
+        else 
+        {
             data = queue[front];
             queue[front] = 0.0;
             front = (front + 1) % queue.length;
@@ -59,25 +70,30 @@ public class DSACircularQueue {
         return data;
     }
 
-    /**
-     * Check if queue is full.
-     */
-    protected boolean isFull() 
+        /*
+    *returns front of queue but makes no changes 
+    */
+    protected double peek()
     {
-        return (currentSize == queue.length);
+        double data = 0.0;
+        if (isEmpty())
+        {
+            System.out.println("Stack is Empty.");
+        }
+        else
+        {
+            data = queue[front-1];
+        }       
+        return data;        
     }
 
-    /**
-     * Check if Queue is empty.
-     */
-    protected boolean isEmpty() 
-    {
-        return (currentSize == 0);
-    }
-
-    protected void show() 
-    {
-        System.out.println("CircularQueue [" + Arrays.toString(queue) + "]");
+    /*
+    *prints entire queue
+    */
+    protected void show()
+    {        
+        System.out.print("Circular ");
+        super.show();        
     }
 
 }
