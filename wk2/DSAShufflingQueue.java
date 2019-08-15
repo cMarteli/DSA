@@ -4,63 +4,72 @@
  * @author Caio Marteli
  */
 public class DSAShufflingQueue extends DSAQueue{
-
-	//protected int DEFAULT_CAPACITY = 5;
-	//protected double queue[];
-
-	protected int count; //keeps index of last element in queue
     /**
 	 * Default Constructor
 	 */
     protected DSAShufflingQueue()
 	{
-		queue = new double[DEFAULT_CAPACITY];
-		count = 0;
+        super();        
+        front = 0;
+        rear = 0;
 	}
 	/**
      * Alternate Constructor
 	 */
     protected DSAShufflingQueue(int maxCapacity)
 	{
-		queue = new double[maxCapacity];
-		count = 0;
+		super();
+        front = 0;
+        rear = 0;
 	}
-    /**
-     * accessor for count.
-     */
-    protected int getCount()
-    {
-        return count;
-    }
 
 	/**
      * adds new element to last position of queue.
      */
     protected void enqueue(double data)
     {
-    	queue[count] = data;
-    	count++;
+        if (isFull()) 
+        {
+            System.out.println("Shuffling queue is full.");
+        }
+        else 
+        {
+        	rear = currentSize; 
+            queue[rear] = data;
+            System.out.println(data +" Added to queue.");
+            if(rear < queue.length - 1)
+            {
+        	rear++;
+            }
+            currentSize++;
+        }
     }
     /**
      *removes element last added to queue
      */
     protected double dequeue()
     {
-    	double data = 0.0;
+        double data = queue[front];
+        //queue[rear] = 0.0;  
     	if (isEmpty())
     	{
-    		System.out.println("Queue is Empty.");
+    		System.out.println("Shuffling queue is Empty.");
     	}
     	else
     	{
-	    	count--;//changes position of count to one back
-	    	data = queue[count];
-	    	queue[count] = 0.0;//resets element to zero
+            //shuffle queue
+	    	for(int i = 0; i < (queue.length - 1) ; i++)
+            {
+                queue[i] = queue[i + 1];
+            }
+            queue[rear] = 0.0;
+            currentSize--;
+            System.out.println(data +" Removed from queue.");
     	}
     	return data;
     }
     /*
-    *returns count of queue but makes no changes 
+    *returns front of queue but makes no changes 
     */
     protected double peek()
     {
@@ -71,7 +80,7 @@ public class DSAShufflingQueue extends DSAQueue{
     	}
     	else
     	{
-			data = queue[count-1];
+			data = queue[front-1];
     	}    	
 		return data;		
     }
@@ -80,18 +89,8 @@ public class DSAShufflingQueue extends DSAQueue{
     */
     protected void show()
     {
-        System.out.print("Shuffling ");  
+        System.out.print("Displaying shuffling ");  
         super.show();
-    }
-
-    protected boolean isEmpty()
-    {
-    	boolean pass = false;    	
-    	if(count == 0)
-    	{
-    		pass = true;
-    	}
-    	return pass;
     }
 
 }

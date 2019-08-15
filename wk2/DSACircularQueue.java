@@ -3,17 +3,14 @@ import java.util.Arrays;
  *
  * @author Caio Marteli
  */
-public class DSACircularQueue extends DSAQueue{
-    protected int rear;//rear position of Circular queue(new element enqueued at rear).
-    protected int front; //front position of Circular queue(element will be dequeued from front).      
+public class DSACircularQueue extends DSAQueue{     
 
     /**
      * Default constructor.
      */
     protected DSACircularQueue() 
     {
-        queue = (double[]) new double[DEFAULT_CAPACITY];
-        currentSize = 0;
+        super();        
         front = -1;
         rear = -1;
     }
@@ -22,8 +19,7 @@ public class DSACircularQueue extends DSAQueue{
      */
     protected DSACircularQueue(int maxSize) 
     {
-        queue = (double[]) new double[maxSize];
-        currentSize = 0;
+        super();        
         front = -1;
         rear = -1;
     }
@@ -31,7 +27,7 @@ public class DSACircularQueue extends DSAQueue{
     /**
      * Enqueue elements to rear.
      */
-    protected void enqueue(double item)
+    protected void enqueue(double data)
         {
         if (isFull()) 
         {
@@ -40,13 +36,14 @@ public class DSACircularQueue extends DSAQueue{
         else 
         {
             rear = (rear + 1) % queue.length;
-            queue[rear] = item;
+            queue[rear] = data;
             currentSize++;
             
             if (front == -1) 
             {
 				front = rear;
-			}
+			}            
+            System.out.println(data +" Added to queue.");
         }
     }
 
@@ -55,17 +52,17 @@ public class DSACircularQueue extends DSAQueue{
      */
     protected double dequeue()
         {
-        double data = 0.0;
+        double data = queue[front];
         if (isEmpty()) 
         {
             System.out.println("Circular Queue is empty.");
         }
         else 
-        {
-            data = queue[front];
+        {            
             queue[front] = 0.0;
             front = (front + 1) % queue.length;
             currentSize--;
+            System.out.println(data +" Removed from queue.");
         }
         return data;
     }
@@ -92,7 +89,7 @@ public class DSACircularQueue extends DSAQueue{
     */
     protected void show()
     {        
-        System.out.print("Circular ");
+        System.out.print("Displaying circular ");
         super.show();        
     }
 

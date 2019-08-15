@@ -8,21 +8,24 @@ public abstract class DSAQueue {
 	protected int DEFAULT_CAPACITY = 5;
 	protected double queue[];
     protected int currentSize; //keeps current size of queue
+    protected int front; //keeps current front of queue
+    protected int rear; //keeps current rear of queue
 
 
     
-    /*
-     * Default Constructor
+    protected DSAQueue() 
+    {
+        queue = new double[DEFAULT_CAPACITY];
+        currentSize = 0;
+    }
+     /**
+     * Alternate constructor.
      */
-	//protected DSAQueue()
-	//{		
-	//}
-	/**
-     * Alternate Constructor
-     */
-	//protected DSAQueue(int maxCapacity)
-	//{
-	//}
+    protected DSAQueue(int maxSize) 
+    {
+        queue = new double[maxSize];
+        currentSize = 0;
+    }
     
 	/**
      * adds new element to last position of stack.
@@ -53,6 +56,21 @@ public abstract class DSAQueue {
     protected boolean isEmpty() 
     {
         return (currentSize == 0);
+    }
+
+    protected int getFront()
+    {
+        return front;
+    }
+
+    protected int getRear()
+    {
+        return rear;
+    }
+
+    protected int getCurrentSize()
+    {
+        return currentSize;
     }
 
     /**

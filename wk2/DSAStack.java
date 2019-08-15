@@ -8,6 +8,8 @@ public class DSAStack {
 	protected int DEFAULT_CAPACITY = 5;
 	protected double stack[];
 	protected int count; //keeps index of last element in stack
+    protected int rear;//rear position of Circular queue(new element enqueued at rear).
+    protected int front; //front position of Circular queue(element will be dequeued from front).
 
 	/*
     * Default Constructor
