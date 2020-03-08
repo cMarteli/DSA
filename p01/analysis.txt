@@ -1,0 +1,18 @@
+Bubble sort - Checks two adjacent elements in an array swaps them if in wrong order then repeats it until it's done.
+
+- is the slowest on average
+- very basic linear approach, easy to understand however.
+- Suffers heavily from worst case time complexity due to having to sequentially compare every element pair.
+- Works in ascending, descending and random.
+
+Selection sort - Finds the smallest element in array first, inserts it in the first position then checks the remaining elements a puts smallest in next position and so on.
+
+- fastest than bubble on everything but the smallest data sets
+- doesn't work if data is descending order (worst case).
+
+Insertion sort - Constantly attempts to place the current element in the right order, one by one.
+
+- By far the fastest.
+- Probably the best of the 3, however the array has to already be sorted so only useful for searches and only if data is kept indexed.
+- Still suffers heavily from time complexity.
+- If data is already sorted, then much better binary search options are available.
