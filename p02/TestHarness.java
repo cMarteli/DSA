@@ -102,7 +102,7 @@ public class TestHarness {
         else
         {
             isNeg = true;
-            System.out.println("Integer cannot be negative");
+            System.out.println("Integer cannot be negative"); //Could use throw new IllegalArgumentException but would stop runtime
         }
 
         return isNeg;
