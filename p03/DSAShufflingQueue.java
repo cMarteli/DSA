@@ -1,21 +1,29 @@
-
+import java.util.Arrays;
 /**
- *
- * @author Caio Marteli
+ * DSAShufflingQueue.java
+ * @author Caio Marteli 19598552
  */
 public class DSAShufflingQueue extends DSAQueue{
-    /**
-	 * Default Constructor
-	 */
+    
+    /************************************************************
+    Default Constructor:
+    IMPORT: none
+    EXPORT: address of new DSAShufflingQueue object
+    ASSERTION: front = 0 and rear = 0 are default states
+    ************************************************************/
     protected DSAShufflingQueue()
 	{
         super();        
         front = 0;
         rear = 0;
 	}
-	/**
-     * Alternate Constructor
-	 */
+
+    /************************************************************
+    OVERLOADED CONSTRUCTOR:
+    IMPORT: maxSize (integer)
+    EXPORT: address of new DSAShufflingQueue object
+    ASSERTION: imports maxCapacity passes it to parent class contructor
+    ************************************************************/
     protected DSAShufflingQueue(int maxCapacity)
 	{
 		super();
@@ -23,9 +31,11 @@ public class DSAShufflingQueue extends DSAQueue{
         rear = 0;
 	}
 
-	/**
-     * adds new element to last position of queue.
-     */
+    /************************************************************
+    IMPORT: data (real)
+    EXPORT: none
+    ASSERTION: Adds new element to last position of stack.
+    ************************************************************/
     protected void enqueue(double data)
     {
         if (isFull()) 
@@ -44,9 +54,12 @@ public class DSAShufflingQueue extends DSAQueue{
             currentSize++;
         }
     }
-    /**
-     *removes element last added to queue
-     */
+    
+    /************************************************************
+    IMPORT: none
+    EXPORT: (real)
+    ASSERTION: Removes element last added to queue
+    ************************************************************/
     protected double dequeue()
     {
         double data = queue[front];
@@ -68,9 +81,12 @@ public class DSAShufflingQueue extends DSAQueue{
     	}
     	return data;
     }
-    /*
-    *returns front of queue but makes no changes 
-    */
+
+    /************************************************************
+    IMPORT: none
+    EXPORT: (real)
+    ASSERTION: Returns front of queue but makes no changes
+    ************************************************************/
     protected double peek()
     {
     	double data = 0.0;
@@ -84,9 +100,12 @@ public class DSAShufflingQueue extends DSAQueue{
     	}    	
 		return data;		
     }
-    /*
-    *prints entire queue
-    */
+
+    /************************************************************
+    IMPORT: none
+    EXPORT: none
+    ASSERTION: Prints entire queue
+    ************************************************************/
     protected void show()
     {
         System.out.print("Displaying shuffling ");  

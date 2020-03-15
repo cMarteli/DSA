@@ -1,22 +1,28 @@
 import java.util.Arrays;
 /**
- *
- * @author Caio Marteli
+ * DSACircularQueue.java
+ * @author Caio Marteli 19598552
  */
 public class DSACircularQueue extends DSAQueue{     
 
-    /**
-     * Default constructor.
-     */
+    /************************************************************
+    Default Constructor:
+    IMPORT: none
+    EXPORT: address of new DSACircularQueue object
+    ASSERTION: front = -1 and rear = -1 are default states
+    ************************************************************/
     protected DSACircularQueue() 
     {
         super();        
         front = -1;
         rear = -1;
     }
-     /**
-     * Alternate constructor.
-     */
+    /************************************************************
+    OVERLOADED CONSTRUCTOR:
+    IMPORT: maxSize (integer)
+    EXPORT: address of new DSACircularQueue object
+    ASSERTION: imports maxSize passes it to parent class contructor
+    ************************************************************/
     protected DSACircularQueue(int maxSize) 
     {
         super();        
@@ -24,9 +30,11 @@ public class DSACircularQueue extends DSAQueue{
         rear = -1;
     }
 
-    /**
-     * Enqueue elements to rear.
-     */
+    /************************************************************
+    IMPORT: none
+    EXPORT: (real)
+    ASSERTION: Enqueue elements to rear.
+    ************************************************************/
     protected void enqueue(double data)
         {
         if (isFull()) 
@@ -47,9 +55,11 @@ public class DSACircularQueue extends DSAQueue{
         }
     }
 
-    /**
-     * Dequeue element from Front.
-     */
+    /************************************************************
+    IMPORT: none
+    EXPORT: (real)
+    ASSERTION: Dequeue element from Front.
+    ************************************************************/
     protected double dequeue()
         {
         double data = queue[front];
@@ -67,9 +77,11 @@ public class DSACircularQueue extends DSAQueue{
         return data;
     }
 
-        /*
-    *returns front of queue but makes no changes 
-    */
+    /************************************************************
+    IMPORT: none
+    EXPORT: (real)
+    ASSERTION: Returns front of queue but makes no changes 
+    ************************************************************/
     protected double peek()
     {
         double data = 0.0;
@@ -84,9 +96,11 @@ public class DSACircularQueue extends DSAQueue{
         return data;        
     }
 
-    /*
-    *prints entire queue
-    */
+    /************************************************************
+    IMPORT: none
+    EXPORT: none
+    ASSERTION: Prints entire queue
+    ************************************************************/
     protected void show()
     {        
         System.out.print("Displaying circular ");

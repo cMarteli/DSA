@@ -1,7 +1,7 @@
 import java.util.Arrays;
 /**
- *
- * @author Caio Marteli
+ * DSAQueue.java
+ * @author Caio Marteli 19598552
  */
 public abstract class DSAQueue {
 
@@ -12,52 +12,83 @@ public abstract class DSAQueue {
     protected int rear; //keeps current rear of queue
 
 
-    
+    /************************************************************
+    Default Constructor:
+    IMPORT: none
+    EXPORT: address of new DSAQueue object
+    ASSERTION: currentSize = 0 are default states
+    ************************************************************/   
     protected DSAQueue() 
     {
         queue = new double[DEFAULT_CAPACITY];
         currentSize = 0;
     }
-     /**
-     * Alternate constructor.
-     */
+    
+    /************************************************************
+    OVERLOADED CONSTRUCTOR:
+    IMPORT: maxSize (integer)
+    EXPORT: address of new DSAQueue object
+    ASSERTION: imports maxSize passes it to parent class contructor
+    ************************************************************/
     protected DSAQueue(int maxSize) 
     {
         queue = new double[maxSize];
         currentSize = 0;
     }
     
-	/**
-     * adds new element to last position of stack.
-     */
+	/************************************************************
+    IMPORT: data (real)
+    EXPORT: none
+    ASSERTION: ABSTRACT
+    ************************************************************/
     protected abstract void enqueue(double data);
     
-    /**
-     *removes element last added to stack
-     */
+    /************************************************************
+    IMPORT: none
+    EXPORT: (real)
+    ASSERTION: ABSTRACT
+    ************************************************************/
     protected abstract double dequeue();
     
-    /*
-    *returns count of queue but makes no changes 
-    */
+    /************************************************************
+    IMPORT: none
+    EXPORT: (real)
+    ASSERTION: ABSTRACT
+    ************************************************************/
     protected abstract double peek();
 
-    /**
-     * Check if queue is full.
-     */
+    /************************************************************
+    IMPORT: none
+    EXPORT: (boolean)
+    ASSERTION: Check if queue is full.
+    ************************************************************/
     protected boolean isFull() 
     {
         return (currentSize == queue.length);
     }
 
-    /**
-     * Check if Queue is empty.
-     */
+    /************************************************************
+    IMPORT: none
+    EXPORT: (boolean)
+    ASSERTION: Check if queue is empty.
+    ************************************************************/
     protected boolean isEmpty() 
     {
         return (currentSize == 0);
     }
+    
+    /************************************************************
+    IMPORT: none
+    EXPORT: none
+    ASSERTION: Prints entire queue
+    ************************************************************/
+    protected void show() 
+    {
+        System.out.println("queue elements: [" + Arrays.toString(queue) + "]");
+    }
 
+    /*** GETTERS ***/
+    
     protected int getFront()
     {
         return front;
@@ -71,14 +102,6 @@ public abstract class DSAQueue {
     protected int getCurrentSize()
     {
         return currentSize;
-    }
-
-    /**
-     * prints entire queue
-     */
-    protected void show() 
-    {
-        System.out.println("queue elements: [" + Arrays.toString(queue) + "]");
     }
 
 }

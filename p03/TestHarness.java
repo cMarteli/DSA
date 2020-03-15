@@ -2,7 +2,7 @@
 
 /**
  *
- * @author Caio Marteli
+ * @author Caio Marteli 19598552
  */
 public class TestHarness {
 
@@ -46,7 +46,6 @@ public class TestHarness {
 
 
         //Testing Shuffling Queue
-
 
         DSAShufflingQueue sq = new DSAShufflingQueue(); //Using default, size 5 
         DSAShufflingQueue sq2 = new DSAShufflingQueue(8); //Using alternate size 8

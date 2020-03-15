@@ -1,44 +1,55 @@
 import java.util.Stack;
 /**
- *
- * @author Caio Marteli
+ * DSAStack.java
+ * @author Caio Marteli 19598552
  */
 public class DSAStack {
 
 	protected int DEFAULT_CAPACITY = 5;
 	protected Object stack[];
 	protected int count; //keeps index of last element in stack
-    protected int rear;//rear position of Circular queue(new element enqueued at rear).
+    protected int rear; //rear position of Circular queue(new element enqueued at rear).
     protected int front; //front position of Circular queue(element will be dequeued from front).
 
-	/*
-    * Default Constructor
-	*/
+    /************************************************************
+    Default Constructor:
+    IMPORT: none
+    EXPORT: address of new DSAStack object
+    ASSERTION: count = 0 are default states
+    ************************************************************/ 
     public DSAStack()
 	{
 		stack = new Object[DEFAULT_CAPACITY];
 		count = 0;
 	}
-	/**
-     * Alternate Constructor
-	 */
+    /************************************************************
+    OVERLOADED CONSTRUCTOR:
+    IMPORT: maxCapacity (integer)
+    EXPORT: address of new DSAStack object
+    ASSERTION: imports maxCapacity passes it to parent class contructor
+    ************************************************************/
     public DSAStack(int maxCapacity)
 	{
 		stack = new Object[maxCapacity];
 		count = 0;
 	}
-	/**
-     * adds new element to last position of stack.
-     */
+    
+    /************************************************************
+    IMPORT: data (real)
+    EXPORT: none
+    ASSERTION: Adds new element to last position of stack.
+    ************************************************************/
     public void push(Object data)
     {
     	stack[count] = data;
     	count++;
     }
 
-    /**
-     * removes element last added to stack
-     */
+    /************************************************************
+    IMPORT: none
+    EXPORT: (real)
+    ASSERTION: Removes element last added to stack
+    ************************************************************/
     public Object pop()
     {
     	Object data = null;
@@ -54,9 +65,12 @@ public class DSAStack {
     	}
     	return data;
     }
-    /**
-     *returns count of stack but makes no changes 
-     */
+
+    /************************************************************
+    IMPORT: none
+    EXPORT: (real)
+    ASSERTION: Returns count of stack but makes no changes
+    ************************************************************/
     public Object peek()
     {
     	Object data = null;
@@ -70,9 +84,12 @@ public class DSAStack {
     	}    	
 		return data;		
     }
-    /**
-     *prints entire stack
-     */
+
+    /************************************************************
+    IMPORT: none
+    EXPORT: none
+    ASSERTION: Prints entire stack
+    ************************************************************/
     public void show()
     {
     	System.out.print("Stack ");
@@ -81,6 +98,12 @@ public class DSAStack {
     		System.out.print(stack[n] + "|");
     	}    	
     }
+
+    /************************************************************
+    IMPORT: none
+    EXPORT: (boolean)
+    ASSERTION: Check if stack is empty.
+    ************************************************************/
 
     public boolean isEmpty()
     {
