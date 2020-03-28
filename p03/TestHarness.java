@@ -10,14 +10,19 @@ public class TestHarness {
     public static void main(String[] args) 
     {
         //Testing Stack
-        
+        DSAStack testingStack = new DSAStack(20); //string stack to emulate how a real stack works\
+        testingStack.push("public static void main(String[] args)"); //Main gets put on satck
+
         DSAStack nums = new DSAStack(); //Using default, size 5 
         DSAStack nums2 = new DSAStack(8); //Using alternate size 8
         System.out.println("Checking if stack is empty, expected: |TRUE| \nResult: "+ nums.isEmpty());
         //nums.pop(); //Should throw exception
         nums.push(12.0);
+        testingStack.push("nums.push(12.0)");
         nums.push(8.0);
+        testingStack.push("nums.push(8.0)");
         nums.push(10.0);
+        testingStack.push("nums.push(10.0)");
         System.out.println("Checking if stack is empty, expected: |FALSE| \nResult: "+ nums.isEmpty());
         
         System.out.println(nums.pop());
