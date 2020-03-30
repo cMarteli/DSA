@@ -1,8 +1,9 @@
+import java.util.*;
 /**
  *
  * @author Caio Marteli
  */
-public class DSALinkedList {
+public class DSALinkedList implements Iterable{
 
 	protected DSAListNode head;
 	protected DSAListNode tail;
@@ -80,12 +81,12 @@ public class DSALinkedList {
 	
 	public Object peekFirst()
 	{
-		return head.data;
+		return head.getValue();
 	}
 
 	public Object peekLast()
 	{
-		return tail.data;		
+		return tail.getValue();		
 	}
 
 	/*
@@ -143,4 +144,46 @@ public class DSALinkedList {
 		System.out.println(node.data);
 	}
 
+	public Iterator iterator()
+	{
+		return new DSALinkedListIterator(this);
+	}
+
+	private class DSALinkedListIterator implements Iterator
+	{
+		private DSAListNode iterNext; //cursor
+		
+		public DSALinkedListIterator(DSALinkedList theList) 
+		{
+			iterNext = theList.head;  //NOTE: Able to access private field of MyLinkedList		
+		}
+
+		public boolean hasNext() //Iterator interface implementation
+		{
+			return (iterNext != null); 
+		}
+
+		public Object next() 
+		{ 
+			Object value; 
+			if(iterNext == null)
+			{
+			    value = null;
+			}
+			else
+			{
+			    value = iterNext.getValue();  //Get the value in the node
+			    iterNext = iterNext.getNext(); //Ready for subsequent calls to next()
+			}
+			return value;
+		}
+
+		public void remove() 
+		{ 
+			throw new UnsupportedOperationException("Not supported"); 
+		}
+	}
+
 }
+
+

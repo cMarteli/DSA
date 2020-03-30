@@ -1,4 +1,4 @@
-import java.util.Scanner;
+import java.util.*;
 
 
 
@@ -16,11 +16,6 @@ public class TestHarness {
         //Initialize variables
 
         DSALinkedList list = new DSALinkedList();
-        //System.out.println(list.peekLast());
-        System.out.println("TESTING isEmpty() Expected Output: TRUE");
-        System.out.println("Actual Output:");
-        System.out.println(list.isEmpty());        
-
 
         list.insertLast(1);
         list.insertLast("2");
@@ -28,10 +23,27 @@ public class TestHarness {
         list.insertFirst("4");
         list.insertFirst("5");
         list.insertLast(6);
+
+        
+
+        
+
+        //System.out.println(list.peekLast());
+
+        System.out.println("TESTING isEmpty() Expected Output: TRUE");
+        System.out.println("Actual Output:");
+        System.out.println(list.isEmpty()); 
+      
+
+
+
+        
+
         System.out.println("TESTING insert methods. Expected Output: 5 4 3 1 2 6");
 
         System.out.println("Actual Output:");
-        list.show();
+        //list.show();
+        iterateOverList(list); //iterator used here
 
         System.out.println("TESTING peeks method. Expected Output: 5 then 6");
 
@@ -48,9 +60,24 @@ public class TestHarness {
         list.removeFirst();
         //System.out.println("Removing last:");
         //list.removeLast();
-        list.show();        
+        //list.show();
+        iterateOverList(list); 
+
+      
 
 
 
     }//end main
+
+    public static void iterateOverList(DSALinkedList theList) 
+    {
+        Object c; 
+        Iterator iter = theList.iterator();
+        
+        while (iter.hasNext())
+        {       
+            c = iter.next(); //iterates over list
+            System.out.println(c);    
+        } 
+    } 
 }

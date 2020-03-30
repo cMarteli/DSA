@@ -48,5 +48,23 @@ public class DSAListNode
 		previous = n2;
 	}
 
+
+	//getters
+
+	public DSAListNode getNext()
+	{
+		return next;
+	}
+
+	public DSAListNode getPrevious()
+	{
+		return previous;
+	}
+
+	public Object getValue()
+	{
+		return data;
+	}
+
 }
 
