@@ -86,7 +86,7 @@ public class DSATree {
 		
 		if(currNode == null) // Base case: not found
 		{
-			throw newNoSuchElementException("Key " + key + " not found");
+			throw new NoSuchElementException("Key " + key + " not found");
 		}
 		else if (key.equals(currNode.getKey())) // Base case: found
 		{
@@ -104,24 +104,54 @@ public class DSATree {
 		return value;
 	} 
 
-	public void insert(String key, Object value) 
+	public Object insert(String key, Object value) 
 	{ 
-	//...
+		//wrapper
+		return insertRec(key, value, root);
+	}
+
+	private void insertRec(String key, Object value, DSATreeNode currNode)
+	{
+		DSATreeNode updateNode = currNode;
+		if(currNode == null)
+		{
+			//DSATreeNode newNode = new DSATreeNode(key, value);
+			//updateNode = newNode;
+			updateNode = new DSATreeNode(key, value);
+		}
+		else if(key.equals(currNode.getKey()))
+		{
+			throw new Exception("Data already exists in the tree.");
+		}
+		else if(key.compareTo(currNode.getKey) < 0)
+		{
+			currNode.setLeft(insertRec(key, data, currNode.getLeft())); //recurse left
+		}
+		else()
+		{
+			currNode.setRight(insertRec(key, data, currNode.getRight())); //recurse right
+		}
+
+		return updateNode;
 	} 
 
 	public void delete(String key) 
 	{ 
 	//...
+		System.out.print("STUB METHOD");
 	}
 
 	public void display() 
 	{ 
 	//...
+		System.out.print("STUB METHOD");
 	}
 
 	public int height() 
 	{
 	//...
+		System.out.print("STUB METHOD");
+		return 0;
 	} 
 
 }
