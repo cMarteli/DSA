@@ -25,10 +25,14 @@ public class DSATree {
 			{
 				throw new IllegalArgumentException("Key cannot be null");
 			}
-			key = inKey;
-			value = inValue;
-			leftChild = null;
-			rightChild = null;
+			else
+			{
+				key = inKey;
+				value = inValue;
+				leftChild = null;
+				rightChild = null;
+			}
+
 		}
 
 		//Accessors
@@ -65,7 +69,8 @@ public class DSATree {
 			rightChild = newRight;
 		}
 
-	}//end of DSATreeNode class
+	}
+	//!!!!!!!!!!!END OF DSATreeNode class
 
 	
 	private DSATreeNode root;
@@ -117,25 +122,29 @@ public class DSATree {
 	private DSATreeNode insertRec(String key, Object value, DSATreeNode currNode)
 	{
 		DSATreeNode updateNode = currNode;
-		if(currNode == null)
+		if(root == null)
 		{
-			//DSATreeNode newNode = new DSATreeNode(key, value);
-			//updateNode = newNode;
+			updateNode = new DSATreeNode(key, value);
+			root = updateNode; //could be wrong?
+
+		}
+		else if(updateNode == null)
+		{
 			updateNode = new DSATreeNode(key, value);
 		}
-		else if(key.equals(currNode.getKey()))
+		else if(key.equals(updateNode.getKey()))
 		{
 			throw new IllegalArgumentException("Data already exists in the tree.");
 		}
-		else if(key.compareTo(currNode.getKey()) < 0)
-		{
-			currNode.setLeft(insertRec(key, value, currNode.getLeft())); //recurse left
+		else if(key.compareTo(updateNode.getKey()) < 0)
+		{ 
+			updateNode.setLeft(insertRec(key, value, updateNode.getLeft())); //recurse left
 		}
 		else
 		{
-			currNode.setRight(insertRec(key, value, currNode.getRight())); //recurse right
+			updateNode.setRight(insertRec(key, value, updateNode.getRight())); //recurse right
 		}
-
+		//System.out.println(updateNode.getValue());//DEBUG
 		return updateNode;
 	} 
 
@@ -213,6 +222,21 @@ public class DSATree {
 		System.out.print("STUB METHOD");
 	}
 
+	public void printInOrder(DSATreeNode currNode) 
+	{ 
+	//...
+		DSATreeNode printNode = currNode;
+		if (printNode.getLeft() != null)
+		{
+			printInOrder(printNode.getLeft());
+		}
+		System.out.println(printNode.getValue());
+		if(printNode.getRight() != null)
+		{
+			printInOrder(printNode.getRight());
+		}
+	}
+
 	public int height() //wrapper
 	{		
 		return heightRec(root);
@@ -245,6 +269,23 @@ public class DSATree {
 		return htSoFar;
 
 	}
+
+	public DSATreeNode getRoot()
+	{
+		return root;
+	}
+
+	public void printRoot()
+		{
+			if(root != null)
+			{
+				System.out.println(root.getValue());
+			}
+			else
+			{
+				System.out.println("Root is empty");
+			}
+		}
 
 }
 
