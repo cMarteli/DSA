@@ -83,14 +83,6 @@ public class FileSorter {
         }
     }
 
-    public static void printArray(String inArray[])
-    {
-    for(int i = 0; i < inArray.length; i++)
-        {
-            System.out.println(inArray[i]);
-        }
-    }
-
     //convert int[] to String[]
     public static String[] convertArray(int[] inArray)
     {
