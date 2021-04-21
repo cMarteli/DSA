@@ -8,7 +8,7 @@ import java.util.*;
 
 /**
  *
- * @author Caio Marteli 19598552
+ * @author Caio Marteli
  */
 public class FileReader {
 

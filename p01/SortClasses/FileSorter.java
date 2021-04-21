@@ -28,17 +28,20 @@ public class FileSorter {
         arrayOfIDs[i] = FileReader.processId(arrayOfStudents[i]);
     }
     //Print Original Unsorted
-    printArray(arrayOfStudents);
+    
+    //printArray(arrayOfStudents);
 
     //sorts using bubble and writes to file
     FileReader.writeFile("bubbleSorted.csv",convertArray(bubbleSort(arrayOfIDs)));
+    System.out.println("bubbleSorted.csv created");
 
     //sorts using selection and writes to file
     FileReader.writeFile("selectionSorted.csv",convertArray(selectionSort(arrayOfIDs)));
-
+    System.out.println("selectionSorted.csv created");
+    
     //sorts using insertion and writes to file
     FileReader.writeFile("insertionSorted.csv",convertArray(insertionSort(arrayOfIDs)));
-
+    System.out.println("insertionSorted.csv created");
 
 
     }//end main

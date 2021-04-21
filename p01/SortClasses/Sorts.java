@@ -4,9 +4,7 @@
 */
 class Sorts
 {
-    /*
-        Bubble sort - Checks two adjacent elements in an array swaps them if in wrong order then repeats it until it's done.
-    */
+    // bubble sort
     public static void bubbleSort(int[] A)
     {
         for(int pass = 0; pass < A.length-1; pass++)
@@ -21,49 +19,37 @@ class Sorts
                 }
             }            
         }
-    }// bubbleSort()
+    }//bubbleSort()
 
-    /*
-        Selection sort - Finds the smallest element in array first,
-        inserts it in the first position then checks the remaining elements
-        and puts smallest in next position and so on.
-    */
-    public static void selectionSort(int[] A)
-    {
-        for(int nn = 0; nn < A.length-1; nn++)
-        {
-            int minIdx = nn;
-            for(int jj = nn + 1; jj < A.length-1; jj++)
-            {
-                if(A[jj] < A[minIdx])
-                {
-                    minIdx = jj;
-                }
-            }          
-            int temp = A[minIdx];
-            A[minIdx] = A[nn];
-            A[nn] = temp;
-        }
-        
-    }// selectionSort()
+    // selection sort
+public static void selectionSort(int[] A){  
+        for (int i = 0; i < A.length - 1; i++)  
+        {  
+            int index = i;  
+            for (int j = i + 1; j < A.length; j++){  
+                if (A[j] < A[index]){  
+                    index = j;//searching for lowest index  
+                }  
+            }  
+            int smallerNumber = A[index];   
+            A[index] = A[i];  
+            A[i] = smallerNumber;  
+        }  
+    }
 
-    /*
-        Insertion sort - Constantly attempts to place the current element in
-        the right order, one by one.
-    */
-    public static void insertionSort(int[] A)
-    {
-        for(int nn = 1; nn < A.length-1; nn++)
-        {
-            int ii = nn;
-            while(ii > 0 && A[ii-1] > A[ii])
-            {
-                int temp = A[ii];
-                A[ii] = A[ii-1];
-                A[ii-1] = temp;
-            }
-        }
-    }// insertionSort()
+    // insertion sort
+    public static void insertionSort(int A[]) {  
+        int n = A.length;  
+        for (int j = 1; j < n; j++) {  
+            int key = A[j];  
+            int i = j-1;  
+            while ( (i > -1) && ( A [i] > key ) ) {  
+                A [i+1] = A [i];  
+                i--;  
+            }  
+            A[i+1] = key;  
+        }  
+    }
 
     // mergeSort - front-end for kick-starting the recursive algorithm
     public static void mergeSort(int[] A)
