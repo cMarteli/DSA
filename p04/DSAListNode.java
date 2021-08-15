@@ -11,46 +11,61 @@ public class DSAListNode
 	protected DSAListNode next;
 	protected DSAListNode previous;
 
-	/**
-     *  Default constructor sets all classfields to null
-     */	
+	/************************************************************
+    Default Constructor:
+    IMPORT: none
+    EXPORT: address of new DSAListNode object
+    ASSERTION: sets all classfields to null
+    ************************************************************/ 
 	public DSAListNode()
 	{
 		data = null;
 		next = null;
 		previous = null;
 	}
-	/**
-     *  Alternate constructor sets data only
-     */
+
+	/************************************************************
+    Alternate Constructor:
+    IMPORT: none
+    EXPORT: address of new DSAListNode object
+    ASSERTION: sets data fild only
+    ************************************************************/ 
 	public DSAListNode(Object d)
 	{
 		data = d;
 		next = null;
 		previous = null;		
 	}
-	/**
-     *  Alternate constructor sets all fields
-     */
+
+	/************************************************************
+    Alternate Constructor:
+    IMPORT: d(Object), n(DSAListNode)
+    EXPORT: address of new DSAListNode object
+    ASSERTION: sets data and next fields only
+    ************************************************************/
 	public DSAListNode(Object d, DSAListNode n)
 	{
 		data = d;
-		next = n;		
+		next = n;
+		previous = null;	
 	}
 
-	/**
-     *  Alternate constructor sets all fields
-     */
-	public DSAListNode(Object d, DSAListNode n1, DSAListNode n2)
+	/************************************************************
+    Alternate Constructor:
+    IMPORT: d(Object), n(DSAListNode), p(DSAListNode)
+    EXPORT: address of new DSAListNode object
+    ASSERTION: sets all fields
+    ************************************************************/
+	public DSAListNode(Object d, DSAListNode n, DSAListNode p)
 	{
 		data = d;
-		next = n1;
-		previous = n2;
+		next = n;
+		previous = p;
 	}
 
-
-	//getters
-
+	/************************************************************
+	*** GETTERS ***
+    ************************************************************/
 	public DSAListNode getNext()
 	{
 		return next;

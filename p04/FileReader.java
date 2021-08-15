@@ -10,15 +10,16 @@ import java.util.*;
  *
  * @author Caio Marteli 19598552
  */
-public class FileReader {
-
-/************************************************************    
-IMPORT: filename (String)
-EXPORT: lineNum (integer)
-ASSERTION: Imports a file name and counts the lines in it then returns the number
-************************************************************/
-public static int numOfLines(String filename)
+public class FileReader 
 {
+
+    /************************************************************    
+    IMPORT: filename (String)
+    EXPORT: lineNum (integer)
+    ASSERTION: Imports a file name and counts the lines in it then returns the number
+    ************************************************************/
+    public static int numOfLines(String filename)
+    {
         FileInputStream fileStrm = null;
         InputStreamReader rdr;
         BufferedReader bufRdr;
@@ -51,15 +52,15 @@ public static int numOfLines(String filename)
             }
         }
         return lineNum;
-}//end numOfLines()
+    }//end numOfLines()
 
 
-/************************************************************    
-IMPORT: filename (String)
-EXPORT: arrayOfStrings (String[] array)
-ASSERTION: Imports a file name and writes it to a string array
-************************************************************/
-public static String[] readFile(String filename)
+    /************************************************************    
+    IMPORT: filename (String)
+    EXPORT: arrayOfStrings (String[] array)
+    ASSERTION: Imports a file name and writes it to a string array
+    ************************************************************/
+    public static String[] readFile(String filename)
     {
         FileInputStream fileStrm = null;
         InputStreamReader rdr;
@@ -101,12 +102,11 @@ public static String[] readFile(String filename)
 
         return arrayOfStrings;
     }//end readfile()
-/************************************************************    
-IMPORT: csvRow (String[])
-EXPORT: none
-ASSERTION: parses single csv row
-************************************************************/
-
+    /************************************************************    
+    IMPORT: csvRow (String[])
+    EXPORT: none
+    ASSERTION: parses single csv row
+    ************************************************************/
     public static void processLine(String csvRow) throws IllegalStateException
     {
         int id;
@@ -129,12 +129,11 @@ ASSERTION: parses single csv row
 
 
 
-/************************************************************    
-IMPORT: csvRow (String[])
-EXPORT: none
-ASSERTION: parses single csv row
-************************************************************/
-
+    /************************************************************    
+    IMPORT: csvRow (String[])
+    EXPORT: none
+    ASSERTION: parses single csv row
+    ************************************************************/
     public static int processId(String csvRow) throws IllegalStateException
     {
         int id;
@@ -152,12 +151,11 @@ ASSERTION: parses single csv row
         return id;
     }//end processLine()
 
-/************************************************************    
-IMPORT: fileName (String), printString (String[])
-EXPORT: none
-ASSERTION: writes formatted array of Strings to file
-************************************************************/ 
-
+    /************************************************************    
+    IMPORT: fileName (String), printString (String[])
+    EXPORT: none
+    ASSERTION: writes formatted array of Strings to file
+    ************************************************************/
     public static void writeFile(String fileName, String[] printString)    {
 
         FileOutputStream fos = null;

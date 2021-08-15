@@ -1,8 +1,5 @@
 import java.util.*;
 
-
-
-
 /**
  *
  * @author Caio Marteli
@@ -22,21 +19,13 @@ public class TestHarness {
         list.insertFirst("3");
         list.insertFirst("4");
         list.insertFirst("5");
-        list.insertLast(6);
-
-        
-
-        
+        list.insertLast(6);        
 
         //System.out.println(list.peekLast());
 
         System.out.println("TESTING isEmpty() Expected Output: TRUE");
         System.out.println("Actual Output:");
-        System.out.println(list.isEmpty()); 
-      
-
-
-
+        System.out.println(list.isEmpty());
         
 
         System.out.println("TESTING insert methods. Expected Output: 5 4 3 1 2 6");
@@ -61,11 +50,7 @@ public class TestHarness {
         //System.out.println("Removing last:");
         //list.removeLast();
         //list.show();
-        iterateOverList(list); 
-
-      
-
-
+        iterateOverList(list);
 
     }//end main
 

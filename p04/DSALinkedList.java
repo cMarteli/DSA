@@ -2,6 +2,8 @@ import java.util.*;
 /**
  *
  * @author Caio Marteli
+ *
+ *Contains Iterator Class
  */
 public class DSALinkedList implements Iterable{
 
@@ -9,18 +11,23 @@ public class DSALinkedList implements Iterable{
 	protected DSAListNode tail;
 
 	
-	/*
-	*	Default constructor sets values to null
-	*/
+    /************************************************************
+    Default Constructor:
+    IMPORT: none
+    EXPORT: address of new DSALinkedList object
+    ASSERTION: head = null and tail = null are the default states
+    ************************************************************/ 
 	public DSALinkedList()
 	{
 		head = null;
 		tail = null;
 	}
 
-	/*
-	* Creates a new node and parses data into it
-	*/
+   /************************************************************
+    IMPORT: none
+    EXPORT: (boolean)
+    ASSERTION: Check if list is empty.
+    ************************************************************/
 	public boolean isEmpty()
 	{
 		boolean isEmp = false;
@@ -35,9 +42,11 @@ public class DSALinkedList implements Iterable{
 		return isEmp;
 	}
 
-	/*
-	 * Creates a new node and parses data into it
-	 */
+    /************************************************************
+    IMPORT: data (Object)
+    EXPORT: none
+    ASSERTION: Adds new element to first position of list.
+    ************************************************************/
 	public void insertFirst(Object data)
 	{
 		DSAListNode node = new DSAListNode(data,head); //makes it point to head
@@ -49,9 +58,12 @@ public class DSALinkedList implements Iterable{
 		head = node; //moves the head to new node
 
 	}
-	/*
-	 * Creates a new node and parses data into it
-	 */
+
+    /************************************************************
+    IMPORT: data (Object)
+    EXPORT: none
+    ASSERTION: Adds new element to last position of list.
+    ************************************************************/
 	public void insertLast(Object data)
 	{
 		DSAListNode node = new DSAListNode(data); //makes it point to null
@@ -75,24 +87,31 @@ public class DSALinkedList implements Iterable{
 		tail = node;//keeps track of tail
 	}
 
-	/*
-	 *getters
-	 */
-	
+    /************************************************************
+    IMPORT: none
+    EXPORT: (Object)
+    ASSERTION: Returns head of list but makes no changes
+    ************************************************************/
 	public Object peekFirst()
 	{
 		return head.getValue();
 	}
 
+	/************************************************************
+    IMPORT: none
+    EXPORT: (Object)
+    ASSERTION: Returns tail of list but makes no changes
+    ************************************************************/
 	public Object peekLast()
 	{
 		return tail.getValue();		
 	}
 
-	/*
-	 * remove methods
-	 */
-	
+    /************************************************************
+    IMPORT: none
+    EXPORT: (Object)
+    ASSERTION: Removes element at head of list
+    ************************************************************/
 	public Object removeFirst()
 	{
 		if(isEmpty())
@@ -111,7 +130,11 @@ public class DSALinkedList implements Iterable{
 		}
 		return head;
 	}
-
+    /************************************************************
+    IMPORT: none
+    EXPORT: (Object)
+    ASSERTION: Removes element at tail of list
+    ************************************************************/
 	public Object removeLast()
 	{
 		if(isEmpty())
@@ -131,7 +154,11 @@ public class DSALinkedList implements Iterable{
 		return tail;
 	}
 	
-
+    /************************************************************
+    IMPORT: none
+    EXPORT: none
+    ASSERTION: Prints entire list
+    ************************************************************/
 	public void show()
 	{
 		DSAListNode node = head;
@@ -144,11 +171,21 @@ public class DSALinkedList implements Iterable{
 		System.out.println(node.data);
 	}
 
+    /************************************************************
+    Iterator Constructor:
+    IMPORT: none
+    EXPORT: address of new DSALinkedListIterator object
+    ASSERTION: 
+    ************************************************************/ 
 	public Iterator iterator()
 	{
 		return new DSALinkedListIterator(this);
 	}
 
+    /************************************************************
+    DSALinkedListIterator Class
+    Private Cass - implement Iterator 
+    ************************************************************/
 	private class DSALinkedListIterator implements Iterator
 	{
 		private DSAListNode iterNext; //cursor
@@ -185,5 +222,3 @@ public class DSALinkedList implements Iterable{
 	}
 
 }
-
-
