@@ -1,12 +1,13 @@
 import java.util.Arrays;
 /**
  * DSAQueue.java
+ * Abstract class
  * @author Caio Marteli 19598552
  */
 public abstract class DSAQueue {
 
 	protected int DEFAULT_CAPACITY = 5;
-	protected double queue[];
+	protected Object queue[];
     protected int currentSize; //keeps current size of queue
     protected int front; //keeps current front of queue
     protected int rear; //keeps current rear of queue
@@ -20,7 +21,7 @@ public abstract class DSAQueue {
     ************************************************************/   
     protected DSAQueue() 
     {
-        queue = new double[DEFAULT_CAPACITY];
+        queue = new Object[DEFAULT_CAPACITY];
         currentSize = 0;
     }
     
@@ -32,7 +33,7 @@ public abstract class DSAQueue {
     ************************************************************/
     protected DSAQueue(int maxSize) 
     {
-        queue = new double[maxSize];
+        queue = new Object[maxSize];
         currentSize = 0;
     }
     
@@ -41,21 +42,21 @@ public abstract class DSAQueue {
     EXPORT: none
     ASSERTION: ABSTRACT
     ************************************************************/
-    protected abstract void enqueue(double data);
+    protected abstract void enqueue(Object data);
     
     /************************************************************
     IMPORT: none
     EXPORT: (real)
     ASSERTION: ABSTRACT
     ************************************************************/
-    protected abstract double dequeue();
+    protected abstract Object dequeue();
     
     /************************************************************
     IMPORT: none
     EXPORT: (real)
     ASSERTION: ABSTRACT
     ************************************************************/
-    protected abstract double peek();
+    protected abstract Object peek();
 
     /************************************************************
     IMPORT: none

@@ -35,7 +35,7 @@ public class DSACircularQueue extends DSAQueue{
     EXPORT: (real)
     ASSERTION: Enqueue elements to rear.
     ************************************************************/
-    protected void enqueue(double data)
+    protected void enqueue(Object data)
         {
         if (isFull()) 
         {
@@ -60,9 +60,9 @@ public class DSACircularQueue extends DSAQueue{
     EXPORT: (real)
     ASSERTION: Dequeue element from Front.
     ************************************************************/
-    protected double dequeue()
+    protected Object dequeue()
         {
-        double data = queue[front];
+        Object data = queue[front];
         if (isEmpty()) 
         {
             System.out.println("Circular Queue is empty.");
@@ -82,9 +82,9 @@ public class DSACircularQueue extends DSAQueue{
     EXPORT: (real)
     ASSERTION: Returns front of queue but makes no changes 
     ************************************************************/
-    protected double peek()
+    protected Object peek()
     {
-        double data = 0.0;
+        Object data = 0.0;
         if (isEmpty())
         {
             System.out.println("Stack is Empty.");

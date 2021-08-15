@@ -36,7 +36,7 @@ public class DSAShufflingQueue extends DSAQueue{
     EXPORT: none
     ASSERTION: Adds new element to last position of stack.
     ************************************************************/
-    protected void enqueue(double data)
+    protected void enqueue(Object data)
     {
         if (isFull()) 
         {
@@ -60,9 +60,9 @@ public class DSAShufflingQueue extends DSAQueue{
     EXPORT: (real)
     ASSERTION: Removes element last added to queue
     ************************************************************/
-    protected double dequeue()
+    protected Object dequeue()
     {
-        double data = queue[front];
+        Object data = queue[front];
         //queue[rear] = 0.0;  
     	if (isEmpty())
     	{
@@ -87,9 +87,9 @@ public class DSAShufflingQueue extends DSAQueue{
     EXPORT: (real)
     ASSERTION: Returns front of queue but makes no changes
     ************************************************************/
-    protected double peek()
+    protected Object peek()
     {
-    	double data = 0.0;
+    	Object data = 0.0;
     	if (isEmpty())
     	{
     		System.out.println("Stack is Empty.");
