@@ -7,67 +7,73 @@ public class DSAGraph
 {
 	public DSALinkedList vertices;
 
-	/**
-	*  Constructor: sets key and value only
-	*/
+	/************************************************************
+	CONSTRUCTOR:
+	IMPORT: none
+	EXPORT: address of new DSA Graph
+	ASSERTION: sets key and value only
+	************************************************************/
 	public DSAGraph() 
-	{
+	{		
 
 	}
 	//Mutators
-	public void addVertex(String label,)
+	public void addVertex(String label)
 	{
-
+		
 	}
-
+	//STUBBED
 	public void addEdge(String label1, String label2)
 	{
 
 	}
-
+	//STUBBED
 	public boolean hasVertex(String label)
 	{
-		return boolean;
+		return false;
 	}
-
+	//STUBBED
 	public int getVertexCount()
 	{
-		return int;
+		return 0;
 	}
-
+	//STUBBED
 	public int getEdgeCount()
 	{
-		return int;
-	}
-
-	public DSAGraphVertex getVertex(String label)
-	{
-		return DSAGraphVertex;
-
-	}
-	//exports vertex list?
+		return 0;
+	} 
+ 
+	public DSAGraphVertex getVertex(String label) 
+	{ 
+		return DSAGraphVertex; 
+ 
+	} 
+	//exports vertex list? 
 	public DSAGraphVertex getAdjacent(String label)
 	{
 		return DSAGraphVertex;		
 	}
 	public boolean isAdjacent(String label1, String label2)
 	{
-		return boolean;
+		return false;
 	}
-
+	//STUBBED METHOD!
 	public void displayAsList()
 	{
+		System.out.println("STUB");
 
 	}
-
+	//STUBBED METHOD!
 	public void displayAsMatrix()
 	{
-		
+		System.out.println("STUB");
 	}
 
-}
+	
 
-public class DSAGraphVertex
+}
+//	NEW CLASS VERTEX!!!!!!!
+private class DSAGraphVertex
 {
 	//fields
 	String label;
@@ -112,13 +118,12 @@ public class DSAGraphVertex
 	}
 	public boolean getVisited()
 	{
-		return boolean;
+		return false;
 
 	}  
 	public String toString()
 	{
 		return String;
 	}
-
 
 }
