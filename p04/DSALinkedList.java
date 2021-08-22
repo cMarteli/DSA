@@ -3,7 +3,7 @@ import java.util.*;
  *
  * @author Caio Marteli
  *
- *Contains Iterator Class
+ *Contains Iterator Class AND DSAListNode
  */
 public class DSALinkedList implements Iterable{
 
@@ -219,6 +219,91 @@ public class DSALinkedList implements Iterable{
 		{ 
 			throw new UnsupportedOperationException("Not supported"); 
 		}
-	}
+	}//end of iterator
 
-}
+
+    /************************************************************
+    DSALinkedListNode Class
+    Private Cass
+    ************************************************************/
+	private class DSAListNode
+	{	
+
+	    private Object data;
+		private DSAListNode next;
+		private DSAListNode previous;
+
+		/************************************************************
+	    Default Constructor:
+	    IMPORT: none
+	    EXPORT: address of new DSAListNode object
+	    ASSERTION: sets all classfields to null
+	    ************************************************************/ 
+		public DSAListNode()
+		{
+			data = null;
+			next = null;
+			previous = null;
+		}
+
+		/************************************************************
+	    Alternate Constructor:
+	    IMPORT: none
+	    EXPORT: address of new DSAListNode object
+	    ASSERTION: sets data fild only
+	    ************************************************************/ 
+		public DSAListNode(Object d)
+		{
+			data = d;
+			next = null;
+			previous = null;		
+		}
+
+		/************************************************************
+	    Alternate Constructor:
+	    IMPORT: d(Object), n(DSAListNode)
+	    EXPORT: address of new DSAListNode object
+	    ASSERTION: sets data and next fields only
+	    ************************************************************/
+		public DSAListNode(Object d, DSAListNode n)
+		{
+			data = d;
+			next = n;
+			previous = null;	
+		}
+
+		/************************************************************
+	    Alternate Constructor:
+	    IMPORT: d(Object), n(DSAListNode), p(DSAListNode)
+	    EXPORT: address of new DSAListNode object
+	    ASSERTION: sets all fields
+	    ************************************************************/
+		public DSAListNode(Object d, DSAListNode n, DSAListNode p)
+		{
+			data = d;
+			next = n;
+			previous = p;
+		}
+
+		/************************************************************
+		*** GETTERS ***
+	    ************************************************************/
+		public DSAListNode getNext()
+		{
+			return next;
+		}
+
+		public DSAListNode getPrevious()
+		{
+			return previous;
+		}
+
+		public Object getValue()
+		{
+			return data;
+		}
+
+	}//end of node class
+
+
+}//end of DSALinkedList.java

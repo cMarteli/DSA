@@ -36,7 +36,17 @@ public class DSAStack implements Iterable{
     ************************************************************/
     public Object pop()
     {
-    	return stack.removeFirst();
+        Object data = null;
+        if (isEmpty())
+        {
+            throw new IllegalArgumentException("Stack is Empty.");
+        }
+        else
+        {
+            data = stack.peekFirst();
+            stack.removeFirst();
+        }
+        return data;
     }
 
     /************************************************************

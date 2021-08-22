@@ -4,7 +4,7 @@ import java.util.*;
  * Implementing DSALinkedList
  * @author Caio Marteli 19598552
  */
-public abstract class DSAQueue implements Iterable{
+public class DSAQueue implements Iterable{
 
 	private DSALinkedList queue;
 
@@ -36,6 +36,27 @@ public abstract class DSAQueue implements Iterable{
     ************************************************************/
     protected Object dequeue()
     {
+        /*
+        Object data = queue.peekFirst();
+        if (queue.isEmpty())
+        {
+            System.out.println("Shuffling queue is Empty.");
+        }
+        else
+        {
+            //shuffle queue
+            for(Iterator iter = queue.itertator(); iter.hasNext(); )
+            {
+                queue[i] = queue[i + 1];
+            }
+            queue[rear] = 0.0;
+            currentSize--;
+            System.out.println(data +" Removed from queue.");
+        }
+        return data;
+        */
+
+    //new
        return queue.removeFirst();
     }
 
