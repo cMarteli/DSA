@@ -34,7 +34,7 @@ public class Hanoi {
     {
         for(int i = 0; i < numOfMoves; i++)
         {
-            System.out.print("   ");//prints 3 sapces for every recursion
+            System.out.print("   ");//prints 3 spaces for every recursion
         }       
         System.out.println("Moving  top  disk  from  peg  " + src + "  to  peg " + dest);        
     }
