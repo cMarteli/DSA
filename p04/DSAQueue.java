@@ -4,9 +4,9 @@ import java.util.*;
  * Implementing DSALinkedList
  * @author Caio Marteli 19598552
  */
-public class DSAQueue implements Iterable{
+public class DSAQueue<T> implements Iterable<T>{
 
-	private DSALinkedList queue;
+	private DSALinkedList<T> queue;
 
     /************************************************************
     Default Constructor:
@@ -16,7 +16,7 @@ public class DSAQueue implements Iterable{
     ************************************************************/   
     protected DSAQueue() 
     {
-        queue = new DSALinkedList();
+        queue = new DSALinkedList<T>();
     }
     
 	/************************************************************
@@ -24,7 +24,7 @@ public class DSAQueue implements Iterable{
     EXPORT: none
     ASSERTION:
     ************************************************************/
-    protected void enqueue(Object data)
+    protected void enqueue(T data)
     {
         queue.insertLast(data);
     }
@@ -34,9 +34,9 @@ public class DSAQueue implements Iterable{
     EXPORT: (Object)
     ASSERTION:
     ************************************************************/
-    protected Object dequeue()
+    protected T dequeue()
     {
-        /*
+        /* This needs some work
         Object data = queue.peekFirst();
         if (queue.isEmpty())
         {
@@ -55,9 +55,19 @@ public class DSAQueue implements Iterable{
         }
         return data;
         */
-
+        T data = null;
+        if (queue.isEmpty())
+        {
+            throw new IllegalArgumentException("Queue is Empty.");
+        }
+        else //if not empty dequeue
+        {
+            data = queue.peekFirst();
+            queue.removeFirst();
+        }
+        return data;
     //new
-       return queue.removeFirst();
+       
     }
 
     /************************************************************
@@ -85,7 +95,7 @@ public class DSAQueue implements Iterable{
     EXPORT: iterator
     ASSERTION: Exposes lists iterator
     ************************************************************/
-    public Iterator iterator()
+    public Iterator<T> iterator()
     {
         return queue.iterator();
     }
@@ -93,12 +103,12 @@ public class DSAQueue implements Iterable{
     /************************************************************
     *** GETTERS ***
     ************************************************************/
-    protected Object peekFirst()
+    protected T peekFirst()
     {
         return queue.peekFirst();
     }
 
-    protected Object peekLast()
+    protected T peekLast()
     {
         return queue.peekLast();
     }    

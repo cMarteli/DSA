@@ -12,21 +12,20 @@ public class TestHarness {
     public static void main(String[] args) {
         //Initialize variables
 
-        DSALinkedList list = new DSALinkedList();
-
-        list.insertLast(1);
-        list.insertLast("2");
-        list.insertFirst("3");
-        list.insertFirst("4");
-        list.insertFirst("5");
-        list.insertLast(6);        
-
-        //System.out.println(list.peekLast());
+        DSALinkedList<String> list = new DSALinkedList<String>();
 
         System.out.println("TESTING isEmpty() Expected Output: TRUE");
         System.out.println("Actual Output:");
         System.out.println(list.isEmpty());
-        
+
+        list.insertLast("1");
+        list.insertLast("2");
+        list.insertFirst("3");
+        list.insertFirst("4");
+        list.insertFirst("5");
+        list.insertLast("6");
+
+        //System.out.println(list.peekLast());
 
         System.out.println("TESTING insert methods. Expected Output: 5 4 3 1 2 6");
 
@@ -54,15 +53,15 @@ public class TestHarness {
 
     }//end main
 
-    public static void iterateOverList(DSALinkedList theList) 
+    public static void iterateOverList(DSALinkedList<String> theList) 
     {
-        Object c; 
-        Iterator iter = theList.iterator();
+        String c;
+        Iterator<String> iter = theList.iterator();
         
         while (iter.hasNext())
         {       
             c = iter.next(); //iterates over list
-            System.out.println(c);    
+            System.out.println(c);
         } 
     } 
 }

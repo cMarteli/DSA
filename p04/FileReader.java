@@ -4,7 +4,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
-import java.util.*;
+import java.util.InputMismatchException;
+import java.util.Scanner;
 
 /**
  *
@@ -12,6 +13,89 @@ import java.util.*;
  */
 public class FileReader 
 {
+    /************************************************************
+    IMPORT: none
+    EXPORT: none
+    ASSERTION: Gets user input and performs the associated task while handling invalid inputs
+    ************************************************************/
+    public void mainMenu()
+    {
+        String prompt = "What would you like to do?\n [1]Read a serialized file\n [2]Display the list\n [3]Write a serialized file\n [4]Exit\n";
+        int userSelect = 0;
+        while(userSelect != 4)
+        {
+            do
+            {
+                userSelect = checkInteger(prompt);
+            }
+            while(userSelect != 1 && userSelect != 2 && userSelect != 3);                    
+
+            //case statement to choose required method
+            switch (userSelect) 
+            {
+                case 1: 
+                {   //User choice: Read a serialized file           
+                    System.out.println("STUB!");
+                }
+                break;
+
+                case 2: 
+                {   //User choice: Display the list
+                    System.out.println("STUB!");
+                }
+                break;
+
+                case 3: 
+                {   //User choice: Write a serialized file
+                    System.out.println("STUB!");
+                }
+                break;
+
+                default:
+                {  //User choice: Exit
+                    System.out.println("Goodbye!");
+                }
+            }
+        }        
+	}//end mainMenu
+    
+    //Validation methods
+
+    /************************************************************
+    IMPORT: prompt (String)
+    EXPORT: userInt (integer)
+    ASSERTION: Gets user integer and repeats until it's a valid input
+    ************************************************************/
+    public int checkInteger(String prompt)
+    {
+        Scanner sc = new Scanner(System.in);
+        int userInt = 0;
+        String error = "(Invalid Number)\n";
+        String outStr = prompt;
+        boolean isValid = false;
+        
+        while (isValid == false)
+        {
+            try
+            {
+                System.out.println(outStr);
+                outStr = error + prompt;
+                userInt = sc.nextInt();
+                isValid = true;
+            }
+            catch(InputMismatchException e) 
+            {
+                System.out.print(error);
+                sc = new Scanner(System.in);
+                userInt = 0;
+                outStr = prompt;
+                isValid = false;
+            }
+        }
+        sc.close();
+        return userInt;
+    }
+
 
     /************************************************************    
     IMPORT: filename (String)

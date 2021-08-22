@@ -4,9 +4,9 @@ import java.util.*;
  * Implementing DSALinkedList
  * @author Caio Marteli 19598552
  */
-public class DSAStack implements Iterable{
+public class DSAStack<T> implements Iterable<T>{
 
-	private DSALinkedList stack;
+	private DSALinkedList<T> stack;
 
     /************************************************************
     Default Constructor:
@@ -16,7 +16,7 @@ public class DSAStack implements Iterable{
     ************************************************************/ 
     public DSAStack()
 	{
-        stack = new DSALinkedList();
+        stack = new DSALinkedList<T>();
 	}
     
     /************************************************************
@@ -24,7 +24,7 @@ public class DSAStack implements Iterable{
     EXPORT: none
     ASSERTION: Adds new element to last position of stack.
     ************************************************************/
-    public void push(Object data)
+    public void push(T data)
     {
         stack.insertFirst(data);
     }
@@ -34,10 +34,10 @@ public class DSAStack implements Iterable{
     EXPORT: (Object)
     ASSERTION: Removes element last added to stack
     ************************************************************/
-    public Object pop()
+    public T pop()
     {
-        Object data = null;
-        if (isEmpty())
+        T data = null;
+        if (stack.isEmpty())
         {
             throw new IllegalArgumentException("Stack is Empty.");
         }
@@ -54,7 +54,7 @@ public class DSAStack implements Iterable{
     EXPORT: (Object)
     ASSERTION: Returns top of stack but makes no changes
     ************************************************************/
-    public Object peek()
+    public T peek()
     {
 		return stack.peekFirst();		
     }
@@ -84,7 +84,7 @@ public class DSAStack implements Iterable{
     EXPORT: iterator
     ASSERTION: Exposes lists iterator
     ************************************************************/
-    public Iterator iterator()
+    public Iterator<T> iterator()
     {
         return stack.iterator();
     }
