@@ -1,11 +1,12 @@
-import java.util.*;
+import java.util.Iterator;
+import java.io.Serializable;
 /**
  *
  * @author Caio Marteli
  *
  *Contains Iterator Class AND DSAListNode
  */
-public class DSALinkedList<T> implements Iterable<T>{
+public class DSALinkedList<T> implements Iterable<T>, Serializable{
 
 	protected DSAListNode<T> head;
 	protected DSAListNode<T> tail;
@@ -30,16 +31,14 @@ public class DSALinkedList<T> implements Iterable<T>{
     ************************************************************/
 	public boolean isEmpty()
 	{
-		boolean isEmp = false;
 		if(head == null)
 		{
-			isEmp = true;
+			return true;
 		}
 		else
 		{
-			isEmp = false;
+			return false;
 		}
-		return isEmp;
 	}
 
     /************************************************************
@@ -108,8 +107,9 @@ public class DSALinkedList<T> implements Iterable<T>{
     EXPORT: (DSAListNode)
     ASSERTION: Removes element at head of list
     ************************************************************/
-	public DSAListNode<T> removeFirst()
+	public T removeFirst()
 	{
+
 		if(isEmpty())
 		{
 			System.out.println("List is Empty");
@@ -124,14 +124,14 @@ public class DSALinkedList<T> implements Iterable<T>{
 			head = head.next;
 			head.previous = null;
 		}
-		return head;
+		return head.getValue();
 	}
     /************************************************************
     IMPORT: none
     EXPORT: (DSAListNode)
     ASSERTION: Removes element at tail of list
     ************************************************************/
-	public DSAListNode<T> removeLast()
+	public T removeLast()
 	{
 		if(isEmpty())
 		{
@@ -147,80 +147,27 @@ public class DSALinkedList<T> implements Iterable<T>{
 			tail = tail.previous;
 			tail.next = null;
 		}
-		return tail;
+		return tail.getValue();
 	}
 	
     /************************************************************
     IMPORT: none
     EXPORT: none
-    ASSERTION: Prints entire list !!!!Change to use iterator!!!!!
+    ASSERTION: Prints entire list using iterator
     ************************************************************/
 	public void show()
 	{
-		DSAListNode<T> node = head;
+		Iterator<T> iter = this.iterator();
 
-		while(node.next != null)
+		while(iter.hasNext())
 		{
-			System.out.println(node.data);
-			node = node.next;
+            System.out.println(iter.next()); //iterates over list
 		}
-		System.out.println(node.data);
 	}
 
-    /************************************************************
-    Iterator Constructor:
-    IMPORT: none
-    EXPORT: address of new DSALinkedListIterator object
-    ASSERTION: 
-    ************************************************************/ 
-	public Iterator<T> iterator()
-	{
-		return new DSALinkedListIterator(this);
-	}
-
-    /************************************************************
-    DSALinkedListIterator Class
-    Private Cass - implement Iterator 
-    ************************************************************/
-	private class DSALinkedListIterator implements Iterator<T>
-	{
-		private DSAListNode<T> iterNext; //cursor
-		
-		public DSALinkedListIterator(DSALinkedList<T> theList) 
-		{
-			iterNext = theList.head;  //NOTE: Able to access private field of MyLinkedList		
-		}
-
-		public boolean hasNext() //Iterator interface implementation
-		{
-			return (iterNext != null); 
-		}
-
-		public T next() 
-		{ 
-			T value;
-			if(iterNext == null)
-			{
-			    value = null;
-			}
-			else
-			{
-			    value = iterNext.getValue();  //Get the value in the node
-			    iterNext = iterNext.getNext(); //Ready for subsequent calls to next()
-			}
-			return value;
-		}
-
-		public void remove() //STUB
-		{ 
-			throw new UnsupportedOperationException("Not supported"); 
-		}
-	}//end of iterator
-
-
-    /************************************************************
+	/************************************************************
     DSALinkedListNode Class
-    Private Cass
+    Private inner Cass
     ************************************************************/
 	private class DSAListNode<T>
 	{	
@@ -300,6 +247,56 @@ public class DSALinkedList<T> implements Iterable<T>{
 		}
 
 	}//end of node class
+
+    /************************************************************
+    Iterator Constructor:
+    IMPORT: none
+    EXPORT: address of new DSALinkedListIterator object
+    ASSERTION: 
+    ************************************************************/ 
+	public Iterator<T> iterator()
+	{
+		return new DSALinkedListIterator(this);
+	}
+
+    /************************************************************
+    DSALinkedListIterator Class
+    Private inner class - implements Iterator 
+    ************************************************************/
+	private class DSALinkedListIterator implements Iterator<T>
+	{
+		private DSAListNode<T> iterNext; //cursor
+		
+		public DSALinkedListIterator(DSALinkedList<T> theList) 
+		{
+			iterNext = theList.head;  //NOTE: Able to access private field of MyLinkedList		
+		}
+
+		public boolean hasNext() //Iterator interface implementation
+		{
+			return (iterNext != null); 
+		}
+
+		public T next() 
+		{ 
+			T value;
+			if(iterNext == null)
+			{
+			    value = null;
+			}
+			else
+			{
+			    value = iterNext.getValue();  //Get the value in the node
+			    iterNext = iterNext.getNext(); //Ready for subsequent calls to next()
+			}
+			return value;
+		}
+
+		public void remove() //STUB
+		{ 
+			throw new UnsupportedOperationException("Not supported"); 
+		}
+	}//end of iterator
 
 
 }//end of DSALinkedList.java

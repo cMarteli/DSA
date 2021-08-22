@@ -1,4 +1,5 @@
-import java.util.*;
+import java.util.Iterator;
+
 /**
  * DSAStack.java
  * Implementing DSALinkedList
@@ -41,10 +42,11 @@ public class DSAStack<T> implements Iterable<T>{
         {
             throw new IllegalArgumentException("Stack is Empty.");
         }
-        else
-        {
+        try {
             data = stack.peekFirst();
-            stack.removeFirst();
+            stack.removeFirst();            
+        } catch (NullPointerException e) {
+            System.out.println("Nothing left in stack");
         }
         return data;
     }
@@ -66,7 +68,7 @@ public class DSAStack<T> implements Iterable<T>{
     ************************************************************/
     public void show()
     {
-        stack.show();  	
+        stack.show();
     }
 
     /************************************************************

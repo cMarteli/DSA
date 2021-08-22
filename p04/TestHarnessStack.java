@@ -1,5 +1,3 @@
-//import java.util.Scanner;
-
 /**
  *
  * @author Caio Marteli 19598552
@@ -10,27 +8,31 @@ public class TestHarnessStack {
     public static void main(String[] args) 
     {
         //Testing Stack
-        DSAStack<String> callStack = new DSAStack<String>(); //string stack to emulate how a call stack works
-        callStack.push("public static void main(String[] args)"); //Main gets put on stack
 
         DSAStack<Double> nums = new DSAStack<Double>();
         System.out.println("Checking if stack is empty, expected: |TRUE| \nResult: "+ nums.isEmpty());
         //nums.pop(); //Should throw exception
-        nums.push(12.0);
-        callStack.push("nums.push(12.0)");
+        System.out.println("Push 12.0");        
+        nums.push(12.0); 
+        System.out.println("Push 8.0");
         nums.push(8.0);
-        callStack.push("nums.push(8.0)");
+        System.out.println("Push 10.0");
         nums.push(10.0);
-        callStack.push("nums.push(10.0)");
-        System.out.println("Current top of Stack:"+ nums.peek());
+        System.out.println("Real output:");
+        nums.show();
+        //System.out.println("Current top of Stack:"+ nums.peek());
         System.out.println("Checking if stack is empty, expected: |FALSE| \nResult: "+ nums.isEmpty());
         
-        //System.out.println("Pop ->" + nums.pop());
-        //System.out.println("Pop ->" + nums.pop());
         System.out.println("Pop ->" + nums.pop());
-        System.out.println("Current top of Stack:"+ nums.peek());
-
+        //System.out.println("Current top of Stack:"+ nums.peek());
+        //nums.show();
+        System.out.println("Pop ->" + nums.pop());
+        //nums.show();
+        System.out.println("Pop ->" + nums.pop());
         nums.show();
+        //nums.pop();
+
+        System.out.println("Checking if stack is empty, expected: |TRUE| \nResult: "+ nums.isEmpty());        
         
         //Testing Circular Queue
 
@@ -50,7 +52,8 @@ public class TestHarnessStack {
         cq.enqueue(7.77);
         //cq.dequeue();
         //cq.dequeue();
-        //cq.enqueue(99.0);
+        System.out.println("Queued >> 99.0");
+        cq.enqueue(99.0);
         cq.show();
 
     }//end main
