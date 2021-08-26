@@ -2,9 +2,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.util.Scanner;
-import java.lang.Object;
 
 
 /**
@@ -24,7 +22,7 @@ public class FileReader
         String usrStr = " ";
         int userSelect = 0;
         Scanner sc = new Scanner(System.in);
-        DSAStack<Double> nums;
+        DSAStack nums;
         while(userSelect != 4)
         {
             do
@@ -53,7 +51,7 @@ public class FileReader
 
                 case 3: 
                 {   //User choice: Write a serialized file
-                    nums = new DSAStack<Double>();
+                    nums = new DSAStack();
                     System.out.println("Checking if stack is empty, expected: |TRUE| \nResult: "+ nums.isEmpty());
                     //nums.pop(); //Should throw exception
                     System.out.println("Push 12.0");        
@@ -83,7 +81,7 @@ public class FileReader
     EXPORT: none
     ASSERTION: Gets filename and performs the associated task while handling invalid inputs
     ************************************************************/
-   public void save(DSAStack<Double> objToSave, String filename) 
+   public void save(DSAStack objToSave, String filename) 
    {   
       FileOutputStream fileStrm; 
       ObjectOutputStream objStrm;
@@ -106,18 +104,18 @@ public class FileReader
     EXPORT: inObj(ContainerClass) - serialized file
     ASSERTION: Gets filename and performs the associated task while handling invalid inputs
     ************************************************************/
-    /*
-   public DSALinkedList<T> load(String filename) throws IllegalArgumentException  
+
+   public DSALinkedList load(String filename) throws IllegalArgumentException  
    {   
       FileInputStream fileStrm;
-      ObjectInputStream<T> objStrm; 
-      DSALinkedList<T> inObj = null;
+      ObjectInputStream objStrm; 
+      DSALinkedList inObj = null;
       try
       {
          fileStrm = new FileInputStream(filename);//Underlying stream 
          objStrm = new ObjectInputStream(fileStrm);//Object serialization stream   
         
-         inObj = objStrm.readObject();//Deserialize. Note the cast is needed 
+         inObj = (DSALinkedList)objStrm.readObject();//Deserialize. Note the cast is needed 
           
          objStrm.close();//Clean up    
       }
@@ -131,7 +129,7 @@ public class FileReader
       } 
       return inObj;   }
 
-      */
+
 
 
 }

@@ -6,9 +6,9 @@ import java.util.Iterator;
  * Implementing DSALinkedList
  * @author Caio Marteli 19598552
  */
-public class DSAQueue implements Iterable, Serializable{
+public class DSAQueue<T extends Serializable> implements Iterable<T>{
 
-	private DSALinkedList queue;
+	private DSALinkedList<T> queue;
 
     /************************************************************
     Default Constructor:
@@ -18,7 +18,7 @@ public class DSAQueue implements Iterable, Serializable{
     ************************************************************/   
     protected DSAQueue() 
     {
-        queue = new DSALinkedList();
+        queue = new DSALinkedList<T>();
     }
     
 	/************************************************************
@@ -26,7 +26,7 @@ public class DSAQueue implements Iterable, Serializable{
     EXPORT: none
     ASSERTION:
     ************************************************************/
-    protected void enqueue(Object data)
+    protected void enqueue(T data)
     {
         queue.insertLast(data);
     }
@@ -36,9 +36,28 @@ public class DSAQueue implements Iterable, Serializable{
     EXPORT: (Object)
     ASSERTION:
     ************************************************************/
-    protected Object dequeue()
+    protected T dequeue()
     {
-        Object data = null;
+        /* This needs some work
+        Object data = queue.peekFirst();
+        if (queue.isEmpty())
+        {
+            System.out.println("Shuffling queue is Empty.");
+        }
+        else
+        {
+            //shuffle queue
+            for(Iterator iter = queue.itertator(); iter.hasNext(); )
+            {
+                queue[i] = queue[i + 1];
+            }
+            queue[rear] = 0.0;
+            currentSize--;
+            System.out.println(data +" Removed from queue.");
+        }
+        return data;
+        */
+        T data = null;
         if (queue.isEmpty())
         {
             throw new IllegalArgumentException("Queue is Empty.");
@@ -48,7 +67,9 @@ public class DSAQueue implements Iterable, Serializable{
             data = queue.peekFirst();
             queue.removeFirst();
         }
-        return data;       
+        return data;
+    //new
+       
     }
 
     /************************************************************
@@ -76,7 +97,7 @@ public class DSAQueue implements Iterable, Serializable{
     EXPORT: iterator
     ASSERTION: Exposes lists iterator
     ************************************************************/
-    public Iterator iterator()
+    public Iterator<T> iterator()
     {
         return queue.iterator();
     }
@@ -84,12 +105,12 @@ public class DSAQueue implements Iterable, Serializable{
     /************************************************************
     *** GETTERS ***
     ************************************************************/
-    protected Object peekFirst()
+    protected T peekFirst()
     {
         return queue.peekFirst();
     }
 
-    protected Object peekLast()
+    protected T peekLast()
     {
         return queue.peekLast();
     }    

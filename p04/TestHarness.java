@@ -14,7 +14,7 @@ public class TestHarness {
         fr.mainMenu();
 
 /*
-        DSALinkedList<Object> list = new DSALinkedList<Object>();
+        DSALinkedList list = new DSALinkedList();
 
         //System.out.println("TESTING isEmpty() Expected Output: |TRUE|");
         //System.out.println("Actual Output:");

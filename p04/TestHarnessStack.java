@@ -9,7 +9,7 @@ public class TestHarnessStack {
     {
         //Testing Stack
 
-        DSAStack<Double> nums = new DSAStack<Double>();
+        DSAStack nums = new DSAStack();
         System.out.println("Checking if stack is empty, expected: |TRUE| \nResult: "+ nums.isEmpty());
         //nums.pop(); //Should throw exception
         System.out.println("Push 12.0");        
@@ -36,7 +36,7 @@ public class TestHarnessStack {
         
         //Testing Circular Queue
 
-        DSAQueue<Double> cq = new DSAQueue<Double>();
+        DSAQueue cq = new DSAQueue();
         //cq.dequeue();
         System.out.println("Checking if queue is empty, expected: |TRUE| \nResult: "+ cq.isEmpty());
         cq.enqueue(1.7);

@@ -6,10 +6,10 @@ import java.util.Iterator;
  *
  *Contains Iterator Class AND DSAListNode
  */
-public class DSALinkedList implements Iterable, Serializable{
+public class DSALinkedList<T extends Serializable> implements Iterable<T>{
 
-	protected DSAListNode head;
-	protected DSAListNode tail;
+	protected DSAListNode<T> head;
+	protected DSAListNode<T> tail;
 
 	
     /************************************************************
@@ -46,9 +46,9 @@ public class DSALinkedList implements Iterable, Serializable{
     EXPORT: none
     ASSERTION: Adds new element to first position of list.
     ************************************************************/
-	public void insertFirst(Object data)
+	public void insertFirst(T data)
 	{
-		DSAListNode node = new DSAListNode(data, head); //creates new node to store old head
+		DSAListNode<T> node = new DSAListNode<T>(data, head); //creates new node to store old head
 		if(isEmpty())
 		{
 			tail = node; //if data is the only node, head is also tail
@@ -61,9 +61,9 @@ public class DSALinkedList implements Iterable, Serializable{
     EXPORT: none
     ASSERTION: Adds new element to last position of list.
     ************************************************************/
-	public void insertLast(Object data)
+	public void insertLast(T data)
 	{
-		DSAListNode node =  new DSAListNode(data); //stores data; head and tail are set to null
+		DSAListNode<T> node =  new DSAListNode<T>(data); //stores data; head and tail are set to null
 
 		if(isEmpty()) //if list is empty make node new head
 		{
@@ -71,7 +71,7 @@ public class DSALinkedList implements Iterable, Serializable{
 		}
 		else
 		{
-			DSAListNode n = head;
+			DSAListNode<T> n = head;
 			while(n.next != null)
 			{
 				n = n.next;
@@ -87,7 +87,7 @@ public class DSALinkedList implements Iterable, Serializable{
     EXPORT: (Object)
     ASSERTION: Returns head of list but makes no changes
     ************************************************************/
-	public Object peekFirst()
+	public T peekFirst()
 	{
 		return head.getValue();
 	}
@@ -97,7 +97,7 @@ public class DSALinkedList implements Iterable, Serializable{
     EXPORT: (Object)
     ASSERTION: Returns tail of list but makes no changes
     ************************************************************/
-	public Object peekLast()
+	public T peekLast()
 	{
 		return tail.getValue();		
 	}
@@ -107,7 +107,7 @@ public class DSALinkedList implements Iterable, Serializable{
     EXPORT: (DSAListNode)
     ASSERTION: Removes element at head of list
     ************************************************************/
-	public Object removeFirst()
+	public T removeFirst()
 	{
 
 		if(isEmpty())
@@ -131,7 +131,7 @@ public class DSALinkedList implements Iterable, Serializable{
     EXPORT: (DSAListNode)
     ASSERTION: Removes element at tail of list
     ************************************************************/
-	public Object removeLast()
+	public T removeLast()
 	{
 		if(isEmpty())
 		{
@@ -157,7 +157,7 @@ public class DSALinkedList implements Iterable, Serializable{
     ************************************************************/
 	public void show()
 	{
-		Iterator iter = this.iterator();
+		Iterator<T> iter = this.iterator();
 
 		while(iter.hasNext())
 		{
@@ -169,12 +169,12 @@ public class DSALinkedList implements Iterable, Serializable{
     DSALinkedListNode Class
     Private inner Cass
     ************************************************************/
-	private class DSAListNode
+	private class DSAListNode<T>
 	{	
 
-	    private Object data;
-		private DSAListNode next;
-		private DSAListNode previous;
+	    private T data;
+		private DSAListNode<T> next;
+		private DSAListNode<T> previous;
 
 		/************************************************************
 	    Default Constructor:
@@ -195,7 +195,7 @@ public class DSALinkedList implements Iterable, Serializable{
 	    EXPORT: address of new DSAListNode object
 	    ASSERTION: sets data fild only
 	    ************************************************************/ 
-		public DSAListNode(Object d)
+		public DSAListNode(T d)
 		{
 			data = d;
 			next = null;
@@ -208,7 +208,7 @@ public class DSALinkedList implements Iterable, Serializable{
 	    EXPORT: address of new DSAListNode object
 	    ASSERTION: sets data and next fields only
 	    ************************************************************/
-		public DSAListNode(Object d, DSAListNode n)
+		public DSAListNode(T d, DSAListNode<T> n)
 		{
 			data = d;
 			next = n;
@@ -221,7 +221,7 @@ public class DSALinkedList implements Iterable, Serializable{
 	    EXPORT: address of new DSAListNode object
 	    ASSERTION: sets all fields
 	    ************************************************************/
-		public DSAListNode(Object d, DSAListNode n, DSAListNode p)
+		public DSAListNode(T d, DSAListNode<T> n, DSAListNode<T> p)
 		{
 			data = d;
 			next = n;
@@ -231,17 +231,17 @@ public class DSALinkedList implements Iterable, Serializable{
 		/************************************************************
 		*** GETTERS ***
 	    ************************************************************/
-		public DSAListNode getNext()
+		public DSAListNode<T> getNext()
 		{
 			return next;
 		}
 
-		public DSAListNode getPrevious()
+		public DSAListNode<T> getPrevious()
 		{
 			return previous;
 		}
 
-		public Object getValue()
+		public T getValue()
 		{
 			return data;
 		}
@@ -254,7 +254,7 @@ public class DSALinkedList implements Iterable, Serializable{
     EXPORT: address of new DSALinkedListIterator object
     ASSERTION: 
     ************************************************************/ 
-	public Iterator iterator()
+	public Iterator<T> iterator()
 	{
 		return new DSALinkedListIterator(this);
 	}
@@ -263,11 +263,11 @@ public class DSALinkedList implements Iterable, Serializable{
     DSALinkedListIterator Class
     Private inner class - implements Iterator 
     ************************************************************/
-	private class DSALinkedListIterator implements Iterator
+	private class DSALinkedListIterator implements Iterator<T>
 	{
-		private DSAListNode iterNext; //cursor
+		private DSAListNode<T> iterNext; //cursor
 		
-		public DSALinkedListIterator(DSALinkedList theList) 
+		public DSALinkedListIterator(DSALinkedList<T> theList) 
 		{
 			iterNext = theList.head;  //NOTE: Able to access private field of MyLinkedList		
 		}
@@ -277,9 +277,9 @@ public class DSALinkedList implements Iterable, Serializable{
 			return (iterNext != null); 
 		}
 
-		public Object next() 
+		public T next() 
 		{ 
-			Object value;
+			T value;
 			if(iterNext == null)
 			{
 			    value = null;
