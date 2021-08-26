@@ -10,6 +10,10 @@ public class TestHarness {
     public static void main(String[] args) {
         //Initialize variables
 
+        FileReader fr = new FileReader();
+        fr.mainMenu();
+
+/*
         DSALinkedList<Object> list = new DSALinkedList<Object>();
 
         //System.out.println("TESTING isEmpty() Expected Output: |TRUE|");
@@ -23,10 +27,8 @@ public class TestHarness {
         list.insertFirst("5");
         list.insertLast("6");
 
-        FileReader fr = new FileReader();
-        fr.mainMenu(list);
-
-
+    
+*/
         /*
         //System.out.println(list.peekLast());
 

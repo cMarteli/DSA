@@ -45,7 +45,7 @@ public class ContainerClass implements Serializable{
          objStrm = new ObjectInputStream(fileStrm);//Object serialization stream 
          inObj = (ContainerClass)objStrm.readObject();//Deserialize. Note the cast is needed 
          objStrm.close();//Clean up    
-      }
+      } 
       catch (ClassNotFoundException e) 
       { 
          System.out.println("Class ContainerClass not found" + e); 

@@ -1,3 +1,4 @@
+import java.io.Serializable;
 import java.util.Iterator;
 
 /**
@@ -5,7 +6,7 @@ import java.util.Iterator;
  * Implementing DSALinkedList
  * @author Caio Marteli 19598552
  */
-public class DSAQueue<T> implements Iterable<T>{
+public class DSAQueue<T extends Serializable> implements Iterable<T>{
 
 	private DSALinkedList<T> queue;
 

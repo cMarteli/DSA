@@ -1,3 +1,4 @@
+import java.io.Serializable;
 import java.util.Iterator;
 
 /**
@@ -5,7 +6,7 @@ import java.util.Iterator;
  * Implementing DSALinkedList
  * @author Caio Marteli 19598552
  */
-public class DSAStack<T> implements Iterable<T>{
+public class DSAStack<T extends Serializable> implements Iterable<T>{
 
 	private DSALinkedList<T> stack;
 

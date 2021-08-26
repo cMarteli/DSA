@@ -1,3 +1,4 @@
+import java.io.Serializable;
 import java.util.Iterator;
 /**
  *
@@ -5,7 +6,7 @@ import java.util.Iterator;
  *
  *Contains Iterator Class AND DSAListNode
  */
-public class DSALinkedList<T> implements Iterable<T>{
+public class DSALinkedList<T extends Serializable> implements Iterable<T>{
 
 	protected DSAListNode<T> head;
 	protected DSAListNode<T> tail;
