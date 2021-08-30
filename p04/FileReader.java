@@ -26,15 +26,8 @@ public class FileReader
         */
 
         menu(list);
-        list = load("output1.txt");
-        System.out.println("Printing file from storage");
-        list.show();
-
-
     
     }//end main
-
-
 
 
     /************************************************************
@@ -133,10 +126,8 @@ public class FileReader
       try
       {
          fileStrm = new FileInputStream(filename);//Underlying stream 
-         objStrm = new ObjectInputStream(fileStrm);//Object serialization stream   
-        
-         inObj = (DSALinkedList)objStrm.readObject();//Deserialize. Note the cast is needed 
-          
+         objStrm = new ObjectInputStream(fileStrm);//Object serialization stream        
+         inObj = (DSALinkedList)objStrm.readObject();//Deserialize. Note the cast is needed          
          objStrm.close();//Clean up    
       }
       catch (ClassNotFoundException e) 
