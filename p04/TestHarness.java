@@ -10,15 +10,12 @@ public class TestHarness {
     public static void main(String[] args) {
         //Initialize variables
 
-        FileReader fr = new FileReader();
-        fr.mainMenu();
 
-/*
         DSALinkedList list = new DSALinkedList();
 
-        //System.out.println("TESTING isEmpty() Expected Output: |TRUE|");
-        //System.out.println("Actual Output:");
-        //System.out.println(list.isEmpty());
+        System.out.println("TESTING isEmpty() Expected Output: |TRUE|");
+        System.out.println("Actual Output:");
+        System.out.println(list.isEmpty());
 
         list.insertLast("1");
         list.insertLast("2");
@@ -28,8 +25,8 @@ public class TestHarness {
         list.insertLast("6");
 
     
-*/
-        /*
+
+        
         //System.out.println(list.peekLast());
 
         System.out.println("TESTING insert methods. Expected Output: 5 4 3 1 2 6");
@@ -53,9 +50,6 @@ public class TestHarness {
 
         System.out.println("TESTING iterator. Expected Output: 4 3 1 2 6");
         list.show();
-
-        */
-
 
 
     }//end main

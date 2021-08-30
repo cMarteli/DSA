@@ -4,25 +4,50 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Scanner;
 
-
 /**
  *
  * @author Caio Marteli 19598552
  */
 public class FileReader
 {
+
+    public static void main(String args[])
+    {
+        DSALinkedList list = new DSALinkedList();
+
+        //ADD SOME DATA
+        /*
+        list.insertLast("1");
+        list.insertLast("2");
+        list.insertFirst("3");
+        list.insertFirst("4");
+        list.insertFirst("5");
+        list.insertLast("6");
+        */
+
+        menu(list);
+        list = load("output1.txt");
+        System.out.println("Printing file from storage");
+        list.show();
+
+
+    
+    }//end main
+
+
+
+
     /************************************************************
     IMPORT: none
     EXPORT: none
     ASSERTION: Gets user input and performs the associated task while handling invalid inputs
     ************************************************************/
-    public void mainMenu()
+    public static void menu(DSALinkedList list)
     {
         String prompt = "What would you like to do?\n [1]Read a serialized file\n [2]Display the list\n [3]Write a serialized file\n [4]Exit\n";
         String usrStr = " ";
         int userSelect = 0;
         Scanner sc = new Scanner(System.in);
-        DSAStack nums;
         while(userSelect != 4)
         {
             do
@@ -39,31 +64,26 @@ public class FileReader
             {
                 case 1: 
                 {   //User choice: Read a serialized file         
-                    System.out.println("LOAD!");                    
+                    System.out.println("LOAD!");
+                    //add get file name method !!HARDCODED!!
+                    list = load("output1.txt");                 
                 }
                 break;
 
                 case 2: 
                 {   //User choice: Display the list
                     System.out.println("DISPLAY");
+                    list.show();
+
                 }
                 break;
 
                 case 3: 
                 {   //User choice: Write a serialized file
-                    nums = new DSAStack();
-                    System.out.println("Checking if stack is empty, expected: |TRUE| \nResult: "+ nums.isEmpty());
-                    //nums.pop(); //Should throw exception
-                    System.out.println("Push 12.0");        
-                    nums.push(12.0); 
-                    System.out.println("Push 8.0");
-                    nums.push(8.0);
-                    System.out.println("Push 10.0");
-                    nums.push(10.0);
-                    System.out.println("Real output:");
-                    nums.show();
                     System.out.println("SAVE");
-                    save(nums,"testFile");
+                    save(list, "output1.txt");
+
+ 
                 }
                 break;
 
@@ -81,7 +101,7 @@ public class FileReader
     EXPORT: none
     ASSERTION: Gets filename and performs the associated task while handling invalid inputs
     ************************************************************/
-   public void save(DSAStack objToSave, String filename) 
+   public static void save(DSALinkedList objToSave, String filename) 
    {   
       FileOutputStream fileStrm; 
       ObjectOutputStream objStrm;
@@ -95,7 +115,7 @@ public class FileReader
       } 
       catch (Exception e) 
       {  //should do more here 
-         throw new IllegalArgumentException("Unable to save object to file"); 
+         throw new IllegalArgumentException("Unable to save object to file" + e); 
       }         
    }
 
@@ -105,7 +125,7 @@ public class FileReader
     ASSERTION: Gets filename and performs the associated task while handling invalid inputs
     ************************************************************/
 
-   public DSALinkedList load(String filename) throws IllegalArgumentException  
+   public static DSALinkedList load(String filename) throws IllegalArgumentException  
    {   
       FileInputStream fileStrm;
       ObjectInputStream objStrm; 
@@ -127,9 +147,9 @@ public class FileReader
       { 
          throw new IllegalArgumentException("Unable to load object from file"); 
       } 
-      return inObj;   }
+      return inObj;
 
-
+    }
 
 
 }
