@@ -1,5 +1,5 @@
 import java.io.Serializable;
-import java.io.*;
+import java.util.NoSuchElementException;
 /**
  *
  * @author Caio Marteli
@@ -157,7 +157,16 @@ public class DSATree implements Serializable{
 	public void display() 
 	{ 
 	//...
-		System.out.print("STUB METHOD");
+	if(root == null)
+	{
+		System.out.println("Tree is empty");
+	}
+	else
+	{
+		System.out.print("Printing:\n");
+		printInOrder(this.getRoot());
+	}
+		
 	}
 
 	public void printInOrder(DSATreeNode currNode) 
@@ -229,7 +238,7 @@ public class DSATree implements Serializable{
     DSATreeNode Class
     Private inner Cass
     ************************************************************/
-	private class DSATreeNode 
+	private class DSATreeNode implements Serializable
 	{	
 
 	    private String key;

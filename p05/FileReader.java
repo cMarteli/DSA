@@ -1,19 +1,18 @@
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.*;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.util.Scanner;
 /**
  *
  * @author Caio Marteli 19598552
- */
+//  */
 public class FileReader {
 
-    public static final String DEFAULT_FILENAME = "test.csv";
+    public static final String DEFAULT_FILENAME = "output.csv", SERIAL_FILENAME = "serial.txt", CSV_FILENAME = "output.csv";
 
 
     /************************************************************
@@ -21,13 +20,16 @@ public class FileReader {
     EXPORT: none
     ASSERTION: Gets user input and performs the associated task while handling invalid inputs
     ************************************************************/
-    public static void menu(DSATree list)
+    public static void menu(DSATree tree)
     {
-        String prompt = "What would you like to do?\n [1]Read a serialized file\n [2]Display the list\n [3]Write a serialized file\n [4]Exit\n";
+        String prompt = 
+        "What would you like to do?\n [1]Read a serialized file\n [2]Read a csv file\n [3]Display the tree\n [4]Write a serialized file\n [5]Write a csv file\n [6]Exit\n";
         String usrStr = " ";
+        String data[];
+        int arrayOfNum[];
         int userSelect = 0;
         Scanner sc = new Scanner(System.in);
-        while(userSelect != 4)
+        while(userSelect != 6)
         {
             do
             {
@@ -35,7 +37,7 @@ public class FileReader {
                 usrStr = sc.next();
                 userSelect = Integer.valueOf(usrStr);
             }
-            while(userSelect != 1 && userSelect != 2 && userSelect != 3 && userSelect != 4);
+            while(userSelect != 1 && userSelect != 2 && userSelect != 3 && userSelect != 4 && userSelect != 5 && userSelect != 6);
                                
 
             //case statement to choose required method
@@ -44,35 +46,57 @@ public class FileReader {
                 case 1: 
                 {   //User choice: Read a serialized file         
                     System.out.println("LOAD!");
-                    //add get file name method !!HARDCODED!!
-                    list = load("output1.txt");                 
+                    //filename = enterFileName(); //enter name here
+                    tree = load(SERIAL_FILENAME);           
                 }
                 break;
 
-                case 2: 
-                {   //User choice: Display the list
-                    System.out.println("DISPLAY");
-                    list.show();
-
+                case 2:
+                {  //User choice: Read from csv
+                    
+                    //filename = enterFileName(); //enter name here
+                    data = readFile(CSV_FILENAME);
+                    arrayOfNum = FileReader.convertArrayI(data);
+                    System.out.println("Reading from CSV" + CSV_FILENAME + "...");               
+                    for(int i=0; i< arrayOfNum.length; i++)
+                    {
+                        tree.insert(String.valueOf(i),arrayOfNum[i]);
+                    }
                 }
                 break;
 
                 case 3: 
+                {   //User choice: Display the list
+                    System.out.println("DISPLAY");
+                    tree.display();
+
+                }
+                break;
+
+                case 4: 
                 {   //User choice: Write a serialized file
                     System.out.println("SAVE");
-                    save(list, "output1.txt");
+                    save(tree, SERIAL_FILENAME);
 
  
                 }
                 break;
 
+                case 5: 
+                {   //User choice: Write a serialized file
+                    System.out.println("Saving to CSV");
+                    //filename = enterFileName(); //enter name here
+                    save(tree, CSV_FILENAME);
+                }
+                break;
+
                 default:
                 {  //User choice: Exit
-                    System.out.println("Goodbye!");
+                    System.out.println("Goodbye!");                    
                 }
-            }
+            }            
         }
-        sc.close();
+        sc.close();        
     }//end mainMenu
     
     /************************************************************
@@ -236,13 +260,13 @@ public static String[] readFile(String filename)
             prompt = "Enter file Name:";
             System.out.println(prompt);
             fileName = sc1.next() + ".csv";
+            sc1.close();
    
         }
         else
         {
             fileName = DEFAULT_FILENAME; //Sets filename to default
         }
-
         return fileName;
     }
 
