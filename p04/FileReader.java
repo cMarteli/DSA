@@ -16,14 +16,14 @@ public class FileReader
         DSALinkedList list = new DSALinkedList();
 
         //ADD SOME DATA
-        /*
+        
         list.insertLast("1");
         list.insertLast("2");
         list.insertFirst("3");
         list.insertFirst("4");
         list.insertFirst("5");
         list.insertLast("6");
-        */
+        
 
         menu(list);
     

@@ -19,7 +19,8 @@ public class TestHarness {
         String filename = FileReader.enterFileName(); //enter name here
         String data[] = FileReader.readFile(filename);
         int arrayOfNum[] = FileReader.convertArrayI(data); 
-        //FileReader.printArray(arrayOfNum);
+        FileReader.printArray(arrayOfNum);
+        
         for(int i=0; i< 3; i++)
         {
             tree.insert(String.valueOf(i),arrayOfNum[i]);

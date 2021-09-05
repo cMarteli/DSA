@@ -169,7 +169,7 @@ public class DSALinkedList<T extends Serializable> implements Iterable<T>{
     DSALinkedListNode Class
     Private inner Cass
     ************************************************************/
-	private class DSAListNode<T>
+	private class DSAListNode<T extends Serializable>
 	{	
 
 	    private T data;

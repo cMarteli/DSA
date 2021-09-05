@@ -1,86 +1,24 @@
-import java.util.*;
+import java.io.Serializable;
+import java.io.*;
 /**
  *
  * @author Caio Marteli
  */
-public class DSATree {
-
-	
-	private class DSATreeNode 
-	{	
-
-	    private String key;
-	    private Object value;
-		private DSATreeNode leftChild;
-		private DSATreeNode rightChild;
-
-
-		/**
-	     *  Constructor: sets key and value only
-	     */
-
-		public DSATreeNode(String inKey, Object inValue)
-		{
-			if(inKey == null)
-			{
-				throw new IllegalArgumentException("Key cannot be null");
-			}
-			else
-			{
-				key = inKey;
-				value = inValue;
-				leftChild = null;
-				rightChild = null;
-			}
-
-		}
-
-		//Accessors
-
-		public String getKey()
-		{
-			return key;
-		}
-
-		public Object getValue()
-		{
-			return value;
-		}
-
-		public DSATreeNode getLeft()
-		{
-			return leftChild;
-		}
-
-		public DSATreeNode getRight()
-		{
-			return rightChild;
-		}
-
-		//Mutators
-
-		public void setLeft(DSATreeNode newLeft)
-		{
-			leftChild = newLeft;
-		}
-
-		public void setRight(DSATreeNode newRight)
-		{
-			rightChild = newRight;
-		}
-
-	}
-	//!!!!!!!!!!!END OF DSATreeNode class
-
+public class DSATree implements Serializable{
 	
 	private DSATreeNode root;
-	
-	public DSATree() 
+	/************************************************************
+    Default Constructor:
+    IMPORT: none
+    EXPORT: address of new DSALinkedList object
+    ASSERTION: root = null is the default states
+    ************************************************************/
+	public DSATree()
 	{
-		root = null; // Start with an empty tree    
+		root = null; //Start with an empty tree    
 	} 
 	
-	//wrapper method, will call private recursive implementations	
+	//wrapper method, will call private recursive implementations
 	public Object find(String key) 
 	{
 		return findRec(key, root);		
@@ -171,7 +109,7 @@ public class DSATree {
 		return updateNode;
 	}
 
-	public DSATreeNode deleteNode(String key, DSATreeNode delNode) 
+	public DSATreeNode deleteNode(String key, DSATreeNode delNode)
 	{
 		DSATreeNode updateNode = null;
 
@@ -286,6 +224,81 @@ public class DSATree {
 				System.out.println("Root is empty");
 			}
 		}
+
+	/************************************************************
+    DSATreeNode Class
+    Private inner Cass
+    ************************************************************/
+	private class DSATreeNode 
+	{	
+
+	    private String key;
+	    private Object value;
+		private DSATreeNode leftChild;
+		private DSATreeNode rightChild;
+
+
+	    /************************************************************
+	    Default Constructor:
+	    IMPORT: none
+	    EXPORT: address of new DSATreeNode object
+	    ASSERTION: sets key and value only
+	    ************************************************************/ 
+		public DSATreeNode(String inKey, Object inValue)
+		{
+			if(inKey == null)
+			{
+				throw new IllegalArgumentException("Key cannot be null");
+			}
+			else
+			{
+				key = inKey;
+				value = inValue;
+				leftChild = null;
+				rightChild = null;
+			}
+
+		}
+
+		/************************************************************
+		*** ACCESSORS ***
+	    ************************************************************/
+
+		public String getKey()
+		{
+			return key;
+		}
+
+		public Object getValue()
+		{
+			return value;
+		}
+
+		public DSATreeNode getLeft()
+		{
+			return leftChild;
+		}
+
+		public DSATreeNode getRight()
+		{
+			return rightChild;
+		}
+
+		/************************************************************
+		*** MUTATORS ***
+	    ************************************************************/
+
+		public void setLeft(DSATreeNode newLeft)
+		{
+			leftChild = newLeft;
+		}
+
+		public void setRight(DSATreeNode newRight)
+		{
+			rightChild = newRight;
+		}
+
+	}//End of DSATreeNode class	
 
 }
 
