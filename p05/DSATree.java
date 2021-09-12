@@ -11,19 +11,28 @@ public class DSATree implements Serializable{
     Default Constructor:
     IMPORT: none
     EXPORT: address of new DSALinkedList object
-    ASSERTION: root = null is the default states
+    ASSERTION: root = null is the default state
     ************************************************************/
 	public DSATree()
 	{
 		root = null; //Start with an empty tree    
 	} 
 	
-	//wrapper method, will call private recursive implementations
+	/************************************************************
+    IMPORT: key(String)
+    EXPORT: Object
+    ASSERTION: wrapper method, will call private recursive implementations
+    ************************************************************/
 	public Object find(String key) 
 	{
 		return findRec(key, root);		
 	}
 
+	/************************************************************
+    IMPORT: key(String), currNode(DSATreeNode)
+    EXPORT: Object
+    ASSERTION: find by key method, returns value in node associated to given key
+    ************************************************************/
 	private Object findRec(String key, DSATreeNode currNode) 
 	{ 
 		Object value = null;
@@ -51,12 +60,21 @@ public class DSATree implements Serializable{
 		return value;
 	} 
 
+	/************************************************************
+    IMPORT: key(String), value(Object)
+    EXPORT: none
+    ASSERTION: wrapper method, inserts value in node associated to given key
+    ************************************************************/
 	public void insert(String key, Object value) 
-	{ 
-		//wrapper
+	{
 		insertRec(key, value, root);
 	}
 
+	/************************************************************
+    IMPORT: key(String), value(Object), currNode(DSATreeNode)
+    EXPORT: DSATreeNode
+    ASSERTION: inserts value in node associated to given key
+    ************************************************************/
 	private DSATreeNode insertRec(String key, Object value, DSATreeNode currNode)
 	{
 		DSATreeNode updateNode = currNode;
@@ -84,8 +102,23 @@ public class DSATree implements Serializable{
 		}
 		//System.out.println(updateNode.getValue());//DEBUG
 		return updateNode;
-	} 
+	}
 
+	/************************************************************
+    IMPORT: key(String), node(DSATreeNode)
+    EXPORT: none
+    ASSERTION: wrapper method, deletes value in node associated to given key
+    ************************************************************/
+	public void delete(String key, DSATreeNode delNode) 
+	{
+		deleteRec(key, delNode);
+	}
+
+	/************************************************************
+    IMPORT: key(String), cuurNode(DSATreeNode)
+    EXPORT: DSATreeNode
+    ASSERTION: wrapper method, deletes value in node associated to given key
+    ************************************************************/
 	private DSATreeNode deleteRec(String key, DSATreeNode currNode)
 	{
 		DSATreeNode updateNode = currNode;
@@ -109,6 +142,11 @@ public class DSATree implements Serializable{
 		return updateNode;
 	}
 
+	/************************************************************
+    IMPORT: key(String), delNode(DSATreeNode)
+    EXPORT: DSATreeNode
+    ASSERTION: NON-RECURSIVE DELETE; deletes value in node associated to given key
+    ************************************************************/
 	public DSATreeNode deleteNode(String key, DSATreeNode delNode)
 	{
 		DSATreeNode updateNode = null;
@@ -153,7 +191,7 @@ public class DSATree implements Serializable{
 		}
 		return successor;
 	}
-
+	//DISPLAYS IN ORDER ONLY
 	public void display() 
 	{ 
 	//...
@@ -184,11 +222,21 @@ public class DSATree implements Serializable{
 		}
 	}
 
-	public int height() //wrapper
+	/************************************************************
+    IMPORT: none
+    EXPORT: int
+    ASSERTION: Wrapper method; Returns height of tree as int
+    ************************************************************/
+	public int height()
 	{		
 		return heightRec(root);
 	}
 
+	/************************************************************
+    IMPORT: currNode(DSATreeNode)
+    EXPORT: int
+    ASSERTION: recursive method; Returns height of tree as int
+    ************************************************************/
 	private int heightRec(DSATreeNode currNode)
 	{
 		int htSoFar, iLeftHt, iRightHt;
@@ -217,11 +265,15 @@ public class DSATree implements Serializable{
 
 	}
 
+	/************************************************************
+	*** ACCESSORS ***
+	************************************************************/
+
 	public DSATreeNode getRoot()
 	{
 		return root;
 	}
-
+ //DEBUG ONLY
 	public void printRoot()
 		{
 			if(root != null)

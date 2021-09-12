@@ -6,6 +6,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.InputStreamReader;
 import java.util.Scanner;
+import java.util.NoSuchElementException;
 /**
  *
  * @author Caio Marteli 19598552
@@ -69,6 +70,19 @@ public class FileReader {
                 {   //User choice: Display the list
                     System.out.println("DISPLAY");
                     tree.display();
+
+
+                    String target = "2";
+                    
+                    try {
+                    System.out.println("Searching for value: " + target);
+                    System.out.println("Result: " + tree.find(target));
+                        
+                    } catch (NoSuchElementException ex) {
+                        //Not found
+                        System.out.println(ex.getMessage());
+                    }
+
 
                 }
                 break;
@@ -142,7 +156,7 @@ public class FileReader {
       }
       catch (ClassNotFoundException e) 
       { 
-         System.out.println("Class ContainerClass not found" + e); 
+         System.out.println("Class not found: " + e); 
       }  
       catch (Exception e) 
       { 
