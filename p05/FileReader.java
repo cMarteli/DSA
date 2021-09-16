@@ -13,7 +13,7 @@ import java.util.NoSuchElementException;
 //  */
 public class FileReader {
 
-    public static final String SERIAL_FILENAME = "serial.txt", INPUT_CSV_FILENAME = "input.csv", OUTPUT_CSV_FILENAME = "output.csv";
+    public static final String SERIAL_FILENAME = "serial.txt", CSV_FILENAME = "tree.csv";
 
 
     /************************************************************
@@ -24,7 +24,7 @@ public class FileReader {
     public static void menu(DSATree tree)
     {
         String prompt = 
-        "What would you like to do?\n [1]Read a serialized file\n [2]Read a csv file\n [3]Display the tree\n [4]Write a serialized file\n [5]Write a csv file\n [6]Exit\n";
+        "What would you like to do?\n [1]Read a serialized file\n [2]Read a csv file\n [3]Write a serialized file\n [4]Write a csv file\n [5]Display the tree\n [6]Exit\n";
         String usrStr = " ";
         String data[];
         int arrayOfNum[];
@@ -48,7 +48,12 @@ public class FileReader {
                 {   //User choice: Read a serialized file         
                     System.out.println("LOAD!");
                     //filename = enterFileName(); //enter name here
-                    tree = load(SERIAL_FILENAME);           
+                    try {
+                        tree = load(SERIAL_FILENAME);                        
+                    } catch (IllegalArgumentException ex) {
+                        //Not found
+                        System.out.println(ex.getMessage());
+                    }                               
                 }
                 break;
 
@@ -56,9 +61,9 @@ public class FileReader {
                 {  //User choice: Read from csv
                     
                     //filename = enterFileName(); //enter name here
-                    data = readFile(INPUT_CSV_FILENAME);
+                    data = readCsv(CSV_FILENAME);
                     arrayOfNum = FileReader.convertArrayI(data);
-                    System.out.println("Reading from CSV" + INPUT_CSV_FILENAME + "...");
+                    System.out.println("Reading from: " + CSV_FILENAME + "...");
                     try {
                         tree.insert("E",arrayOfNum[0]);
                         tree.insert("B",arrayOfNum[1]);
@@ -70,53 +75,57 @@ public class FileReader {
                     } catch (IllegalArgumentException e) {
                         //catches if key already exists
                         System.out.println(e.getMessage());
-                    }              
-                    // for(int i=0; i< arrayOfNum.length; i++)
-                    // {
-                    //     tree.insert(String.valueOf(i),arrayOfNum[i]);
-                    // }
+                    }
+                    catch (ArrayIndexOutOfBoundsException ei)
+                    {
+                        System.out.println(ei.getMessage() + "\nDoes the file: " + CSV_FILENAME + " exist?");
+                    }     
+  
                 }
                 break;
 
                 case 3: 
-                {   //User choice: Display the list
+                {   //User choice: Write a serialized file
+                    String filename = enterFileName(SERIAL_FILENAME); //enter name here                    
+                    try {                        
+                        save(tree, filename);                        
+                    } 
+                    catch (Exception e) {
+                        //Catches file IO exceptions
+                        System.out.println("Error: "+ e.getMessage());
+                    } 
+                    finally {
+                        System.out.println("Saved as: "+ filename);
+                    }
+                }
+                break;
+
+                case 4: 
+                {   //User choice: Write a csv file
+                    
+                    String filename = enterFileName(CSV_FILENAME); //enter name here
+                    System.out.println("Saved as: "+ filename);
+                    //saveCsv(tree, OUTPUT_CSV_FILENAME);
+                }
+                break;
+
+                case 5: 
+                {   //User choice: Display the list in order
                     System.out.println("DISPLAY");
-                    tree.display();
+                    tree.display(); 
 
-
-                   // String target = "2";
-                    
                     try {
-                    //System.out.println("Searching for value at index: " + target);
-                    //System.out.println("Result: " + tree.find(target));
                     System.out.println("Tree depth: "+ tree.height());
-                    System.out.println("Tree max: "+ tree.find(tree.max(tree.getRoot())));
-                    
+                    System.out.println("Tree max: "+ tree.find(tree.max(tree.getRoot())));                    
                     System.out.println("Tree min: "+ tree.find(tree.min(tree.getRoot())));
                         
                     } catch (NoSuchElementException ex) {
                         //Not found
                         System.out.println(ex.getMessage());
+                    } catch (NullPointerException en) {
+                    //Not found
+                    System.out.println(en.getMessage());
                     }
-
-
-                }
-                break;
-
-                case 4: 
-                {   //User choice: Write a serialized file
-                    System.out.println("SAVE");
-                    save(tree, SERIAL_FILENAME);
-
- 
-                }
-                break;
-
-                case 5: 
-                {   //User choice: Write a serialized file
-                    System.out.println("Saving to CSV");
-                    //filename = enterFileName(); //enter name here
-                    save(tree, OUTPUT_CSV_FILENAME);
                 }
                 break;
 
@@ -143,12 +152,12 @@ public class FileReader {
       { 
          fileStrm = new FileOutputStream(filename);   //Underlying stream 
          objStrm = new ObjectOutputStream(fileStrm);    //Object serialization stream 
-         objStrm.writeObject(objToSave);    //Serialize and save to filename, This will also save the ContainerClass contained Location object
+         objStrm.writeObject(objToSave);    //Serialize and save to filename
          objStrm.close();//Clean up 
       } 
       catch (Exception e) 
-      {  //should do more here 
-         throw new IllegalArgumentException("Unable to save object to file" + e); 
+      {  //catches filenot found exception
+         throw new IllegalArgumentException("Unable to save object to file" + e);
       }         
    }
 
@@ -229,7 +238,7 @@ IMPORT: filename (String)
 EXPORT: arrayOfStrings (String[] array)
 ASSERTION: Imports a file name and writes it to a string array
 ************************************************************/
-public static String[] readFile(String filename)
+public static String[] readCsv(String filename)
     {
         FileInputStream fileStrm = null;
         InputStreamReader rdr;
@@ -271,7 +280,7 @@ public static String[] readFile(String filename)
     }//end readfile()
 
     //Manual file name option
-    public static String enterFileName()
+    public static String enterFileName(String defa)
     {
         String prompt = "Would you like to enter a file name? Y/N";
         Scanner sc1 = new Scanner(System.in);
@@ -295,7 +304,7 @@ public static String[] readFile(String filename)
         }
         else
         {
-            fileName = OUTPUT_CSV_FILENAME; //Sets filename to default
+            fileName = defa; //Sets filename to default
         }
         return fileName;
     }
