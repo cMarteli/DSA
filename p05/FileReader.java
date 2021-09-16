@@ -90,6 +90,9 @@ public class FileReader {
                     //System.out.println("Searching for value at index: " + target);
                     //System.out.println("Result: " + tree.find(target));
                     System.out.println("Tree depth: "+ tree.height());
+                    System.out.println("Tree max: "+ tree.find(tree.max(tree.getRoot())));
+                    
+                    System.out.println("Tree min: "+ tree.find(tree.min(tree.getRoot())));
                         
                     } catch (NoSuchElementException ex) {
                         //Not found
