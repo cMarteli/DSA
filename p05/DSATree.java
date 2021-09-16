@@ -67,7 +67,7 @@ public class DSATree implements Serializable{
     ************************************************************/
 	public void insert(String key, Object value) 
 	{
-		insertRec(key, value, root);
+		root = insertRec(key, value, root);
 	}
 
 	/************************************************************
@@ -75,32 +75,26 @@ public class DSATree implements Serializable{
     EXPORT: DSATreeNode
     ASSERTION: inserts value in node associated to given key
     ************************************************************/
-	private DSATreeNode insertRec(String key, Object value, DSATreeNode currNode)
+	private DSATreeNode insertRec(String inKey, Object value, DSATreeNode currNode)
 	{
 		DSATreeNode updateNode = currNode;
-		if(root == null)
+		
+		if(currNode == null)
 		{
-			updateNode = new DSATreeNode(key, value);
-			root = updateNode; //could be wrong?
-
+			updateNode = new DSATreeNode(inKey, value); //insertion point
 		}
-		else if(updateNode == null)
-		{
-			updateNode = new DSATreeNode(key, value);
-		}
-		else if(key.equals(updateNode.getKey()))
+		else if(inKey.equals(currNode.getKey())) //in the tree
 		{
 			throw new IllegalArgumentException("Data already exists in the tree.");
 		}
-		else if(key.compareTo(updateNode.getKey()) < 0)
+		else if((inKey.compareTo(currNode.getKey())) < 0)
 		{ 
-			updateNode.setLeft(insertRec(key, value, updateNode.getLeft())); //recurse left
+			currNode.setLeft(insertRec(inKey, value, currNode.getLeft())); //recurse left
 		}
 		else
 		{
-			updateNode.setRight(insertRec(key, value, updateNode.getRight())); //recurse right
+			currNode.setRight(insertRec(inKey, value, currNode.getRight())); //recurse right
 		}
-		//System.out.println(updateNode.getValue());//DEBUG
 		return updateNode;
 	}
 
@@ -191,6 +185,8 @@ public class DSATree implements Serializable{
 		}
 		return successor;
 	}
+
+
 	//DISPLAYS IN ORDER ONLY
 	public void display() 
 	{ 
@@ -220,6 +216,43 @@ public class DSATree implements Serializable{
 		{
 			printInOrder(printNode.getRight());
 		}
+	}
+
+	/************************************************************
+    IMPORT: currNode(DSATreeNode)
+    EXPORT: none
+    ASSERTION: Wrapper method; Parse root into it for traversal!
+    ************************************************************/
+	public void traverseTree(DSATreeNode currNode)
+	{
+		traverseTreeRec(currNode);
+	}
+
+	/************************************************************
+    IMPORT: currNode(DSATreeNode)
+    EXPORT: none
+    ASSERTION: TRAVERSAL!
+    ************************************************************/
+	private void traverseTreeRec(DSATreeNode currNode)
+	{
+		if(currNode != null)
+		{
+			//do prefix stuff
+			traverseTreeRec(currNode.getLeft());
+			//do infix stuff
+			traverseTreeRec(currNode.getRight());
+			//do postfix stuff
+		}
+	}
+
+	/************************************************************
+    IMPORT: none
+    EXPORT: none
+    ASSERTION: STUB method; balances tree!!!!!!!!!!!!!!!!!
+    ************************************************************/
+	public void balance()
+	{		
+		System.out.println("STUB!");
 	}
 
 	/************************************************************
@@ -259,8 +292,7 @@ public class DSATree implements Serializable{
 			{
 				htSoFar = iRightHt + 1;
 			}			
-		}
-		
+		}		
 		return htSoFar;
 
 	}
@@ -273,6 +305,39 @@ public class DSATree implements Serializable{
 	{
 		return root;
 	}
+
+	/************************************************************
+    IMPORT: currNode(DSATreeNode)
+    EXPORT: minKey(String)
+    ASSERTION: returns left most key
+    ************************************************************/
+	public String min(DSATreeNode currNode)
+	{
+		String minKey = " ";
+		while (currNode.getLeft() != null) // keep going left
+		{
+			currNode = currNode.getLeft();
+		}
+		minKey = currNode.getKey();		
+		return minKey;
+	}
+
+	/************************************************************
+    IMPORT: currNode(DSATreeNode)
+    EXPORT: minKey(String)
+    ASSERTION: returns right most key
+    ************************************************************/
+	public String max(DSATreeNode currNode)
+	{
+		String maxKey = " ";
+		while (currNode.getRight() != null) // keep going right
+		{
+			currNode = currNode.getRight();
+		}
+		maxKey = currNode.getKey();		
+		return maxKey;
+	}
+
  //DEBUG ONLY
 	public void printRoot()
 		{
@@ -327,22 +392,22 @@ public class DSATree implements Serializable{
 
 		public String getKey()
 		{
-			return key;
+			return this.key;
 		}
 
 		public Object getValue()
 		{
-			return value;
+			return this.value;
 		}
 
 		public DSATreeNode getLeft()
 		{
-			return leftChild;
+			return this.leftChild;
 		}
 
 		public DSATreeNode getRight()
 		{
-			return rightChild;
+			return this.rightChild;
 		}
 
 		/************************************************************
