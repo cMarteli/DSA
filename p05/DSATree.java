@@ -353,6 +353,9 @@ public class DSATree implements Serializable{
 			}
 		}
 
+
+
+
 	/************************************************************
     DSATreeNode Class
     Private inner Cass
@@ -394,22 +397,28 @@ public class DSATree implements Serializable{
 
 		public String getKey()
 		{
-			return this.key;
+			return key;
 		}
 
 		public Object getValue()
 		{
-			return this.value;
+			return value;
 		}
 
 		public DSATreeNode getLeft()
 		{
-			return this.leftChild;
+			return leftChild;
 		}
 
 		public DSATreeNode getRight()
 		{
-			return this.rightChild;
+			return rightChild;
+		}
+		@Override
+		public String toString()
+		{
+			return "Key: "+ key + "\nValue: " + value.toString() +
+			"\nLeft: " + leftChild.getKey() + "Right: " + rightChild.getKey();
 		}
 
 		/************************************************************
