@@ -14,15 +14,24 @@ public class TestHarness {
         graph.addVertex("A", 56);
         graph.addVertex("B", 31);
         graph.addVertex("C", 68);
-        graph.addVertex("D");
+        graph.addVertex("D", 0);
 
-        graph.addEdge("B", "C"); //this method is making it loop
+        graph.addEdge("B", "C"); //adds 2 edges
         
         try {
-            graph.getVertex("D");
+            //graph.getVertex("D");
+            
+
+            System.out.println("TESTING IF TARGET B HAS VERTEX EXPECTED: EXPECTED: |TRUE|\nreturned>>" + graph.hasVertex("B"));
+            
+            System.out.println("TESTING IF A & B ARE ADJACENT - EXPECTED: |FALSE|\nreturned>>"+ graph.isAdjacent("A","B"));
+            System.out.println("TESTING IF B & C ARE ADJACENT - EXPECTED: |TRUE|\nreturned>>"+ graph.isAdjacent("B","C"));
+            
+            //System.out.println("Testing Display Method:");
+            graph.displayAsList();
             
         } catch (Exception e) {
-            //TODO: handle exception
+            //handles exceptions
             System.out.println(e.getMessage());
         }
         // graph.getVertex("B");

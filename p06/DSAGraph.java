@@ -48,23 +48,33 @@ public class DSAGraph implements Serializable
 	}
 
 	/************************************************************
-	IMPORT: v1 (DSAGraphVertex), v2 (DSAGraphVertex)
+	IMPORT: label1 (String), label2 (String)
 	EXPORT: none
-	ASSERTION: Adds edge between 2 parameter nodes
+	ASSERTION: Adds edge between 2 parameter nodes TODO: check for duplicates
 	************************************************************/
 
-	public void addEdge(String label1, String label2) 
+	public void addEdge(String label1, String label2)
 	{
-		DSAGraphVertex v1 = getVertex(label1), v2 = getVertex(label2);
-		
-		v1.getAdjacent().insertLast(v2);
-		v2.getAdjacent().insertLast(v1);	
+		DSAGraphVertex vx1 = getVertex(label1), vx2 = getVertex(label2);
+		vx1.addEdge(vx2);
+		vx2.addEdge(vx1);
 	}
 
-	//TODO: STUBBED SHOULD BE ONLY IF NODE HAS VERTEX?
+	/************************************************************
+	IMPORT: label (String)
+	EXPORT: boolean
+	ASSERTION: check if vertices list has the node from label
+	************************************************************/
 	public boolean hasVertex(String label)
 	{
-		return vertices.isEmpty();
+		boolean sucess = false;
+		try {
+			getVertex(label);
+			sucess = true;
+		} catch (NoSuchElementException e) {
+			System.out.println(e.getMessage());
+		}
+		return sucess;
 	}
 	/************************************************************
 	IMPORT: none
@@ -82,12 +92,16 @@ public class DSAGraph implements Serializable
 		}
 		return count;
 	}
-	//TODO: STUBBED
+	//TODO: need to complete method
 	public int getEdgeCount()
 	{
 		return 0;
 	} 
-	//TODO: STUBBED
+	/************************************************************
+	IMPORT: label (String)
+	EXPORT: target (DSAGraphVertex)
+	ASSERTION: iterates through vertices list w/ a label and returns target if found; if not throws exception
+	************************************************************/
 	public DSAGraphVertex getVertex(String label) 
 	{
 		DSAGraphVertex temp, target = null;
@@ -112,17 +126,50 @@ public class DSAGraph implements Serializable
 		{
 			throw new NoSuchElementException("Label |" + label + "| not found");
 		}
-		System.out.println("Label: " + target.getLabel() + "\nValue: " + target.getValue()); // debug		
+		//System.out.println("Label: " + target.getLabel() + "\nValue: " + target.getValue()); // debug		
+		
 		return target;		
 	} 
-	//TODO: STUBBED exports vertex list? 
-	public DSAGraphVertex getAdjacent(String label)
+
+	/************************************************************
+	IMPORT: label (String)
+	EXPORT: getAdjacent (DSALinkedList)
+	ASSERTION: returns the adjecency list from node w/ label
+	************************************************************/
+	public DSALinkedList getAdjacent(String label)
 	{
-		return null;
+		DSAGraphVertex vx = getVertex(label);
+		return vx.getAdjacent();
 	}
+
+	/************************************************************
+	IMPORT: label (String)
+	EXPORT: bool (DSALinkedList)
+	ASSERTION: checks if two nodes are adjacent TODO: write code for this method
+	************************************************************/
 	public boolean isAdjacent(String label1, String label2)
 	{
-		return false;
+		DSAGraphVertex temp, vx1 = getVertex(label1);
+		DSALinkedList adjList = vx1.getAdjacent();
+		Iterator itr = adjList.iterator(); // - Maybe needs to check instance?
+		boolean found = false;	
+		if(adjList.isEmpty()) // case: list is empty
+		{
+			System.out.println("Adjacency list of "+ label1 +" is empty.");
+		}
+		else //searches for target
+		{
+			while(itr.hasNext()) //iterates until target is found
+			{				
+				temp = ((DSAGraphVertex)itr.next());
+				if(temp.getLabel().equals(label2))
+				{
+					found = true;
+				}
+			}
+		}
+			
+		return found;
 	}
 	//TODO: write code for this method
 	public void displayAsList()
@@ -159,7 +206,7 @@ public class DSAGraph implements Serializable
 			label = inLabel;
 			value = inValue;
 			links = new DSALinkedList();
-			visited = false;		
+			visited = false;	
 		}
 		/**************************************************
 		ACCESSORS
@@ -202,7 +249,7 @@ public class DSAGraph implements Serializable
 		//Return formatted string
 		public String toString()
 		{
-			return ("Label: |" + label + "| Is visited: " + visited + "\nValue info: " + value.toString());
+			return ("Label: |" + label + "| Visited? |" + visited + "| Value: " + value.toString());
 		}
 
 	}	
