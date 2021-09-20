@@ -27,7 +27,7 @@ public class FileReader {
         "What would you like to do?\n [1]Read a serialized file\n [2]Read a csv file\n [3]Display the tree\n [4]Write a serialized file\n [5]Write a csv file\n [6]Exit\n";
         String usrStr = " ";
         String data[];
-        int arrayOfNum[];
+       // int arrayOfNum[];
         int userSelect = 0;
         Scanner sc = new Scanner(System.in);
         while(userSelect != 6)
@@ -57,7 +57,7 @@ public class FileReader {
                     
                     //filename = enterFileName(); //enter name here
                     data = readFile(INPUT_CSV_FILENAME);
-                    arrayOfNum = FileReader.convertArrayI(data);
+                    //arrayOfNum = FileReader.convertArrayI(data);
                     System.out.println("Reading from CSV" + INPUT_CSV_FILENAME + "...");
                     try {
                         // tree.insert("E",arrayOfNum[0]);
@@ -158,16 +158,16 @@ public class FileReader {
     ASSERTION: Gets filename and performs the associated task while handling invalid inputs
     ************************************************************/
 
-   public static DSATree load(String filename) throws IllegalArgumentException  
+   public static DSAGraph load(String filename) throws IllegalArgumentException  
    {   
       FileInputStream fileStrm;
       ObjectInputStream objStrm; 
-      DSATree inObj = null;
+      DSAGraph inObj = null;
       try
       {
          fileStrm = new FileInputStream(filename);//Underlying stream 
          objStrm = new ObjectInputStream(fileStrm);//Object serialization stream        
-         inObj = (DSATree)objStrm.readObject();//Deserialize. Note the cast is needed          
+         inObj = (DSAGraph)objStrm.readObject();//Deserialize. Note the cast is needed          
          objStrm.close();//Clean up    
       }
       catch (ClassNotFoundException e) 
