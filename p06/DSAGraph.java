@@ -6,8 +6,9 @@ import java.util.NoSuchElementException;
  * @author Caio Marteli
  * Adjecency List Graph
  */
+@SuppressWarnings("unchecked")
 public class DSAGraph implements Serializable
-{
+{	
 	public DSALinkedList vertices;
 
 	/************************************************************
@@ -15,7 +16,7 @@ public class DSAGraph implements Serializable
 	IMPORT: none
 	EXPORT: address of new DSA Graph
 	ASSERTION: creates empty linked list
-	************************************************************/
+	************************************************************/	
 	public DSAGraph()
 	{
 		vertices = new DSALinkedList();
@@ -50,7 +51,7 @@ public class DSAGraph implements Serializable
 	/************************************************************
 	IMPORT: label1 (String), label2 (String)
 	EXPORT: none
-	ASSERTION: Adds edge between 2 parameter nodes TODO: check for duplicates
+	ASSERTION: Adds edge between 2 parameter nodes
 	************************************************************/
 
 	public void addEdge(String label1, String label2)
@@ -81,10 +82,11 @@ public class DSAGraph implements Serializable
 	EXPORT: count (integer)
 	ASSERTION: iterates through vertices list and returns count
 	************************************************************/
+	
 	public int getVertexCount()
 	{
 		int count = 0;
-		Iterator itr = vertices.iterator();
+		Iterator<DSAGraphVertex> itr = vertices.iterator();
 		while(itr.hasNext())
 		{
 			count++;
@@ -92,10 +94,42 @@ public class DSAGraph implements Serializable
 		}
 		return count;
 	}
-	//TODO: need to complete method
+	//TODO: STUB need to complete method
 	public int getEdgeCount()
 	{
 		return 0;
+	}
+	/************************************************************
+	IMPORT: label (String)
+	EXPORT: target (DSAGraphVertex)
+	ASSERTION: iterates through vertices list w/ a label and returns target if found; if not throws exception
+	************************************************************/
+	public DSAGraphVertex getVertexByValue(String label) 
+	{
+		DSAGraphVertex temp, target = null;
+		Iterator<DSAGraphVertex> itr = vertices.iterator();	
+		if(vertices.isEmpty()) // case: list is empty
+		{
+			System.out.println("Vertices list is empty.");
+		}
+		else //searches for target
+		{
+			while(itr.hasNext()) //iterates until target is found
+			{				
+				temp = itr.next();
+				if(temp.getValue().equals(label))
+				{
+					target = temp;
+				}
+			}
+		}
+		if(target == null) // case: not found
+		{
+			throw new NoSuchElementException("Value |" + label + "| not found");
+		}
+		//System.out.println("Value: " + target.getValue() + "\nLabel: " + target.getLabel()); // debug		
+		
+		return target;		
 	} 
 	/************************************************************
 	IMPORT: label (String)
@@ -105,8 +139,7 @@ public class DSAGraph implements Serializable
 	public DSAGraphVertex getVertex(String label) 
 	{
 		DSAGraphVertex temp, target = null;
-		Iterator itr = vertices.iterator();
-		// if(vertices.peekFirst() instanceof DSAGraphVertex) - Maybe needs to check instance?		
+		Iterator<DSAGraphVertex> itr = vertices.iterator();		
 		if(vertices.isEmpty()) // case: list is empty
 		{
 			System.out.println("Vertices list is empty.");
@@ -115,7 +148,7 @@ public class DSAGraph implements Serializable
 		{
 			while(itr.hasNext()) //iterates until target is found
 			{				
-				temp = ((DSAGraphVertex)itr.next());
+				temp = itr.next();
 				if(temp.getLabel().equals(label))
 				{
 					target = temp;
@@ -145,23 +178,24 @@ public class DSAGraph implements Serializable
 	/************************************************************
 	IMPORT: label (String)
 	EXPORT: bool (DSALinkedList)
-	ASSERTION: checks if two nodes are adjacent TODO: write code for this method
+	ASSERTION: checks if two nodes are adjacent
 	************************************************************/
 	public boolean isAdjacent(String label1, String label2)
 	{
 		DSAGraphVertex temp, vx1 = getVertex(label1);
 		DSALinkedList adjList = vx1.getAdjacent();
-		Iterator itr = adjList.iterator(); // - Maybe needs to check instance?
+		Iterator<DSAGraphVertex> itr = adjList.iterator(); // - Maybe needs to check instance?
 		boolean found = false;	
 		if(adjList.isEmpty()) // case: list is empty
 		{
-			System.out.println("Adjacency list of "+ label1 +" is empty.");
+			System.out.println("Adjacency list of "+ label1
+			 +" is empty.");
 		}
 		else //searches for target
 		{
 			while(itr.hasNext()) //iterates until target is found
 			{				
-				temp = ((DSAGraphVertex)itr.next());
+				temp = itr.next();
 				if(temp.getLabel().equals(label2))
 				{
 					found = true;
@@ -171,7 +205,7 @@ public class DSAGraph implements Serializable
 			
 		return found;
 	}
-	//TODO: write code for this method
+	//TODO: add more to this method
 	public void displayAsList()
 	{
 		System.out.println("Printing all vertices");
@@ -183,7 +217,44 @@ public class DSAGraph implements Serializable
 	{
 		System.out.println("STUB");
 	}
+	/************************************************************
+	IMPORT: label (String)
+	EXPORT: bool (DSALinkedList)
+	ASSERTION: DEPTH FIRST SEARCH TODO: complete method
+	************************************************************/
+	void DFSUtil(int v, boolean visited[])
+	{
+		// Mark the current node as visited and print it
+		visited[v] = true;
+		System.out.print(v + " ");
 
+		// Recur for all the vertices adjacent to this
+		// vertex
+		Iterator<DSAGraphVertex> itr = vertices.iterator();
+		while (itr.hasNext()) 
+		{
+			// Boolean n = itr.next().getVisited();
+			// if (temp.getLabel().equals(label2))
+			// 	DFSUtil(n, visited);
+		}
+	}
+
+	// The function to do DFS traversal.
+	// It uses recursive, v is the chosen root
+	// DFSUtil() TODO: complete method
+	void DFS(int v)
+	{
+		int vxCount = this.getVertexCount();
+		// Mark all the vertices as 
+		// not visited(set as
+		// false by default in java)
+		boolean visited[] = new boolean[vxCount];
+
+		// Call the recursive helper 
+		// function to print DFS
+		// traversal
+		DFSUtil(v, visited);
+	}
 
 	/************************************************************
 	PRIVATE INNER CLASS

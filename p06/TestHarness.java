@@ -18,17 +18,17 @@ public class TestHarness {
 
         graph.addEdge("B", "C"); //adds 2 edges
         
-        try {
-            //graph.getVertex("D");
-            
+        try {          
 
-            System.out.println("TESTING IF TARGET B HAS VERTEX EXPECTED: EXPECTED: |TRUE|\nreturned>>" + graph.hasVertex("B"));
-            
+            System.out.println("TESTING IF TARGET B HAS VERTEX EXPECTED: EXPECTED: |TRUE|\nreturned>>" + graph.hasVertex("B"));            
             System.out.println("TESTING IF A & B ARE ADJACENT - EXPECTED: |FALSE|\nreturned>>"+ graph.isAdjacent("A","B"));
             System.out.println("TESTING IF B & C ARE ADJACENT - EXPECTED: |TRUE|\nreturned>>"+ graph.isAdjacent("B","C"));
             
             //System.out.println("Testing Display Method:");
             graph.displayAsList();
+
+            //System.out.println("Testing Display Method:");
+            //graph.DFS(2);
             
         } catch (Exception e) {
             //handles exceptions

@@ -6,7 +6,8 @@ import java.util.Iterator;
  *
  *Contains Iterator Class AND DSAListNode
  */
-public class DSALinkedList implements Iterable, Serializable{
+@SuppressWarnings("unchecked")
+public class DSALinkedList implements Iterable<DSALinkedList>, Serializable{
 
 	protected DSAListNode head;
 	protected DSAListNode tail;
@@ -156,7 +157,7 @@ public class DSALinkedList implements Iterable, Serializable{
     ************************************************************/
 	public void show()
 	{
-		Iterator iter = this.iterator();
+		Iterator<DSALinkedList> iter = this.iterator();
 
 		while(iter.hasNext())
 		{
@@ -189,7 +190,7 @@ public class DSALinkedList implements Iterable, Serializable{
 		}
 
 		/************************************************************
-	    Alternate Constructor:
+	    Constructor:
 	    IMPORT: none
 	    EXPORT: address of new DSAListNode object
 	    ASSERTION: sets data fild only
