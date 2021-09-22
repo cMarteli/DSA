@@ -94,7 +94,7 @@ public class DSAGraph implements Serializable
 		}
 		return count;
 	}
-	//TODO: STUB need to complete method
+	//TODO: STUB need to traverse graph and increment a counter every time an edge is found (check for dupes)
 	public int getEdgeCount()
 	{
 		return 0;
@@ -222,38 +222,43 @@ public class DSAGraph implements Serializable
 	EXPORT: bool (DSALinkedList)
 	ASSERTION: DEPTH FIRST SEARCH TODO: complete method
 	************************************************************/
-	void DFSUtil(int v, boolean visited[])
+	void DFSUtil(DSAGraphVertex vx, DSAStack visited)
 	{
 		// Mark the current node as visited and print it
-		visited[v] = true;
-		System.out.print(v + " ");
+		vx.setVisited();
+		System.out.print("Pushed: " + vx.getLabel() + "\n");
+		visited.push(vx);
 
 		// Recur for all the vertices adjacent to this
 		// vertex
-		Iterator<DSAGraphVertex> itr = vertices.iterator();
+		Iterator<DSAGraphVertex> itr = vx.getAdjacent().iterator();
 		while (itr.hasNext()) 
 		{
-			// Boolean n = itr.next().getVisited();
-			// if (temp.getLabel().equals(label2))
-			// 	DFSUtil(n, visited);
+			if(!vx.getVisited())
+			{
+				vx = itr.next();
+				DFSUtil(vx, visited);
+			}
+			else
+			{
+				visited.pop();
+			}
 		}
 	}
 
 	// The function to do DFS traversal.
 	// It uses recursive, v is the chosen root
 	// DFSUtil() TODO: complete method
-	void DFS(int v)
+	void DFS()
 	{
-		int vxCount = this.getVertexCount();
-		// Mark all the vertices as 
-		// not visited(set as
-		// false by default in java)
-		boolean visited[] = new boolean[vxCount];
+		
+		DSAGraphVertex vx = (DSAGraphVertex)vertices.peekFirst();
+		DSAStack visited = new DSAStack();
 
 		// Call the recursive helper 
 		// function to print DFS
 		// traversal
-		DFSUtil(v, visited);
+		DFSUtil(vx, visited);
 	}
 
 	/************************************************************

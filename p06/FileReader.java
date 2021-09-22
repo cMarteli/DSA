@@ -24,13 +24,13 @@ public class FileReader {
     public static void menu(DSAGraph graph)
     {
         String prompt = 
-        "What would you like to do?\n [1]Read a serialized file\n [2]Read a csv file\n [3]Display the tree\n [4]Write a serialized file\n [5]Write a csv file\n [6]Exit\n";
+        "What would you like to do?\n [1]Read a serialized file\n [2]Read a csv file\n [3]Display the graph\n [4]Write a serialized file\n [5]Exit\n";
         String usrStr = " ";
         String data[];
-       // int arrayOfNum[];
+       // int data[];
         int userSelect = 0;
         Scanner sc = new Scanner(System.in);
-        while(userSelect != 6)
+        while(userSelect != 5)
         {
             do
             {
@@ -38,7 +38,7 @@ public class FileReader {
                 usrStr = sc.next();
                 userSelect = Integer.valueOf(usrStr);
             }
-            while(userSelect != 1 && userSelect != 2 && userSelect != 3 && userSelect != 4 && userSelect != 5 && userSelect != 6);
+            while(userSelect != 1 && userSelect != 2 && userSelect != 3 && userSelect != 4 && userSelect != 5);
                                
 
             //case statement to choose required method
@@ -46,9 +46,9 @@ public class FileReader {
             {
                 case 1: 
                 {   //User choice: Read a serialized file         
-                    // System.out.println("LOAD!");
+                    System.out.println("LOAD!");
                     // //filename = enterFileName(); //enter name here
-                    // tree = load(SERIAL_FILENAME);           
+                    // graph = load(SERIAL_FILENAME);           
                 }
                 break;
 
@@ -57,23 +57,28 @@ public class FileReader {
                     
                     //filename = enterFileName(); //enter name here
                     data = readFile(INPUT_CSV_FILENAME);
-                    //arrayOfNum = FileReader.convertArrayI(data);
+                    //data = FileReader.convertArrayI(data);
                     System.out.println("Reading from CSV" + INPUT_CSV_FILENAME + "...");
                     try {
-                        // tree.insert("E",arrayOfNum[0]);
-                        // tree.insert("B",arrayOfNum[1]);
-                        // tree.insert("A",arrayOfNum[2]);
-                        // tree.insert("D",arrayOfNum[3]);
-                        // tree.insert("C",arrayOfNum[4]);
-                        // tree.insert("F",arrayOfNum[5]);
+                        // graph.addVertex(data[0],0);
+                        // graph.addVertex(data[1],0);
+                        // graph.addVertex(data[2],0);
+                        // graph.addVertex(data[3],0);
+                        // graph.addVertex(data[4],0);
+                        // graph.addVertex(data[5],0);
+                        System.out.println("Printing");
+                        for(int i = 0; i < data.length; i++)
+                        {
+                            System.out.println(data[i]);                           
+                        }
                         
                     } catch (IllegalArgumentException e) {
                         //catches if key already exists
                         System.out.println(e.getMessage());
                     }              
-                    // for(int i=0; i< arrayOfNum.length; i++)
+                    // for(int i=0; i< data.length; i++)
                     // {
-                    //     tree.insert(String.valueOf(i),arrayOfNum[i]);
+                    //     graph.addVertex(String.valueOf(i),data[i]);
                     // }
                 }
                 break;
@@ -81,18 +86,18 @@ public class FileReader {
                 case 3: 
                 {   //User choice: Display the list
                     System.out.println("DISPLAY");
-                    // tree.display();
+                    // graph.display();
 
 
                    // String target = "2";
                     
                     try {
                     //System.out.println("Searching for value at index: " + target);
-                    //System.out.println("Result: " + tree.find(target));
-                    // System.out.println("Tree depth: "+ tree.height());
-                    // System.out.println("Tree max: "+ tree.find(tree.max(tree.getRoot())));
+                    //System.out.println("Result: " + graph.find(target));
+                    // System.out.println("graph depth: "+ graph.height());
+                    // System.out.println("graph max: "+ graph.find(graph.max(graph.getRoot())));
                     
-                    // System.out.println("Tree min: "+ tree.find(tree.min(tree.getRoot())));
+                    // System.out.println("graph min: "+ graph.find(graph.min(graph.getRoot())));
                         
                     } catch (NoSuchElementException ex) {
                         //Not found
@@ -106,17 +111,9 @@ public class FileReader {
                 case 4: 
                 {   //User choice: Write a serialized file
                     System.out.println("SAVE");
-                    // save(tree, SERIAL_FILENAME);
+                    // save(graph, SERIAL_FILENAME);
 
  
-                }
-                break;
-
-                case 5: 
-                {   //User choice: Write a serialized file
-                    System.out.println("Saving to CSV");
-                    //filename = enterFileName(); //enter name here
-                    // save(tree, OUTPUT_CSV_FILENAME);
                 }
                 break;
 
