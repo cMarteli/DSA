@@ -266,10 +266,10 @@ public class DSAGraph implements Serializable
 	************************************************************/
 	private class DSAGraphVertex
 	{
-		String label;
-		Object value;
-		DSALinkedList links;
-		boolean visited; //has someone visited node? true or false
+		private String label;
+		private Object value;
+		private DSALinkedList links;
+		private boolean visited; //has someone visited node? true or false
 
 		/************************************************************
 		Constructor:
