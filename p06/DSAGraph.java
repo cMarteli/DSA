@@ -99,6 +99,16 @@ public class DSAGraph implements Serializable
 	{
 		return 0;
 	}
+
+	//DEBUG method, iterates through vertices list and prints all edges
+	public void printEdges()
+	{
+		Iterator<DSAGraphVertex> itr = vertices.iterator();
+		while(itr.hasNext())
+		{			
+			itr.next().printAdjacent();
+		}
+	}
 	/************************************************************
 	IMPORT: label (String)
 	EXPORT: target (DSAGraphVertex)
@@ -218,47 +228,65 @@ public class DSAGraph implements Serializable
 		System.out.println("STUB");
 	}
 	/************************************************************
+	IMPORT: none
+	EXPORT: count (integer)
+	ASSERTION: iterates through vertices list and returns count
+	************************************************************/
+	
+	public void clear()
+	{
+		Iterator<DSAGraphVertex> itr = vertices.iterator();
+		while(itr.hasNext())
+		{			
+			itr.next().clearVisited();
+		}
+	}
+
+	/************************************************************
 	IMPORT: label (String)
 	EXPORT: bool (DSALinkedList)
 	ASSERTION: DEPTH FIRST SEARCH TODO: complete method
 	************************************************************/
-	void DFSUtil(DSAGraphVertex vx, DSAStack visited)
-	{
-		// Mark the current node as visited and print it
-		vx.setVisited();
-		System.out.print("Pushed: " + vx.getLabel() + "\n");
+	public void DFSUtil(DSAGraphVertex vx, DSAStack visited)
+	{		
 		visited.push(vx);
-
 		// Recur for all the vertices adjacent to this
 		// vertex
-		Iterator<DSAGraphVertex> itr = vx.getAdjacent().iterator();
-		while (itr.hasNext()) 
+		while(!visited.isEmpty()) //while stack is not empty
 		{
-			if(!vx.getVisited())
-			{
-				vx = itr.next();
-				DFSUtil(vx, visited);
-			}
-			else
-			{
-				visited.pop();
+			Iterator<DSAGraphVertex> itr = vx.getAdjacent().iterator();
+			while (itr.hasNext())		
+			{				
+				if(!vx.getVisited())
+				{
+					//vx = itr.next();
+					System.out.println(vx.toString()); //debug
+					vx.setVisited(); //check later
+					DFSUtil(vx, visited);
+				}
+				else
+				{
+					visited.pop();
+				}
 			}
 		}
 	}
 
-	// The function to do DFS traversal.
-	// It uses recursive, v is the chosen root
-	// DFSUtil() TODO: complete method
-	void DFS()
+	/************************************************************
+	IMPORT: label (String)
+	EXPORT: queue (DSAQueue)
+	ASSERTION: Wrapper DEPTH FIRST SEARCH returns q of objs TODO: complete method
+	************************************************************/
+	public void depthFirstSearch()
 	{
-		
-		DSAGraphVertex vx = (DSAGraphVertex)vertices.peekFirst();
-		DSAStack visited = new DSAStack();
+		System.out.println("DFS:\n");
+		clear(); //sets all visited on all vertices == false
+		DSAGraphVertex vx = (DSAGraphVertex)vertices.peekFirst(); //picks head of vertices list to start on
+		DSAStack visited = new DSAStack();	//creates empty stack	
+		vx.setVisited(); // Marks vx visited == true
+		DFSUtil(vx, visited); //begin recursion
 
-		// Call the recursive helper 
-		// function to print DFS
-		// traversal
-		DFSUtil(vx, visited);
+		//return queue;
 	}
 
 	/************************************************************
@@ -302,6 +330,12 @@ public class DSAGraph implements Serializable
 			return links;
 		}
 
+		public void printAdjacent()
+		{
+			System.out.println("Edges of: " + label);
+			links.show();
+		}
+
 		public boolean getVisited()
 		{
 			return visited;
@@ -325,7 +359,9 @@ public class DSAGraph implements Serializable
 		//Return formatted string
 		public String toString()
 		{
-			return ("Label: |" + label + "| Visited? |" + visited + "| Value: " + value.toString());
+			return("|" + label + "|");
+			//return ("Label: |" + label + "| Visited? |" + visited + "| Value: " +
+			// value.toString()); //DEBUG
 		}
 
 	}	

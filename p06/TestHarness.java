@@ -14,26 +14,31 @@ public class TestHarness {
         graph.addVertex("A", 56);
         graph.addVertex("B", 31);
         graph.addVertex("C", 68);
-        graph.addVertex("D", 0);
-        graph.addVertex("E", 450);
-        graph.addVertex("F", 3);
+        // graph.addVertex("D", 0);
+        // graph.addVertex("E", 450);
+        // graph.addVertex("F", 3);
 
-        graph.addEdge("B", "C"); //adds 2 edges
-        graph.addEdge("F", "C");
+        // graph.addEdge("B", "C"); //adds 2 edges
+        // graph.addEdge("F", "C");
+
+        graph.addEdge("A", "C"); //adds 2 edges
+        graph.addEdge("B", "C");
         
         try {
+            //System.out.println("Testing Traversal Method:");
+            //graph.printEdges(); //debug method
+            graph.depthFirstSearch();
+
             
 
-            System.out.println("TESTING IF TARGET B HAS VERTEX EXPECTED: EXPECTED: |TRUE|\nreturned>>" + graph.hasVertex("B"));            
-            System.out.println("TESTING IF A & B ARE ADJACENT - EXPECTED: |FALSE|\nreturned>>"+ graph.isAdjacent("A","B"));
-            System.out.println("TESTING IF B & C ARE ADJACENT - EXPECTED: |TRUE|\nreturned>>"+ graph.isAdjacent("B","C"));
-            System.out.println("TESTING IF F & C ARE ADJACENT - EXPECTED: |TRUE|\nreturned>>"+ graph.isAdjacent("F","C"));
+            // System.out.println("TESTING IF TARGET B HAS VERTEX EXPECTED: EXPECTED: |TRUE|\nreturned>>" + graph.hasVertex("B"));            
+            // System.out.println("TESTING IF A & B ARE ADJACENT - EXPECTED: |FALSE|\nreturned>>"+ graph.isAdjacent("A","B"));
+            // System.out.println("TESTING IF B & C ARE ADJACENT - EXPECTED: |TRUE|\nreturned>>"+ graph.isAdjacent("B","C"));
+            // System.out.println("TESTING IF F & C ARE ADJACENT - EXPECTED: |TRUE|\nreturned>>"+ graph.isAdjacent("F","C"));
             
             // //System.out.println("Testing Display Method:");
             // graph.displayAsList();
 
-            //System.out.println("Testing Traversal Method:"); 
-            //graph.DFS(2); //TODO: NEED TRAVERSAL FOR THIS
 
             //FileReader.menu(graph); //TODO: NEED TRAVERSAL FOR THIS
             
