@@ -47,7 +47,7 @@ public class DSAStack implements Iterable, Serializable{
             data = stack.peekFirst();
             stack.removeFirst();            
         } catch (NullPointerException e) {
-            System.out.println("Nothing left in stack");
+            throw new IllegalArgumentException("Nothing left in stack");
         }
         return data;
     }

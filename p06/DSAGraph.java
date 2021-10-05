@@ -1,6 +1,8 @@
 import java.io.Serializable;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+
+import javax.naming.spi.DirStateFactory.Result;
 /**
  *
  * @author Caio Marteli
@@ -248,42 +250,52 @@ public class DSAGraph implements Serializable
 	ASSERTION: DEPTH FIRST SEARCH TODO: complete method
 	************************************************************/
 	public void DFSUtil(DSAGraphVertex vx, DSAStack visited)
-	{		
+	{
+		if(vx != null){
 		visited.push(vx);
+		}
+		Iterator<DSAGraphVertex> itr = vx.getAdjacent().iterator();
 		// Recur for all the vertices adjacent to this
 		// vertex
-		while(!visited.isEmpty()) //while stack is not empty
-		{
-			Iterator<DSAGraphVertex> itr = vx.getAdjacent().iterator();
-			while (itr.hasNext())		
-			{				
-				if(!vx.getVisited())
+		 //while stack is not empty
+		do{
+			while (itr.hasNext() && !visited.isEmpty())		
+			{
+				vx = itr.next();				
+				if(!vx.getVisited()) //if not visited traverse here
 				{
-					//vx = itr.next();
 					System.out.println(vx.toString()); //debug
 					vx.setVisited(); //check later
 					DFSUtil(vx, visited);
 				}
-				else
-				{
-					visited.pop();
-				}
 			}
-		}
+			try {
+				visited.pop();
+			} catch (Exception e) {
+				//System.out.println(e.getMessage());
+			}
+			
+				
+		}while(!visited.isEmpty());
+		
 	}
 
 	/************************************************************
 	IMPORT: label (String)
 	EXPORT: queue (DSAQueue)
-	ASSERTION: Wrapper DEPTH FIRST SEARCH returns q of objs TODO: complete method
+	ASSERTION: Wrapper DEPTH FIRST SEARCH returns q of objs TODO: need to grab output instead of printing
 	************************************************************/
 	public void depthFirstSearch()
 	{
-		System.out.println("DFS:\n");
+		//String queue = " ";
 		clear(); //sets all visited on all vertices == false
 		DSAGraphVertex vx = (DSAGraphVertex)vertices.peekFirst(); //picks head of vertices list to start on
-		DSAStack visited = new DSAStack();	//creates empty stack	
+		DSAStack visited = new DSAStack();	//creates empty stack
 		vx.setVisited(); // Marks vx visited == true
+		System.out.println(vx);//start point
+		//queue = vx.toString();
+
+		
 		DFSUtil(vx, visited); //begin recursion
 
 		//return queue;
