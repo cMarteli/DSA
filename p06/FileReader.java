@@ -21,13 +21,13 @@ public class FileReader {
     EXPORT: none
     ASSERTION: Gets user input and performs the associated task while handling invalid inputs
     ************************************************************/
-    public static void menu(DSAGraph graph)
+    public static void menu()
     {
         String prompt = 
         "What would you like to do?\n [1]Read a serialized file\n [2]Read a csv file\n [3]Display the graph\n [4]Write a serialized file\n [5]Exit\n";
         String usrStr = " ";
-        String data[];
-       // int data[];
+        //String data[];
+        DSAGraph graph = new DSAGraph();
         int userSelect = 0;
         Scanner sc = new Scanner(System.in);
         while(userSelect != 5)
@@ -47,63 +47,81 @@ public class FileReader {
                 case 1: 
                 {   //User choice: Read a serialized file         
                     System.out.println("LOAD!");
-                    // //filename = enterFileName(); //enter name here
-                    // graph = load(SERIAL_FILENAME);           
+                    // // //filename = enterFileName(); //enter name here
+                    graph = load(SERIAL_FILENAME);           
                 }
                 break;
 
                 case 2:
-                {  //User choice: Read from csv
+                {  //User choice: Read from csv TODO: Stubbed method
                     
                     //filename = enterFileName(); //enter name here
-                    data = readFile(INPUT_CSV_FILENAME);
+                    //data = readFile(INPUT_CSV_FILENAME);
                     //data = FileReader.convertArrayI(data);
                     System.out.println("Reading from CSV" + INPUT_CSV_FILENAME + "...");
-                    try {
-                        // graph.addVertex(data[0],0);
-                        // graph.addVertex(data[1],0);
-                        // graph.addVertex(data[2],0);
-                        // graph.addVertex(data[3],0);
-                        // graph.addVertex(data[4],0);
-                        // graph.addVertex(data[5],0);
-                        System.out.println("Printing");
-                        for(int i = 0; i < data.length; i++)
-                        {
-                            System.out.println(data[i]);                           
-                        }
+                    try 
+                    {
+                        graph.addVertex("Elephant");
+                        graph.addVertex("Rabbit");
+                        graph.addVertex("Dog");
+                        graph.addVertex("Ant");
+                        graph.addVertex("Mongoose");
+                        graph.addVertex("Narwhal");
+                        graph.addVertex("Snake");
+                        graph.addVertex("Cat");
+                        graph.addVertex("Bear");
+
+                        graph.addEdge("Elephant", "Rabbit");
+                        graph.addEdge("Elephant", "Bear");
+
+                        graph.addEdge("Rabbit", "Bear");
+                        graph.addEdge("Rabbit", "Dog");
+                        graph.addEdge("Rabbit", "Snake");
+                        graph.addEdge("Rabbit", "Cat");
+
+                        graph.addEdge("Dog", "Ant");
+                        graph.addEdge("Dog", "Narwhal");
+
+                        graph.addEdge("Snake", "Rabbit");
+                        graph.addEdge("Snake", "Cat");
                         
-                    } catch (IllegalArgumentException e) {
-                        //catches if key already exists
+                    } catch (IllegalArgumentException e)
+                    {
                         System.out.println(e.getMessage());
-                    }              
-                    // for(int i=0; i< data.length; i++)
-                    // {
-                    //     graph.addVertex(String.valueOf(i),data[i]);
-                    // }
+                    }
                 }
                 break;
 
-                case 3: 
-                {   //User choice: Display the list
-                    System.out.println("DISPLAY");
-                    // graph.display();
+                case 3: //User choice: [3] Display the graph
+                {   
+                   if(!graph.isEmpty())
+                   { 
+                        try 
+                        {
+                            System.out.println("Traversing Graph...");
+                            graph.depthFirstSearch().show();
 
+                            System.out.println("Testing Edges:");
+                            graph.printEdges(); //debug method
 
-                   // String target = "2";
-                    
-                    try {
-                    //System.out.println("Searching for value at index: " + target);
-                    //System.out.println("Result: " + graph.find(target));
-                    // System.out.println("graph depth: "+ graph.height());
-                    // System.out.println("graph max: "+ graph.find(graph.max(graph.getRoot())));
-                    
-                    // System.out.println("graph min: "+ graph.find(graph.min(graph.getRoot())));
-                        
-                    } catch (NoSuchElementException ex) {
-                        //Not found
-                        System.out.println(ex.getMessage());
-                    }
-
+                            System.out.println("TESTING IF TARGET Bear HAS VERTEX EXPECTED: EXPECTED: |TRUE|\nreturned>>" + graph.hasVertex("Bear"));
+                            System.out.println("TESTING IF TARGET Mongoose HAS VERTEX EXPECTED: EXPECTED: |FALSE|\nreturned>>" + graph.hasVertex("Mongoose"));
+                            System.out.println("TESTING IF Snake & Dog ARE ADJACENT - EXPECTED: |FALSE|\nreturned>>"+ graph.isAdjacent("Snake","Dog"));
+                            System.out.println("TESTING IF Rabbit & Elephant ARE ADJACENT - EXPECTED: |TRUE|\nreturned>>"+ graph.isAdjacent("Rabbit","Elephant"));
+                            System.out.println("TESTING IF Cat & Snake ARE ADJACENT - EXPECTED: |TRUE|\nreturned>>"+ graph.isAdjacent("Cat","Snake"));
+                            
+                            System.out.println("Displaying all vertices in list order:");
+                            graph.displayAsList(); 
+                            
+                        } catch (NoSuchElementException ex) {
+                            //Not found
+                            System.out.println(ex.getMessage());
+                        }
+                   }
+                   else
+                   {
+                       System.out.println("Graph is empty");
+                   }
 
                 }
                 break;
@@ -111,7 +129,7 @@ public class FileReader {
                 case 4: 
                 {   //User choice: Write a serialized file
                     System.out.println("SAVE");
-                    // save(graph, SERIAL_FILENAME);
+                    save(graph, SERIAL_FILENAME);
 
  
                 }

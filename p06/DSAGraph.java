@@ -56,9 +56,12 @@ public class DSAGraph implements Serializable
 
 	public void addEdge(String label1, String label2)
 	{
-		DSAGraphVertex vx1 = getVertex(label1), vx2 = getVertex(label2);
-		vx1.addEdge(vx2);
-		vx2.addEdge(vx1);
+		if(!isAdjacent(label1, label2)) //if edge does not already exist add it
+		{
+			DSAGraphVertex vx1 = getVertex(label1), vx2 = getVertex(label2);		
+			vx1.addEdge(vx2);
+			vx2.addEdge(vx1);
+		}
 	}
 
 	/************************************************************
@@ -99,6 +102,18 @@ public class DSAGraph implements Serializable
 	{
 		return 0;
 	}
+
+	/************************************************************
+	IMPORT: none
+	EXPORT: boolean
+	ASSERTION: returns empty if there are no vertices
+	************************************************************/
+	
+	public boolean isEmpty()
+	{
+		return vertices.isEmpty();
+	}
+
 
 	//DEBUG method, iterates through vertices list and prints all edges
 	public void printEdges()
@@ -243,7 +258,7 @@ public class DSAGraph implements Serializable
 	}
 
 	/************************************************************
-	IMPORT: label (String)
+	IMPORT: label (String)queue
 	EXPORT: bool (DSALinkedList)
 	ASSERTION: DEPTH FIRST SEARCH Recur for all the vertices adjacent to vx while stack is not empty
 	************************************************************/
@@ -257,7 +272,7 @@ public class DSAGraph implements Serializable
 				Iterator<DSAGraphVertex> itr = vx.getAdjacent().iterator();
 
 				do{
-					while (itr.hasNext() && !visited.isEmpty())		
+					while (itr.hasNext())		
 					{
 						vx = itr.next();				
 						if(!vx.getVisited()) //if not visited traverse here
@@ -301,7 +316,7 @@ public class DSAGraph implements Serializable
 	/************************************************************
 	PRIVATE INNER CLASS
 	************************************************************/
-	private class DSAGraphVertex
+	private class DSAGraphVertex implements Serializable
 	{
 		private String label;
 		private Object value;

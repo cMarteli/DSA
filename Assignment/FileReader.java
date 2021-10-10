@@ -61,20 +61,29 @@ public class FileReader {
                     System.out.println("Reading from CSV" + INPUT_CSV_FILENAME + "...");
                     try 
                     {
-                        graph.addVertex("A");
-                        graph.addVertex("B");
-                        graph.addVertex("C");
-                        graph.addVertex("D");
-                        graph.addVertex("E");
-                        graph.addVertex("F");
+                        graph.addVertex("Elephant");
+                        graph.addVertex("Rabbit");
+                        graph.addVertex("Dog");
+                        graph.addVertex("Ant");
+                        graph.addVertex("Mongoose");
+                        graph.addVertex("Narwhal");
+                        graph.addVertex("Snake");
+                        graph.addVertex("Cat");
+                        graph.addVertex("Bear");
 
-                        graph.addEdge("B", "C");
-                        graph.addEdge("B", "F");
-                        graph.addEdge("F", "C");
+                        graph.addEdge("Elephant", "Rabbit");
+                        graph.addEdge("Elephant", "Bear");
 
-                        graph.addEdge("A", "C"); //adds 2 edges
-                        graph.addEdge("D", "E");
-                        graph.addEdge("F", "E");
+                        graph.addEdge("Rabbit", "Bear");
+                        graph.addEdge("Rabbit", "Dog");
+                        graph.addEdge("Rabbit", "Snake");
+                        graph.addEdge("Rabbit", "Cat");
+
+                        graph.addEdge("Dog", "Ant");
+                        graph.addEdge("Dog", "Narwhal");
+
+                        graph.addEdge("Snake", "Rabbit");
+                        graph.addEdge("Snake", "Cat");
                         
                     } catch (IllegalArgumentException e)
                     {
@@ -95,13 +104,14 @@ public class FileReader {
                             System.out.println("Testing Edges:");
                             graph.printEdges(); //debug method
 
-                            System.out.println("TESTING IF TARGET B HAS VERTEX EXPECTED: EXPECTED: |TRUE|\nreturned>>" + graph.hasVertex("B"));
-                            System.out.println("TESTING IF A & B ARE ADJACENT - EXPECTED: |FALSE|\nreturned>>"+ graph.isAdjacent("A","B"));
-                            System.out.println("TESTING IF B & C ARE ADJACENT - EXPECTED: |TRUE|\nreturned>>"+ graph.isAdjacent("B","C"));
-                            System.out.println("TESTING IF F & C ARE ADJACENT - EXPECTED: |TRUE|\nreturned>>"+ graph.isAdjacent("F","C"));
+                            System.out.println("TESTING IF TARGET Bear HAS VERTEX EXPECTED: EXPECTED: |TRUE|\nreturned>>" + graph.hasVertex("Bear"));
+                            System.out.println("TESTING IF TARGET Mongoose HAS VERTEX EXPECTED: EXPECTED: |FALSE|\nreturned>>" + graph.hasVertex("Mongoose"));
+                            System.out.println("TESTING IF Snake & Dog ARE ADJACENT - EXPECTED: |FALSE|\nreturned>>"+ graph.isAdjacent("Snake","Dog"));
+                            System.out.println("TESTING IF Rabbit & Elephant ARE ADJACENT - EXPECTED: |TRUE|\nreturned>>"+ graph.isAdjacent("Rabbit","Elephant"));
+                            System.out.println("TESTING IF Cat & Snake ARE ADJACENT - EXPECTED: |TRUE|\nreturned>>"+ graph.isAdjacent("Cat","Snake"));
                             
                             System.out.println("Displaying all vertices in list order:");
-                            graph.displayAsList();     
+                            graph.displayAsList(); 
                             
                         } catch (NoSuchElementException ex) {
                             //Not found

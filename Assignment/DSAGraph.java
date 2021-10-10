@@ -56,9 +56,12 @@ public class DSAGraph implements Serializable
 
 	public void addEdge(String label1, String label2)
 	{
-		DSAGraphVertex vx1 = getVertex(label1), vx2 = getVertex(label2);
-		vx1.addEdge(vx2);
-		vx2.addEdge(vx1);
+		if(!isAdjacent(label1, label2)) //if edge does not already exist add it
+		{
+			DSAGraphVertex vx1 = getVertex(label1), vx2 = getVertex(label2);		
+			vx1.addEdge(vx2);
+			vx2.addEdge(vx1);
+		}
 	}
 
 	/************************************************************
@@ -269,7 +272,7 @@ public class DSAGraph implements Serializable
 				Iterator<DSAGraphVertex> itr = vx.getAdjacent().iterator();
 
 				do{
-					while (itr.hasNext() && !visited.isEmpty())		
+					while (itr.hasNext())		
 					{
 						vx = itr.next();				
 						if(!vx.getVisited()) //if not visited traverse here
