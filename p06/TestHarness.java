@@ -29,7 +29,7 @@ public class TestHarness {
         try {
             //System.out.println("Testing Traversal Method:");
             //graph.printEdges(); //debug method
-            graph.depthFirstSearch();           
+            graph.depthFirstSearch().show();        
 
             // System.out.println("TESTING IF TARGET B HAS VERTEX EXPECTED: EXPECTED: |TRUE|\nreturned>>" + graph.hasVertex("B"));            
             // System.out.println("TESTING IF A & B ARE ADJACENT - EXPECTED: |FALSE|\nreturned>>"+ graph.isAdjacent("A","B"));

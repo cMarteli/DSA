@@ -1,71 +1,69 @@
-import java.util.*;
+import java.io.Serializable;
+import java.util.Iterator;
 /**
  *
  * @author Caio Marteli
+ *
+ *Contains Iterator Class AND DSAListNode
  */
-public class DSALinkedList implements Iterable{
+@SuppressWarnings("unchecked")
+public class DSALinkedList implements Iterable<DSALinkedList>, Serializable{
 
 	protected DSAListNode head;
 	protected DSAListNode tail;
-
-	/************************************************************
-	CONSTRUCTOR:
-	IMPORT: none
-	EXPORT: address of new Linked List
-	ASSERTION: sets values to null
-	************************************************************/
+	
+    /************************************************************
+    Default Constructor:
+    IMPORT: none
+    EXPORT: address of new DSALinkedList object
+    ASSERTION: head = null and tail = null are the default states
+    ************************************************************/ 
 	public DSALinkedList()
 	{
 		head = null;
 		tail = null;
 	}
 
-	/************************************************************
-	IMPORT: none
-	EXPORT: boolean
-	ASSERTION: Checks if list is empty
-	************************************************************/
+   /************************************************************
+    IMPORT: none
+    EXPORT: (boolean)
+    ASSERTION: Check if list is empty.
+    ************************************************************/
 	public boolean isEmpty()
 	{
-		boolean isEmp = false;
 		if(head == null)
 		{
-			isEmp = true;
+			return true;
 		}
 		else
 		{
-			isEmp = false;
+			return false;
 		}
-		return isEmp;
 	}
 
-
-	/************************************************************
-	IMPORT: data (Object)
-	EXPORT: void
-	ASSERTION: Creates a new node, parses data into it and inserts it at front
-	************************************************************/
+    /************************************************************
+    IMPORT: data (Object)
+    EXPORT: none
+    ASSERTION: Adds new element to first position of list.
+    ************************************************************/
 	public void insertFirst(Object data)
 	{
-		DSAListNode node = new DSAListNode(data,head); //makes it point to head
+		DSAListNode node = new DSAListNode(data, head); //creates new node to store old head
 		if(isEmpty())
 		{
-			tail = node;
+			tail = node; //if data is the only node, head is also tail
 		}
-
 		head = node; //moves the head to new node
-
 	}
-	/************************************************************
-	IMPORT: data (Object)
-	EXPORT: void
-	ASSERTION: Creates a new node, parses data into it and inserts it at back
-	************************************************************/
+
+    /************************************************************
+    IMPORT: data (Object)
+    EXPORT: none
+    ASSERTION: Adds new element to last position of list.
+    ************************************************************/
 	public void insertLast(Object data)
 	{
-		DSAListNode node = new DSAListNode(data); //makes it point to null
-		//node.data = data;
-		//node.next = null;
+		DSAListNode node =  new DSAListNode(data); //stores data; head and tail are set to null
 
 		if(isEmpty()) //if list is empty make node new head
 		{
@@ -84,28 +82,34 @@ public class DSALinkedList implements Iterable{
 		tail = node;//keeps track of tail
 	}
 
-	/*
-	 *getters
-	 */
-	
+    /************************************************************
+    IMPORT: none
+    EXPORT: (Object)
+    ASSERTION: Returns head of list but makes no changes
+    ************************************************************/
 	public Object peekFirst()
 	{
 		return head.getValue();
 	}
 
+	/************************************************************
+    IMPORT: none
+    EXPORT: (Object)
+    ASSERTION: Returns tail of list but makes no changes
+    ************************************************************/
 	public Object peekLast()
 	{
 		return tail.getValue();		
 	}
 
-	/************************************************************
-	IMPORT: none
-	EXPORT: Object
-	ASSERTION: Removes node at head
-	************************************************************/
-	
+    /************************************************************
+    IMPORT: none
+    EXPORT: (DSAListNode)
+    ASSERTION: Removes element at head of list
+    ************************************************************/
 	public Object removeFirst()
 	{
+
 		if(isEmpty())
 		{
 			System.out.println("List is Empty");
@@ -120,14 +124,13 @@ public class DSALinkedList implements Iterable{
 			head = head.next;
 			head.previous = null;
 		}
-		return head;
+		return head.getValue();
 	}
-
-	/************************************************************
-	IMPORT: none
-	EXPORT: Object
-	ASSERTION: Removes node at tail
-	************************************************************/
+    /************************************************************
+    IMPORT: none
+    EXPORT: (DSAListNode)
+    ASSERTION: Removes element at tail of list
+    ************************************************************/
 	public Object removeLast()
 	{
 		if(isEmpty())
@@ -144,36 +147,122 @@ public class DSALinkedList implements Iterable{
 			tail = tail.previous;
 			tail.next = null;
 		}
-		return tail;
+		return tail.getValue();
 	}
 	
-	/************************************************************
-	IMPORT: none
-	EXPORT: none
-	ASSERTION: prints list to terminal
-	************************************************************/
+    /************************************************************
+    IMPORT: none
+    EXPORT: none
+    ASSERTION: Prints entire list using iterator
+    ************************************************************/
 	public void show()
 	{
-		DSAListNode node = head;
+		Iterator<DSALinkedList> iter = this.iterator();
 
-		while(node.next != null)
+		while(iter.hasNext())
 		{
-			System.out.println(node.data);
-			node = node.next;
+            System.out.println(iter.next()); //iterates over list
 		}
-		System.out.println(node.data);
 	}
-	
+
 	/************************************************************
-	IMPORT: none
-	EXPORT: Object
-	ASSERTION: Removes node at head
-	************************************************************/
+    DSALinkedListNode Class
+    Private inner Cass
+    ************************************************************/
+	private class DSAListNode implements Serializable
+	{	
+
+	    private Object data;
+		private DSAListNode next;
+		private DSAListNode previous;
+
+		/************************************************************
+	    Default Constructor:
+	    IMPORT: none
+	    EXPORT: address of new DSAListNode object
+	    ASSERTION: sets all classfields to null
+	    ************************************************************/ 
+		public DSAListNode()
+		{
+			data = null;
+			next = null;
+			previous = null;
+		}
+
+		/************************************************************
+	    Constructor:
+	    IMPORT: none
+	    EXPORT: address of new DSAListNode object
+	    ASSERTION: sets data fild only
+	    ************************************************************/ 
+		public DSAListNode(Object d)
+		{
+			data = d;
+			next = null;
+			previous = null;		
+		}
+
+		/************************************************************
+	    Alternate Constructor:
+	    IMPORT: d(Object), n(DSAListNode)
+	    EXPORT: address of new DSAListNode object
+	    ASSERTION: sets data and next fields only
+	    ************************************************************/
+		public DSAListNode(Object d, DSAListNode n)
+		{
+			data = d;
+			next = n;
+			previous = null;	
+		}
+
+		/************************************************************
+	    Alternate Constructor:
+	    IMPORT: d(Object), n(DSAListNode), p(DSAListNode)
+	    EXPORT: address of new DSAListNode object
+	    ASSERTION: sets all fields
+	    ************************************************************/
+		public DSAListNode(Object d, DSAListNode n, DSAListNode p)
+		{
+			data = d;
+			next = n;
+			previous = p;
+		}
+
+		/************************************************************
+		*** GETTERS ***
+	    ************************************************************/
+		public DSAListNode getNext()
+		{
+			return next;
+		}
+
+		public DSAListNode getPrevious()
+		{
+			return previous;
+		}
+
+		public Object getValue()
+		{
+			return data;
+		}
+
+	}//end of node class
+
+    /************************************************************
+    Iterator Constructor:
+    IMPORT: none
+    EXPORT: address of new DSALinkedListIterator object
+    ASSERTION: 
+    ************************************************************/ 
 	public Iterator iterator()
 	{
 		return new DSALinkedListIterator(this);
 	}
 
+    /************************************************************
+    DSALinkedListIterator Class
+    Private inner class - implements Iterator 
+    ************************************************************/
 	private class DSALinkedListIterator implements Iterator
 	{
 		private DSAListNode iterNext; //cursor
@@ -190,7 +279,7 @@ public class DSALinkedList implements Iterable{
 
 		public Object next() 
 		{ 
-			Object value; 
+			Object value;
 			if(iterNext == null)
 			{
 			    value = null;
@@ -203,79 +292,11 @@ public class DSALinkedList implements Iterable{
 			return value;
 		}
 
-		public void remove() 
+		public void remove() //Not implemented
 		{ 
 			throw new UnsupportedOperationException("Not supported"); 
 		}
-	}
-
-/************************************************************
-CLASS: DSAListNode
-ACCESS: Private
-ASSERTION: Inner class of DSALinkedList, holds the actual data
-************************************************************/
-private class DSAListNode 
-{	
-
-    protected Object data;
-	protected DSAListNode next;
-	protected DSAListNode previous;
-
-	/**
-     *  Default constructor sets all classfields to null
-     */	
-	public DSAListNode()
-	{
-		data = null;
-		next = null;
-		previous = null;
-	}
-	/**
-     *  Alternate constructor sets data only
-     */
-	public DSAListNode(Object d)
-	{
-		data = d;
-		next = null;
-		previous = null;		
-	}
-	/**
-     *  Alternate constructor sets all fields
-     */
-	public DSAListNode(Object d, DSAListNode n)
-	{
-		data = d;
-		next = n;		
-	}
-
-	/**
-     *  Alternate constructor sets all fields
-     */
-	public DSAListNode(Object d, DSAListNode n1, DSAListNode n2)
-	{
-		data = d;
-		next = n1;
-		previous = n2;
-	}
+	}//end of iterator
 
 
-	//getters
-
-	public DSAListNode getNext()
-	{
-		return next;
-	}
-
-	public DSAListNode getPrevious()
-	{
-		return previous;
-	}
-
-	public Object getValue()
-	{
-		return data;
-	}
-
-}
-
-}
+}//end of DSALinkedList.java

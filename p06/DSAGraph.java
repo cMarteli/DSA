@@ -1,8 +1,6 @@
 import java.io.Serializable;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-
-import javax.naming.spi.DirStateFactory.Result;
 /**
  *
  * @author Caio Marteli
@@ -247,58 +245,57 @@ public class DSAGraph implements Serializable
 	/************************************************************
 	IMPORT: label (String)
 	EXPORT: bool (DSALinkedList)
-	ASSERTION: DEPTH FIRST SEARCH TODO: complete method
+	ASSERTION: DEPTH FIRST SEARCH Recur for all the vertices adjacent to vx while stack is not empty
 	************************************************************/
-	public void DFSUtil(DSAGraphVertex vx, DSAStack visited)
+	public void DFSUtil(DSAGraphVertex vx, DSAStack visited, DSAQueue queue)
 	{
-		if(vx != null){
-		visited.push(vx);
-		}
-		Iterator<DSAGraphVertex> itr = vx.getAdjacent().iterator();
-		// Recur for all the vertices adjacent to this
-		// vertex
-		 //while stack is not empty
-		do{
-			while (itr.hasNext() && !visited.isEmpty())		
+		try {		
+			if(vx != null) //base case if it's null end recursion
 			{
-				vx = itr.next();				
-				if(!vx.getVisited()) //if not visited traverse here
-				{
-					System.out.println(vx.toString()); //debug
-					vx.setVisited(); //check later
-					DFSUtil(vx, visited);
-				}
-			}
-			try {
-				visited.pop();
-			} catch (Exception e) {
-				//System.out.println(e.getMessage());
-			}
+				visited.push(vx); //push onto visited stack
 			
-				
-		}while(!visited.isEmpty());
+				Iterator<DSAGraphVertex> itr = vx.getAdjacent().iterator();
+
+				do{
+					while (itr.hasNext() && !visited.isEmpty())		
+					{
+						vx = itr.next();				
+						if(!vx.getVisited()) //if not visited traverse here
+						{
+							queue.enqueue(vx); //adds to output queue
+							vx.setVisited(); //sets to visited							
+							DFSUtil(vx, visited, queue);
+						}
+					}			
+					visited.pop();	
+
+				} while(!visited.isEmpty());
+			}
+		} 
+		catch (IllegalArgumentException e) //catches empty stack exceptions
+		{
+			//System.out.println(e.getMessage());			
+		}
 		
 	}
 
 	/************************************************************
 	IMPORT: label (String)
 	EXPORT: queue (DSAQueue)
-	ASSERTION: Wrapper DEPTH FIRST SEARCH returns q of objs TODO: need to grab output instead of printing
+	ASSERTION: Wrapper DEPTH FIRST SEARCH returns q of objs in traversal order
 	************************************************************/
-	public void depthFirstSearch()
+	public DSAQueue depthFirstSearch()
 	{
-		//String queue = " ";
+		DSAQueue queue = new DSAQueue();
 		clear(); //sets all visited on all vertices == false
 		DSAGraphVertex vx = (DSAGraphVertex)vertices.peekFirst(); //picks head of vertices list to start on
 		DSAStack visited = new DSAStack();	//creates empty stack
 		vx.setVisited(); // Marks vx visited == true
-		System.out.println(vx);//start point
-		//queue = vx.toString();
-
+		queue.enqueue(vx); //start point
 		
-		DFSUtil(vx, visited); //begin recursion
+		DFSUtil(vx, visited, queue); //begin recursion
 
-		//return queue;
+		return queue;
 	}
 
 	/************************************************************
