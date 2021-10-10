@@ -1,0 +1,19 @@
+Node Elephant
+Node Rabbit
+Node Dog
+Node Ant
+Node Mongoose
+Node Narwhal
+Node Snake
+Node Cat
+Node Bear
+Edge Elephant Rabbit
+Edge Elephant Bear
+Edge Rabbit Bear
+Edge Rabbit Dog
+Edge Rabbit Snake
+Edge Rabbit Cat
+Edge Dog Ant
+Edge Dog Narwhal
+Edge Snake Rabbit
+Edge Snake Cat
