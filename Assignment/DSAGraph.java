@@ -380,7 +380,7 @@ public class DSAGraph implements Serializable
 		{
 			visited = false;
 		}
-		//Return formatted string
+		@Override
 		public String toString()
 		{
 			return("|" + label + "|");

@@ -1,117 +1,18 @@
-import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.InputStreamReader;
 import java.util.Scanner;
-import java.util.NoSuchElementException;
 /**
  *
  * @author Caio Marteli 19598552
 //  */
 public class FileReader {
 
-    public static final String SERIAL_FILENAME = "serial.txt", INPUT_CSV_FILENAME = "input.csv", OUTPUT_CSV_FILENAME = "output.csv";
+    public static final String OUTPUT_FILENAME = "savefile.txt";
 
-
-    /************************************************************
-    IMPORT: none
-    EXPORT: none
-    ASSERTION: Gets user input and performs the associated task while handling invalid inputs
-    ************************************************************/
-    public static void menu()
-    {
-        String prompt = 
-        "What would you like to do?\n [1]Read a serialized file\n [2]Read a csv file\n [3]Display the graph\n [4]Write a serialized file\n [5]Exit\n";
-        String usrStr = " ";
-        //String data[];
-        DSAGraph graph = new DSAGraph();
-        int userSelect = 0;
-        Scanner sc = new Scanner(System.in);
-        while(userSelect != 5)
-        {
-            do
-            {
-                System.out.println(prompt);
-                usrStr = sc.next();
-                userSelect = Integer.valueOf(usrStr);
-            }
-            while(userSelect != 1 && userSelect != 2 && userSelect != 3 && userSelect != 4 && userSelect != 5);
-                               
-
-            //case statement to choose required method
-            switch (userSelect)
-            {
-                case 1: 
-                {   //User choice: Read a serialized file         
-                    System.out.println("LOAD!");
-                    // // //filename = enterFileName(); //enter name here
-                    graph = load(SERIAL_FILENAME);           
-                }
-                break;
-
-                case 2:
-                {  //User choice: Read from csv TODO: Stubbed method
-                    
-                    //filename = enterFileName(); //enter name here
-                    //data = readFile(INPUT_CSV_FILENAME);
-                    //data = FileReader.convertArrayI(data);
-                    System.out.println("Reading from CSV" + INPUT_CSV_FILENAME + "...");
-                    try 
-                    {
-                        System.out.println(numOfLines("in.txt"));
-                        
-                    } catch (IllegalArgumentException e)
-                    {
-                        System.out.println(e.getMessage());
-                    }
-                }
-                break;
-
-                case 3: //User choice: [3] Display the graph
-                {   
-                   if(!graph.isEmpty())
-                   { 
-                        try 
-                        {
-                            System.out.println("Traversing Graph...");
-                            graph.depthFirstSearch().show();
-
-                            // System.out.println("Testing Edges:");
-                            // graph.printEdges(); //debug method
-                            
-                        } catch (NoSuchElementException ex) {
-                            //Not found
-                            System.out.println(ex.getMessage());
-                        }
-                   }
-                   else
-                   {
-                       System.out.println("Graph is empty");
-                   }
-
-                }
-                break;
-
-                case 4: 
-                {   //User choice: Write a serialized file
-                    System.out.println("SAVE");
-                    save(graph, SERIAL_FILENAME);
-
- 
-                }
-                break;
-
-                default:
-                {  //User choice: Exit
-                    System.out.println("Goodbye!");                    
-                }
-            }            
-        }
-        sc.close();        
-    }//end mainMenu
     
     /************************************************************
     IMPORT: objToSave(ContainerClass), filename(String)
@@ -166,92 +67,63 @@ public class FileReader {
 
     }
 
-/************************************************************    
-IMPORT: filename (String)
-EXPORT: lineNum (integer)
-ASSERTION: Imports a file name and counts the lines in it then returns the number
-************************************************************/
-public static int numOfLines(String filename)
-{
-        FileInputStream fileStrm = null;
-        InputStreamReader rdr;
-        BufferedReader bufRdr;
-        int lineNum = 0;
-        
-        try
-        {
-            fileStrm = new FileInputStream(filename);
-            rdr = new InputStreamReader(fileStrm);
-            bufRdr = new BufferedReader(rdr);
-            lineNum = 0;
-
-            while (bufRdr.readLine() != null) 
-            {
-                lineNum++;
-            }
-            fileStrm.close();
-        }
-     
-        catch (IOException e)
-        {
-            if (fileStrm != null)                      
-            {
-                try
-                {
-                    fileStrm.close();
-                } 
-                catch (IOException ex2){ }
-                System.out.println("Error in file processing " + e.getMessage());
-            }
-        }
-        return lineNum;
-}//end numOfLines()
-
 
 /************************************************************    
 IMPORT: filename (String)
-EXPORT: arrayOfStrings (String[] array)
-ASSERTION: Imports a file name and writes it to a string array
+EXPORT: graph (DSAGraph)
+ASSERTION: Imports a text file and writes it to a graph
 ************************************************************/
-public static String[] readFile(String filename)
+public static DSAGraph readFile(String filename)
     {
-        FileInputStream fileStrm = null;
-        InputStreamReader rdr;
-        BufferedReader bufRdr;
+        DSAGraph graph = new DSAGraph();
+        //System.out.println("Reading text file");
+        File inFile = new File(filename);
 
-        String line;
+        try {
+            System.out.println("Reading text file");
+            Scanner sc = new Scanner(inFile);
+            sc.skip("#"); //skips comment at beggining
+            //sc.useDelimiter(" ");
+            //Scanner lineSc; 
 
-        String[] arrayOfStrings = new String[numOfLines(filename)]; //gets number of lines in file
-        try
-        {
-            fileStrm = new FileInputStream(filename);
-            rdr = new InputStreamReader(fileStrm);
-            bufRdr = new BufferedReader(rdr);
-            
-            line = bufRdr.readLine();
-            while (line != null)
+            while(sc.hasNextLine())
             {                
-                arrayOfStrings = line.split(","); //adds read lines to array
-                line = bufRdr.readLine();
+                //sc.nextLine(); //currently always skipping the first line
+                String command = sc.next();
 
-            }
-            fileStrm.close();
-        }
-     
-        catch (IOException e)
-        {
-            if (fileStrm != null)                      
-            {
-                try
+                if(command.equals("Node"))//case finds NODE
                 {
-                    fileStrm.close();
-                } 
-                catch (IOException ex2){ }
-                System.out.println("Error in file processing " + e.getMessage());
+                    System.out.println("Found node");                    
+                    String label = sc.next();
+                    System.out.println("Added label:" + label);
+                    graph.addVertex(label);
+                }
+                else if(command.equals("Edge")) //case finds EDGE
+                {
+                    System.out.println("Found Edge");
+                    String l1 = sc.next();
+                    String l2 = sc.next();
+                    System.out.println("Added edges:" + l1 + " and " + l2);
+                    graph.addEdge(l1, l2);
+                }
+                else if(command.equals("#"))
+                {
+                    System.out.println("Comment line"); //TODO: currently crashes if there's a comment after the '#'
+                }             
+                
             }
+            sc.close();              
+
+
+
+        } catch (FileNotFoundException e) {
+            // handle exception
+            e.printStackTrace();
         }
 
-        return arrayOfStrings;
+        return graph;
+     
+
     }//end readfile()
 
     //Manual file name option
@@ -279,43 +151,8 @@ public static String[] readFile(String filename)
         }
         else
         {
-            fileName = OUTPUT_CSV_FILENAME; //Sets filename to default
+            fileName = OUTPUT_FILENAME; //Sets filename to default
         }
         return fileName;
     }
-
-    //PRINTING METHODS
-
-    public static void printArray(int inArray[])
-    {
-    for(int i = 0; i < inArray.length; i++)
-        {
-            System.out.println(inArray[i]);
-        }
-    }
-
-    //convert int[] to String[]
-    public static String[] convertArrayS(int[] inArray)
-    {
-        String strArray[] = new String[inArray.length];
-
-        for(int i = 0; i < inArray.length; i++)
-        {
-            strArray[i] = String.valueOf(inArray[i]);
-        }
-        return strArray;
-    }
-
-    //convert String[] to int[] 
-    public static int[] convertArrayI(String[] inArray)
-    {
-        int outArray[] = new int[inArray.length];
-
-        for(int i = 0; i < inArray.length; i++)
-        {
-            outArray[i] = Integer.parseInt(inArray[i]);
-        }
-        return outArray;
-    }
-
 }
