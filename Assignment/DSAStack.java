@@ -39,13 +39,9 @@ public class DSAStack implements Iterable, Serializable{
     public Object pop()
     {
         Object data = null;
-        if (stack.isEmpty())
-        {
-            throw new IllegalArgumentException("Stack is Empty.");
-        }
         try {
-            data = stack.peekFirst();
-            stack.removeFirst();            
+            data = stack.removeFirst();
+            //stack.peekFirst();                  
         } catch (NullPointerException e) {
             throw new IllegalArgumentException("Nothing left in stack");
         }

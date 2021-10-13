@@ -83,6 +83,21 @@ public class DSAGraph implements Serializable
 		}
 		return sucess;
 	}
+
+	/************************************************************
+	IMPORT: label (String)
+	EXPORT: none
+	ASSERTION: deletes a vertex by label TODO: testing
+	************************************************************/
+	public void removeVertex(String label)
+	{
+		if(hasVertex(label)) //if vertex in in list
+		{
+			vertices.removeAt(getVertex(label));
+			System.out.println("Deleted: " + label); //debug
+		}
+	}
+
 	/************************************************************
 	IMPORT: none
 	EXPORT: count (integer)
@@ -161,7 +176,6 @@ public class DSAGraph implements Serializable
 			throw new NoSuchElementException("Value |" + label + "| not found");
 		}
 		//System.out.println("Value: " + target.getValue() + "\nLabel: " + target.getLabel()); // debug
-
 		return target;
 	}
 	/************************************************************
@@ -238,17 +252,6 @@ public class DSAGraph implements Serializable
 		System.out.println("Printing all vertices");
 		vertices.show(); //only works currently if no values are null
 
-	}
-
-	/************************************************************
-	IMPORT: label (String)
-	EXPORT: getAdjacent (DSALinkedList)
-	ASSERTION: STUB
-	************************************************************/
-	public DSALinkedList removeVertex(String label)
-	{
-		DSAGraphVertex vx = getVertex(label);
-		return vx.getAdjacent();
 	}
 
 	/************************************************************

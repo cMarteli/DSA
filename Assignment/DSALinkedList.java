@@ -47,16 +47,19 @@ public class DSALinkedList implements Iterable<DSALinkedList>, Serializable{
     ASSERTION: Adds new element to first position of list. TODO: find out why it's not storing previous
     ************************************************************/
 	public void insertFirst(Object data)
-	{
-		DSAListNode node = new DSAListNode(data, head, null); //creates new node to store old head
+	{				
 		if(isEmpty())
 		{
-			head = tail = node; //if data is the only node, head is also tail
-			//node = new DSAListNode(data, head, null);
-
+			DSAListNode node = new DSAListNode(data, head, head);
+			head = node;
+			tail = node; //if data is the only node, head is also tail
 		}
-		tail.next = null;
-		head = node; //moves the head to new node
+		else
+		{
+			DSAListNode node = new DSAListNode(data, head, null); //creates new node linking to old head
+			head.previous = node; //makes old head point to new one		
+			head = node; //moves the head to new node
+		}			
 
 	}
 
@@ -67,23 +70,25 @@ public class DSALinkedList implements Iterable<DSALinkedList>, Serializable{
     ************************************************************/
 	public void insertLast(Object data)
 	{
-		DSAListNode node =  new DSAListNode(data, null, null); //stores data; head and tail are set to null
-
 		if(isEmpty()) //if list is empty make node new head
 		{
+			DSAListNode node = new DSAListNode(data, head, head);
 			head = node;
+			tail = node; //if data is the only node, head is also tail
 		}
 		else
 		{
-			DSAListNode n = head;
-			while(n.next != null)
-			{
-				n = n.next;
-			}
-			node.previous = n; //keeps track of previous
-			n.next = node;
+			DSAListNode node =  new DSAListNode(data, null, tail); //stores data; next is set to null and previous to tail
+			// DSAListNode n = head;
+			// while(n.next != null)
+			// {
+			// 	n = n.next;
+			// }
+			node.previous = tail; //keeps track of previous tail
+			tail.next = node;
+			tail = node; //update tail
 		}
-		tail = node;//keeps track of tail
+		
 	}
 
     /************************************************************
@@ -108,27 +113,29 @@ public class DSALinkedList implements Iterable<DSALinkedList>, Serializable{
 
     /************************************************************
     IMPORT: none
-    EXPORT: (DSAListNode)
-    ASSERTION: Removes element at head of list
+    EXPORT: pop (Object)
+    ASSERTION: Removes element at head of list and returns it's value
     ************************************************************/
 	public Object removeFirst()
 	{
-
+		Object pop;
 		if(isEmpty())
 		{
-			System.out.println("List is Empty");
+			throw new IllegalArgumentException("Can't remove, list is empty");
 		}
 		else if(head == tail)
 		{
+			pop = head.getValue();
 			head = null;
 			tail = null;
 		}
 		else
 		{
+			pop = head.getValue();
 			head = head.next;
-			head.previous = null;
+			head.previous = null;			
 		}
-		return head.getValue();
+		return pop;		
 	}
     /************************************************************
     IMPORT: none
@@ -137,21 +144,24 @@ public class DSALinkedList implements Iterable<DSALinkedList>, Serializable{
     ************************************************************/
 	public Object removeLast()
 	{
+		Object pop;
 		if(isEmpty())
 		{
-			System.out.println("List is Empty");
+			throw new IllegalArgumentException("Can't remove, list is empty");
 		}
 		else if(head == tail)
 		{
+			pop = tail.getValue();
 			head = null;
 			tail = null;
 		}
 		else
 		{
+			pop = tail.getValue();
 			tail = tail.previous;
 			tail.next = null;
 		}
-		return tail.getValue();
+		return pop;
 	}
 
     /************************************************************
@@ -182,13 +192,13 @@ public class DSALinkedList implements Iterable<DSALinkedList>, Serializable{
 		{
 			if(temp.data.equals(target))
 			{
-				System.out.println("Found: "+ temp.data.toString()); //debug
+				//System.out.println("Found: "+ temp.data.toString()); //debug
 				return temp; //found
 			}
 			temp = temp.next;
 		}
 		//Couldn't find target
-		throw new NullPointerException("Could not find: "+ target.toString());
+		throw new IllegalArgumentException("Could not find: "+ target.toString());
 	}
 
 	/************************************************************
@@ -204,21 +214,18 @@ public class DSALinkedList implements Iterable<DSALinkedList>, Serializable{
 		{
 			System.out.println("List is Empty");
 		}
-		else if(del == head)
+		else if(del == head) //if it's head node
 		{
 			return removeFirst();
 		}
-		else if(del == tail)
+		else if(del == tail) //if it's tail node
 		{
 			return removeLast();
 		}
 		else
 		{
-			System.out.println("next:"+ del.next.getValue());
-			System.out.println("previous:"+ del.previous.getValue());
-			//del.next.previous = del.previous;
-			//del.previous.next = del.next;
-			//System.out.println(del.previous.next.toString());
+			del.next.previous = del.previous;
+			del.previous.next = del.next;
 		}
 		return del.getValue();
 	}

@@ -146,8 +146,6 @@ import java.util.Scanner;
     ************************************************************/
     public void nodeOperations(DSAGraph graph)
     {
-        System.out.println("Current vertex count: " + graph.getVertexCount());
-
         String prompt =
         "[1]Find\n[2]Insert\n[3]Delete\n[4]Update\n[5]Back to menu";
         int userSelect = 0;
@@ -155,6 +153,7 @@ import java.util.Scanner;
         {
             do
             {
+                System.out.println("Current vertex count: " + graph.getVertexCount()); //prints vertex count
                 userSelect = checkInteger(prompt);
             }
             while(userSelect != 1 && userSelect != 2 && userSelect != 3 && userSelect != 4 && userSelect != 5);
@@ -180,12 +179,25 @@ import java.util.Scanner;
                     Scanner sc = new Scanner(System.in);
                     System.out.println("Enter label:");
                     String inLabel = sc.next();
-                    graph.addVertex(inLabel);
+                    try {
+                        graph.addVertex(inLabel);
+                    } catch (IllegalArgumentException e) {
+                        System.out.println(e.getMessage());
+                    }
+                    
                 }
                 break;
 
-                case 3: //TODO Delete
+                case 3: //Allows user to delete a node
                 {
+                    Scanner sc = new Scanner(System.in);
+                    System.out.println("Enter label:");
+                    String inLabel = sc.next();
+                    try {
+                        graph.removeVertex(inLabel);
+                    } catch (IllegalArgumentException e) {
+                        System.out.println(e.getMessage());
+                    }
 
                 }
                 break;
