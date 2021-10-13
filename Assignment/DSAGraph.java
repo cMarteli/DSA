@@ -9,17 +9,19 @@ import java.util.NoSuchElementException;
 @SuppressWarnings("unchecked")
 public class DSAGraph implements Serializable
 {	
-	public DSALinkedList vertices;
+	private DSALinkedList vertices;
+	private int edgeCount;
 
 	/************************************************************
 	CONSTRUCTOR:
 	IMPORT: none
 	EXPORT: address of new DSA Graph
-	ASSERTION: creates empty linked list
+	ASSERTION: creates empty linked list, edge count of 0 is default value
 	************************************************************/	
 	public DSAGraph()
 	{
 		vertices = new DSALinkedList();
+		edgeCount = 0;
 	}
 
 	/************************************************************
@@ -61,6 +63,7 @@ public class DSAGraph implements Serializable
 			DSAGraphVertex vx1 = getVertex(label1), vx2 = getVertex(label2);		
 			vx1.addEdge(vx2);
 			vx2.addEdge(vx1);
+			edgeCount++;
 		}
 	}
 
@@ -97,10 +100,15 @@ public class DSAGraph implements Serializable
 		}
 		return count;
 	}
-	//TODO: STUB need to traverse graph and increment a counter every time an edge is found (check for dupes)
+
+	/************************************************************
+	IMPORT: none
+	EXPORT: edgeCount (integer)
+	ASSERTION: getter
+	************************************************************/
 	public int getEdgeCount()
 	{
-		return 0;
+		return edgeCount;
 	}
 
 	/************************************************************
@@ -211,12 +219,7 @@ public class DSAGraph implements Serializable
 		DSALinkedList adjList = vx1.getAdjacent();
 		Iterator<DSAGraphVertex> itr = adjList.iterator(); // - Maybe needs to check instance?
 		boolean found = false;	
-		if(adjList.isEmpty()) // case: list is empty
-		{
-			System.out.println("Adjacency list of "+ label1
-			 +" is empty.");
-		}
-		else //searches for target
+		if(!adjList.isEmpty()) // if list is not empty
 		{
 			while(itr.hasNext()) //iterates until target is found
 			{				
@@ -226,8 +229,7 @@ public class DSAGraph implements Serializable
 					found = true;
 				}
 			}
-		}
-			
+		}			
 		return found;
 	}
 	//TODO: add more to this method
@@ -237,11 +239,7 @@ public class DSAGraph implements Serializable
 		vertices.show(); //only works currently if no values are null
 
 	}
-	//TODO: write code for this method
-	public void displayAsMatrix()
-	{
-		System.out.println("STUB");
-	}
+
 	/************************************************************
 	IMPORT: none
 	EXPORT: count (integer)
@@ -384,8 +382,6 @@ public class DSAGraph implements Serializable
 		public String toString()
 		{
 			return("|" + label + "|");
-			//return ("Label: |" + label + "| Visited? |" + visited + "| Value: " +
-			// value.toString()); //DEBUG
 		}
 
 	}	

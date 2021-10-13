@@ -52,7 +52,7 @@ public class FileReader {
       {
          fileStrm = new FileInputStream(filename);//Underlying stream 
          objStrm = new ObjectInputStream(fileStrm);//Object serialization stream        
-         inObj = (DSAGraph)objStrm.readObject();//Deserialize. Note the cast is needed          
+         inObj = (DSAGraph)objStrm.readObject();//Deserialize.         
          objStrm.close();//Clean up    
       }
       catch (ClassNotFoundException e) 
@@ -80,11 +80,10 @@ public static DSAGraph readFile(String filename)
         File inFile = new File(filename);
 
         try {
-            System.out.println("Reading text file");
+            System.out.println("Reading file: " + filename);
             Scanner sc = new Scanner(inFile);
             sc.skip("#"); //skips comment at beggining
             //sc.useDelimiter(" ");
-            //Scanner lineSc; 
 
             while(sc.hasNextLine())
             {                
@@ -93,17 +92,17 @@ public static DSAGraph readFile(String filename)
 
                 if(command.equals("Node"))//case finds NODE
                 {
-                    System.out.println("Found node");                    
+                    //System.out.println("Found node");                    
                     String label = sc.next();
-                    System.out.println("Added label:" + label);
+                    //System.out.println("Added label:" + label);
                     graph.addVertex(label);
                 }
                 else if(command.equals("Edge")) //case finds EDGE
                 {
-                    System.out.println("Found Edge");
+                    //System.out.println("Found Edge");
                     String l1 = sc.next();
                     String l2 = sc.next();
-                    System.out.println("Added edges:" + l1 + " and " + l2);
+                    //System.out.println("Added edges:" + l1 + " and " + l2);
                     graph.addEdge(l1, l2);
                 }
                 else if(command.equals("#"))
