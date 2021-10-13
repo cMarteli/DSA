@@ -1,4 +1,3 @@
-import java.io.File;
 import java.util.InputMismatchException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
@@ -40,12 +39,13 @@ import java.util.Scanner;
                 case 1: 
                 {   //User choice: Read in a text file
                     
-                    String filename = INPUT_FILENAME; //enter name here TODO: HARDCODED
+                    
                     try 
                     {
+                        String filename = checkFileName(); //gets filename from user
                         graph = FileReader.readFile(filename);
                         
-                    } catch (IllegalArgumentException e)
+                    } catch (Exception e)
                     {
                         System.out.println(e.getMessage());
                     }    
@@ -132,16 +132,15 @@ import java.util.Scanner;
                     System.out.println("Goodbye!");                    
                 }
             }            
-        }
-        //sc.close();        
+        }       
     }//end mainMenu
 
     /************************************************************
-    IMPORT: none
+    IMPORT: infile (String), savefile (String)
     EXPORT: none
-    ASSERTION: Overloaded method Gets user input and performs the associated task while handling invalid inputs
+    ASSERTION: runs when program is booted into simulation mode
     ************************************************************/
-    public void menu(String infile, String saveFile)
+    public void simulation(String infile, String saveFile)
     {
         DSAGraph graph = new DSAGraph();
         graph = FileReader.readFile(infile);
@@ -155,9 +154,65 @@ import java.util.Scanner;
     }
 
     /************************************************************
+    IMPORT: infile (String), savefile (String)
+    EXPORT: none
+    ASSERTION: runs when program is booted into simulation mode
+    ************************************************************/
+    public void nodeOperations(DSAGraph graph)
+    {
+        System.out.println("Current vertex count: " + graph.getVertexCount());
+
+        String prompt = 
+        "[1]Find\n [2]Insert\n [3]Delete\n [4]Update\n [5]Back to menu\n";
+        int userSelect = 0;
+        while(userSelect != 5)
+        {
+            do
+            {
+                userSelect = checkInteger(prompt);
+            }
+            while(userSelect != 1 && userSelect != 2 && userSelect != 3 && userSelect != 4 && userSelect != 5);
+                               
+
+            //case statement to choose required method
+            switch (userSelect)
+            {
+                case 1: 
+                {   //Find
+ 
+                }
+                break;
+
+                case 2:
+                {  //TODO Insert
+
+                }
+                break;
+
+                case 3: //TODO Delete
+                {   
+
+                }
+                break;
+
+                case 4: 
+                {   //TODO Update           
+ 
+                }
+                break;
+
+                default:
+                {  //User choice: Exit
+                    System.out.println("...Returning");                    
+                }
+            }            
+        }
+    }
+
+    /************************************************************
     IMPORT: prompt (String)
     EXPORT: userInt (integer)
-    ASSERTION: Gets user integer and repeats until it's a valid input
+    ASSERTION: Validator Method. Gets user integer and repeats until it's a valid input
     ************************************************************/
     public int checkInteger(String prompt)
     {
@@ -188,6 +243,37 @@ import java.util.Scanner;
         }  
 
         return userInt;
+    }
+
+    /************************************************************
+    IMPORT: none
+    EXPORT: filename (String)
+    ASSERTION: Lets user enter the file name
+    ************************************************************/
+    @SuppressWarnings("resource")
+    public String checkFileName()
+    {
+        Scanner sc = new Scanner(System.in);
+        String prompt = "Please enter a file name:", filename = "";
+        int ans = 0;
+        
+        System.out.println(prompt);
+        filename = sc.next() + ".txt";
+        prompt = "File name: <" + filename + ">\nIs this correct? [1]Confirm [2]Cancel\n";
+        do
+        {
+            ans = checkInteger(prompt);    
+        }
+        while(ans != 1 && ans != 2);
+
+        if(ans == 1)
+        {
+            return filename;
+        }
+        else
+        {
+            return checkFileName();
+        }
     }
 
  }

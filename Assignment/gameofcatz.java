@@ -31,7 +31,7 @@ public class gameofcatz {
                 {
                     throw new Exception("Incorrect number of Arguments for this mode.");
                 }
-                ui.menu(args[1], args[2]); //Start sim mode
+                ui.simulation(args[1], args[2]); //Start sim mode
 
 
             }

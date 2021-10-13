@@ -75,12 +75,10 @@ ASSERTION: Imports a text file and writes it to a graph
 ************************************************************/
 public static DSAGraph readFile(String filename)
     {
-        DSAGraph graph = new DSAGraph();
-        //System.out.println("Reading text file");
-        File inFile = new File(filename);
-
+        DSAGraph graph = new DSAGraph();        
+        System.out.println("Reading file: " + filename);
         try {
-            System.out.println("Reading file: " + filename);
+            File inFile = new File(filename);            
             Scanner sc = new Scanner(inFile);
             sc.skip("#"); //skips comment at beggining
             //sc.useDelimiter(" ");
@@ -111,13 +109,10 @@ public static DSAGraph readFile(String filename)
                 }             
                 
             }
-            sc.close();              
-
-
-
-        } catch (FileNotFoundException e) {
-            // handle exception
-            e.printStackTrace();
+            sc.close();
+        } catch (FileNotFoundException e) //file not found
+        {
+            System.out.println(e.getMessage());
         }
 
         return graph;
