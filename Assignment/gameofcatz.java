@@ -10,8 +10,8 @@ public class gameofcatz {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        
-        try 
+
+        try
         {
             UserInterface ui = new UserInterface();
 
@@ -32,11 +32,9 @@ public class gameofcatz {
                     throw new Exception("Incorrect number of Arguments for this mode.");
                 }
                 ui.simulation(args[1], args[2]); //Start sim mode
-
-
             }
-
-        } catch (Exception e) 
+        }
+        catch (Exception e)
         {
             System.out.println("Error: " + e.getMessage());
         }

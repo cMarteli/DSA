@@ -4,11 +4,11 @@ import java.util.NoSuchElementException;
 /**
  *
  * @author Caio Marteli
- * Adjecency List Graph
+ * Adjacency List Graph
  */
 @SuppressWarnings("unchecked")
 public class DSAGraph implements Serializable
-{	
+{
 	private DSALinkedList vertices;
 	private int edgeCount;
 
@@ -17,7 +17,7 @@ public class DSAGraph implements Serializable
 	IMPORT: none
 	EXPORT: address of new DSA Graph
 	ASSERTION: creates empty linked list, edge count of 0 is default value
-	************************************************************/	
+	************************************************************/
 	public DSAGraph()
 	{
 		vertices = new DSALinkedList();
@@ -27,7 +27,7 @@ public class DSAGraph implements Serializable
 	/************************************************************
 	MUTATORS
 	************************************************************/
-	
+
 	/************************************************************
 	IMPORT: label (String), value (Object)
 	EXPORT: none
@@ -35,7 +35,7 @@ public class DSAGraph implements Serializable
 	************************************************************/
 	public void addVertex(String label)
 	{
-		DSAGraphVertex v = new DSAGraphVertex(label,null);		
+		DSAGraphVertex v = new DSAGraphVertex(label,null);
 		vertices.insertLast(v); //inserts into vertices list at end
 	}
 
@@ -60,7 +60,7 @@ public class DSAGraph implements Serializable
 	{
 		if(!isAdjacent(label1, label2)) //if edge does not already exist add it
 		{
-			DSAGraphVertex vx1 = getVertex(label1), vx2 = getVertex(label2);		
+			DSAGraphVertex vx1 = getVertex(label1), vx2 = getVertex(label2);
 			vx1.addEdge(vx2);
 			vx2.addEdge(vx1);
 			edgeCount++;
@@ -88,7 +88,7 @@ public class DSAGraph implements Serializable
 	EXPORT: count (integer)
 	ASSERTION: iterates through vertices list and returns count
 	************************************************************/
-	
+
 	public int getVertexCount()
 	{
 		int count = 0;
@@ -116,7 +116,7 @@ public class DSAGraph implements Serializable
 	EXPORT: boolean
 	ASSERTION: returns empty if there are no vertices
 	************************************************************/
-	
+
 	public boolean isEmpty()
 	{
 		return vertices.isEmpty();
@@ -128,7 +128,7 @@ public class DSAGraph implements Serializable
 	{
 		Iterator<DSAGraphVertex> itr = vertices.iterator();
 		while(itr.hasNext())
-		{			
+		{
 			itr.next().printAdjacent();
 		}
 	}
@@ -137,10 +137,10 @@ public class DSAGraph implements Serializable
 	EXPORT: target (DSAGraphVertex)
 	ASSERTION: iterates through vertices list w/ a label and returns target if found; if not throws exception
 	************************************************************/
-	public DSAGraphVertex getVertexByValue(String label) 
+	public DSAGraphVertex getVertexByValue(String label)
 	{
 		DSAGraphVertex temp, target = null;
-		Iterator<DSAGraphVertex> itr = vertices.iterator();	
+		Iterator<DSAGraphVertex> itr = vertices.iterator();
 		if(vertices.isEmpty()) // case: list is empty
 		{
 			System.out.println("Vertices list is empty.");
@@ -148,7 +148,7 @@ public class DSAGraph implements Serializable
 		else //searches for target
 		{
 			while(itr.hasNext()) //iterates until target is found
-			{				
+			{
 				temp = itr.next();
 				if(temp.getValue().equals(label))
 				{
@@ -160,19 +160,19 @@ public class DSAGraph implements Serializable
 		{
 			throw new NoSuchElementException("Value |" + label + "| not found");
 		}
-		//System.out.println("Value: " + target.getValue() + "\nLabel: " + target.getLabel()); // debug		
-		
-		return target;		
-	} 
+		//System.out.println("Value: " + target.getValue() + "\nLabel: " + target.getLabel()); // debug
+
+		return target;
+	}
 	/************************************************************
 	IMPORT: label (String)
 	EXPORT: target (DSAGraphVertex)
 	ASSERTION: iterates through vertices list w/ a label and returns target if found; if not throws exception
 	************************************************************/
-	public DSAGraphVertex getVertex(String label) 
+	public DSAGraphVertex getVertex(String label)
 	{
 		DSAGraphVertex temp, target = null;
-		Iterator<DSAGraphVertex> itr = vertices.iterator();		
+		Iterator<DSAGraphVertex> itr = vertices.iterator();
 		if(vertices.isEmpty()) // case: list is empty
 		{
 			System.out.println("Vertices list is empty.");
@@ -180,7 +180,7 @@ public class DSAGraph implements Serializable
 		else //searches for target
 		{
 			while(itr.hasNext()) //iterates until target is found
-			{				
+			{
 				temp = itr.next();
 				if(temp.getLabel().equals(label))
 				{
@@ -192,15 +192,15 @@ public class DSAGraph implements Serializable
 		{
 			throw new NoSuchElementException("Label |" + label + "| not found");
 		}
-		//System.out.println("Label: " + target.getLabel() + "\nValue: " + target.getValue()); // debug		
-		
-		return target;		
-	} 
+		//System.out.println("Label: " + target.getLabel() + "\nValue: " + target.getValue()); // debug
+
+		return target;
+	}
 
 	/************************************************************
 	IMPORT: label (String)
 	EXPORT: getAdjacent (DSALinkedList)
-	ASSERTION: returns the adjecency list from node w/ label
+	ASSERTION: returns the adjacency list from node w/ label
 	************************************************************/
 	public DSALinkedList getAdjacent(String label)
 	{
@@ -218,18 +218,18 @@ public class DSAGraph implements Serializable
 		DSAGraphVertex temp, vx1 = getVertex(label1);
 		DSALinkedList adjList = vx1.getAdjacent();
 		Iterator<DSAGraphVertex> itr = adjList.iterator(); // - Maybe needs to check instance?
-		boolean found = false;	
+		boolean found = false;
 		if(!adjList.isEmpty()) // if list is not empty
 		{
 			while(itr.hasNext()) //iterates until target is found
-			{				
+			{
 				temp = itr.next();
 				if(temp.getLabel().equals(label2))
 				{
 					found = true;
 				}
 			}
-		}			
+		}
 		return found;
 	}
 	//TODO: add more to this method
@@ -241,16 +241,27 @@ public class DSAGraph implements Serializable
 	}
 
 	/************************************************************
+	IMPORT: label (String)
+	EXPORT: getAdjacent (DSALinkedList)
+	ASSERTION: STUB
+	************************************************************/
+	public DSALinkedList removeVertex(String label)
+	{
+		DSAGraphVertex vx = getVertex(label);
+		return vx.getAdjacent();
+	}
+
+	/************************************************************
 	IMPORT: none
 	EXPORT: count (integer)
 	ASSERTION: iterates through vertices list and returns count
 	************************************************************/
-	
+
 	public void clear()
 	{
 		Iterator<DSAGraphVertex> itr = vertices.iterator();
 		while(itr.hasNext())
-		{			
+		{
 			itr.next().clearVisited();
 		}
 	}
@@ -262,34 +273,34 @@ public class DSAGraph implements Serializable
 	************************************************************/
 	public void DFSUtil(DSAGraphVertex vx, DSAStack visited, DSAQueue queue)
 	{
-		try {		
+		try {
 			if(vx != null) //base case if it's null end recursion
 			{
 				visited.push(vx); //push onto visited stack
-			
+
 				Iterator<DSAGraphVertex> itr = vx.getAdjacent().iterator();
 
 				do{
-					while (itr.hasNext())		
+					while (itr.hasNext())
 					{
-						vx = itr.next();				
+						vx = itr.next();
 						if(!vx.getVisited()) //if not visited traverse here
 						{
 							queue.enqueue(vx); //adds to output queue
-							vx.setVisited(); //sets to visited							
+							vx.setVisited(); //sets to visited
 							DFSUtil(vx, visited, queue);
 						}
-					}			
-					visited.pop();	
+					}
+					visited.pop();
 
 				} while(!visited.isEmpty());
 			}
-		} 
+		}
 		catch (IllegalArgumentException e) //catches empty stack exceptions
 		{
-			//System.out.println(e.getMessage());			
+			//System.out.println(e.getMessage());
 		}
-		
+
 	}
 
 	/************************************************************
@@ -299,16 +310,23 @@ public class DSAGraph implements Serializable
 	************************************************************/
 	public DSAQueue depthFirstSearch()
 	{
-		DSAQueue queue = new DSAQueue();
-		clear(); //sets all visited on all vertices == false
-		DSAGraphVertex vx = (DSAGraphVertex)vertices.peekFirst(); //picks head of vertices list to start on
-		DSAStack visited = new DSAStack();	//creates empty stack
-		vx.setVisited(); // Marks vx visited == true
-		queue.enqueue(vx); //start point
-		
-		DFSUtil(vx, visited, queue); //begin recursion
+		if(!vertices.isEmpty())
+		{
+			DSAQueue queue = new DSAQueue();
+			clear(); //sets all visited on all vertices == false
+			DSAGraphVertex vx = (DSAGraphVertex)vertices.peekFirst(); //picks head of vertices list to start on
+			DSAStack visited = new DSAStack();	//creates empty stack
+			vx.setVisited(); // Marks vx visited == true
+			queue.enqueue(vx); //start point
 
-		return queue;
+			DFSUtil(vx, visited, queue); //begin recursion
+
+			return queue;
+		}
+		else
+		{
+			throw new NoSuchElementException("List is empty");
+		}
 	}
 
 	/************************************************************
@@ -326,13 +344,13 @@ public class DSAGraph implements Serializable
 		IMPORT: none
 		EXPORT: address of new DSAGraphVertex object
 		ASSERTION: Sets label and value from parameters; visited = false is default
-		************************************************************/ 
+		************************************************************/
 		public DSAGraphVertex(String inLabel, Object inValue)
 		{
 			label = inLabel;
 			value = inValue;
 			links = new DSALinkedList();
-			visited = false;	
+			visited = false;
 		}
 		/**************************************************
 		ACCESSORS
@@ -361,14 +379,14 @@ public class DSAGraph implements Serializable
 		public boolean getVisited()
 		{
 			return visited;
-		} 
+		}
 		/**************************************************
 		MUTATORS
 		**************************************************/
 		public void addEdge(DSAGraphVertex inVertex)
 		{
 			links.insertLast(inVertex); //inserts at the end of links
-		} 
+		}
 		public void setVisited()
 		{
 			visited = true;
@@ -384,6 +402,6 @@ public class DSAGraph implements Serializable
 			return("|" + label + "|");
 		}
 
-	}	
+	}
 
 }
