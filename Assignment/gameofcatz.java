@@ -19,7 +19,7 @@ public class gameofcatz {
 
             if(args.length < 1) //if no arguments
             {
-                System.out.println("Game of Catz\nPlease enter the correct parameters\n-i : interactive testing environment\n-s : simulation mode (usage: gameofcatz –s infile savefile )");
+                System.out.println("Game of Catz\nPlease enter the correct parameters\n-i : interactive testing environment\n-s : simulation mode (usage: gameofcatz -s infile savefile )");
             }
             else if(args[0].equals("-i"))
             {
