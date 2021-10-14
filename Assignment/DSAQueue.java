@@ -6,6 +6,8 @@ import java.util.Iterator;
  * Implementing DSALinkedList
  * @author Caio Marteli 19598552
  */
+// Marteli, C (2021) DSAPrac4 source code (Version 2.0) [Source code]. https://github.com/cMarteli/DSA
+// Modified and improved October 2021 for gameofcatz.java
 @SuppressWarnings("unchecked")
 public class DSAQueue implements Iterable<DSAQueue>, Serializable{
 
@@ -16,12 +18,12 @@ public class DSAQueue implements Iterable<DSAQueue>, Serializable{
     IMPORT: none
     EXPORT: address of new DSAQueue object
     ASSERTION: currentSize = 0 are default states
-    ************************************************************/   
-    protected DSAQueue() 
+    ************************************************************/
+    protected DSAQueue()
     {
         queue = new DSALinkedList();
     }
-    
+
 	/************************************************************
     IMPORT: data (Object)
     EXPORT: none
@@ -31,7 +33,7 @@ public class DSAQueue implements Iterable<DSAQueue>, Serializable{
     {
         queue.insertLast(data);
     }
-    
+
     /************************************************************
     IMPORT: none
     EXPORT: (Object)
@@ -49,7 +51,7 @@ public class DSAQueue implements Iterable<DSAQueue>, Serializable{
             data = queue.peekFirst();
             queue.removeFirst();
         }
-        return data;       
+        return data;
     }
 
     /************************************************************
@@ -57,17 +59,17 @@ public class DSAQueue implements Iterable<DSAQueue>, Serializable{
     EXPORT: (boolean)
     ASSERTION: Check if queue is empty.
     ************************************************************/
-    protected boolean isEmpty() 
+    protected boolean isEmpty()
     {
         return queue.isEmpty();
     }
-    
+
     /************************************************************
     IMPORT: none
     EXPORT: none
     ASSERTION: Prints entire queue
     ************************************************************/
-    protected void show() 
+    protected void show()
     {
         queue.show();
     }
@@ -93,7 +95,7 @@ public class DSAQueue implements Iterable<DSAQueue>, Serializable{
     protected Object peekLast()
     {
         return queue.peekLast();
-    }    
+    }
 
 
 }

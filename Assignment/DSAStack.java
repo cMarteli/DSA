@@ -6,6 +6,8 @@ import java.util.Iterator;
  * Implementing DSALinkedList
  * @author Caio Marteli 19598552
  */
+// Marteli, C (2021) DSAPrac4 source code (Version 2.0) [Source code]. https://github.com/cMarteli/DSA
+// Modified and improved October 2021 for gameofcatz.java
 public class DSAStack implements Iterable, Serializable{
 
 	private DSALinkedList stack;
@@ -15,12 +17,12 @@ public class DSAStack implements Iterable, Serializable{
     IMPORT: none
     EXPORT: address of new DSAStack object
     ASSERTION: creates new DSALinkedList
-    ************************************************************/ 
+    ************************************************************/
     public DSAStack()
 	{
         stack = new DSALinkedList();
 	}
-    
+
     /************************************************************
     IMPORT: data (Object)
     EXPORT: none
@@ -41,7 +43,7 @@ public class DSAStack implements Iterable, Serializable{
         Object data = null;
         try {
             data = stack.removeFirst();
-            //stack.peekFirst();                  
+            //stack.peekFirst();
         } catch (NullPointerException e) {
             throw new IllegalArgumentException("Nothing left in stack");
         }
@@ -55,7 +57,7 @@ public class DSAStack implements Iterable, Serializable{
     ************************************************************/
     public Object peek()
     {
-		return stack.peekFirst();		
+		return stack.peekFirst();
     }
 
     /************************************************************

@@ -1,8 +1,10 @@
 /**
- * Main class Game of Cats
- * JAVA
- * 2021 DSA Assignment
- * @author Caio Marteli
+ * gameofcatz.java
+ *
+ * Main class Game of Cats, handles command line parameters
+ * and catches any unhandled exceptions that may have fallen through the cracks.
+ * 2021/October DSA Assignment
+ * @author Caio Marteli (19598552)
  */
 public class gameofcatz {
 
@@ -29,7 +31,7 @@ public class gameofcatz {
                 System.out.println("simulation mode");
                 if(args.length != 3) //checks for correct number of parameters
                 {
-                    throw new Exception("Incorrect number of Arguments for this mode.");
+                    throw new IllegalArgumentException("Incorrect number of Arguments for this mode.");
                 }
                 ui.simulation(args[1], args[2]); //Start sim mode
             }

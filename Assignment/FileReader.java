@@ -6,35 +6,37 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Scanner;
 /**
- *
- * @author Caio Marteli 19598552
-//  */
+ * FileReader.java
+ * @author Caio Marteli (19598552)
+*/
+// Marteli, C (2021) OOPD source code (Version 1.0) [Source code]. https://github.com/cMarteli/
+// Modified and improved October 2021 for gameofcatz.java
 public class FileReader {
 
     public static final String OUTPUT_FILENAME = "savefile.txt";
 
-    
+
     /************************************************************
     IMPORT: objToSave(ContainerClass), filename(String)
     EXPORT: none
     ASSERTION: Gets filename and performs the associated task while handling invalid inputs
     ************************************************************/
-   public static void save(DSAGraph objToSave, String filename) 
-   {   
-      FileOutputStream fileStrm; 
+   public static void save(DSAGraph objToSave, String filename)
+   {
+      FileOutputStream fileStrm;
       ObjectOutputStream objStrm;
 
       try
-      { 
-         fileStrm = new FileOutputStream(filename);   //Underlying stream 
-         objStrm = new ObjectOutputStream(fileStrm);    //Object serialization stream 
+      {
+         fileStrm = new FileOutputStream(filename);   //Underlying stream
+         objStrm = new ObjectOutputStream(fileStrm);    //Object serialization stream
          objStrm.writeObject(objToSave);    //Serialize and save to filename
-         objStrm.close();//Clean up 
-      } 
-      catch (Exception e) 
-      {  //should do more here 
-         throw new IllegalArgumentException("Unable to save object to file" + e); 
-      }         
+         objStrm.close();//Clean up
+      }
+      catch (Exception e)
+      {  //should do more here
+         throw new IllegalArgumentException("Unable to save object to file" + e);
+      }
    }
 
    /************************************************************
@@ -43,54 +45,54 @@ public class FileReader {
     ASSERTION: Gets filename and performs the associated task while handling invalid inputs
     ************************************************************/
 
-   public static DSAGraph load(String filename) throws IllegalArgumentException  
-   {   
+   public static DSAGraph load(String filename) throws IllegalArgumentException
+   {
       FileInputStream fileStrm;
-      ObjectInputStream objStrm; 
+      ObjectInputStream objStrm;
       DSAGraph inObj = null;
       try
       {
-         fileStrm = new FileInputStream(filename);//Underlying stream 
-         objStrm = new ObjectInputStream(fileStrm);//Object serialization stream        
-         inObj = (DSAGraph)objStrm.readObject();//Deserialize.         
-         objStrm.close();//Clean up    
+         fileStrm = new FileInputStream(filename);//Underlying stream
+         objStrm = new ObjectInputStream(fileStrm);//Object serialization stream
+         inObj = (DSAGraph)objStrm.readObject();//Deserialize.
+         objStrm.close();//Clean up
       }
-      catch (ClassNotFoundException e) 
-      { 
-         System.out.println("Class not found: " + e); 
-      }  
-      catch (Exception e) 
-      { 
-         throw new IllegalArgumentException("Unable to load object from file"); 
-      } 
+      catch (ClassNotFoundException e)
+      {
+         System.out.println("Class not found: " + e);
+      }
+      catch (Exception e)
+      {
+         throw new IllegalArgumentException("Unable to load object from file");
+      }
       return inObj;
 
     }
 
 
-/************************************************************    
+/************************************************************
 IMPORT: filename (String)
 EXPORT: graph (DSAGraph)
 ASSERTION: Imports a text file and writes it to a graph
 ************************************************************/
 public static DSAGraph readFile(String filename)
     {
-        DSAGraph graph = new DSAGraph();        
+        DSAGraph graph = new DSAGraph();
         System.out.println("Reading file: " + filename);
         try {
-            File inFile = new File(filename);            
+            File inFile = new File(filename);
             Scanner sc = new Scanner(inFile);
             sc.skip("#"); //skips comment at beggining
             //sc.useDelimiter(" ");
 
             while(sc.hasNextLine())
-            {                
+            {
                 //sc.nextLine(); //currently always skipping the first line
                 String command = sc.next();
 
                 if(command.equals("Node"))//case finds NODE
                 {
-                    //System.out.println("Found node");                    
+                    //System.out.println("Found node");
                     String label = sc.next();
                     //System.out.println("Added label:" + label);
                     graph.addVertex(label);
@@ -106,8 +108,8 @@ public static DSAGraph readFile(String filename)
                 else if(command.equals("#"))
                 {
                     System.out.println("Comment line"); //TODO: currently crashes if there's a comment after the '#'
-                }             
-                
+                }
+
             }
             sc.close();
         } catch (FileNotFoundException e) //file not found
@@ -116,7 +118,7 @@ public static DSAGraph readFile(String filename)
         }
 
         return graph;
-     
+
 
     }//end readfile()
 
@@ -129,19 +131,19 @@ public static DSAGraph readFile(String filename)
         char userAnswer;
         do
         {
-            System.out.println(prompt);        
+            System.out.println(prompt);
             prompt = "Please enter Y or N";
             userAnswer = Character.toUpperCase(sc1.next().charAt(0));
         }
         while (userAnswer != 'Y' && userAnswer != 'N');
-        
+
         if (userAnswer == 'Y')
         {
             prompt = "Enter file Name:";
             System.out.println(prompt);
             fileName = sc1.next() + ".csv";
             sc1.close();
-   
+
         }
         else
         {

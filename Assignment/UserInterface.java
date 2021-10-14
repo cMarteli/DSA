@@ -2,10 +2,12 @@ import java.util.InputMismatchException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 /**
- * DSAStack.java
- * Implementing DSALinkedList
- * @author Caio Marteli 19598552
+ * UserInterface.java
+ * Contains menus and user input handling methods
+ * @author Caio Marteli (19598552)
  */
+// Marteli, C (2021) OOPD source code (Version 1.0) [Source code]. https://github.com/cMarteli/
+// Modified and improved October 2021 for gameofcatz.java
 @SuppressWarnings("resource")
  public class UserInterface
  {

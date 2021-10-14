@@ -1,11 +1,13 @@
 import java.io.Serializable;
 import java.util.Iterator;
 /**
- *
- * @author Caio Marteli
- *
- *Contains Iterator Class AND DSAListNode
+ * DSALinkedList.java
+ * @author Caio Marteli - September 2021
+ * @author Caio Marteli - October 2021
+ * Contains Iterator Class AND DSAListNode
  */
+// Marteli, C (2021) DSAPrac4 source code (Version 2.0) [Source code]. https://github.com/cMarteli/DSA
+// Modified and improved October 2021 for gameofcatz.java
 @SuppressWarnings("unchecked")
 public class DSALinkedList implements Iterable<DSALinkedList>, Serializable{
 
@@ -44,10 +46,10 @@ public class DSALinkedList implements Iterable<DSALinkedList>, Serializable{
     /************************************************************
     IMPORT: data (Object)
     EXPORT: none
-    ASSERTION: Adds new element to first position of list. TODO: find out why it's not storing previous
+    ASSERTION: Adds new element to first position of list.
     ************************************************************/
 	public void insertFirst(Object data)
-	{				
+	{
 		if(isEmpty())
 		{
 			DSAListNode node = new DSAListNode(data, head, head);
@@ -57,9 +59,9 @@ public class DSALinkedList implements Iterable<DSALinkedList>, Serializable{
 		else
 		{
 			DSAListNode node = new DSAListNode(data, head, null); //creates new node linking to old head
-			head.previous = node; //makes old head point to new one		
+			head.previous = node; //makes old head point to new one
 			head = node; //moves the head to new node
-		}			
+		}
 
 	}
 
@@ -79,16 +81,11 @@ public class DSALinkedList implements Iterable<DSALinkedList>, Serializable{
 		else
 		{
 			DSAListNode node =  new DSAListNode(data, null, tail); //stores data; next is set to null and previous to tail
-			// DSAListNode n = head;
-			// while(n.next != null)
-			// {
-			// 	n = n.next;
-			// }
 			node.previous = tail; //keeps track of previous tail
 			tail.next = node;
 			tail = node; //update tail
 		}
-		
+
 	}
 
     /************************************************************
@@ -118,24 +115,24 @@ public class DSALinkedList implements Iterable<DSALinkedList>, Serializable{
     ************************************************************/
 	public Object removeFirst()
 	{
-		Object pop;
 		if(isEmpty())
 		{
 			throw new IllegalArgumentException("Can't remove, list is empty");
 		}
 		else if(head == tail)
 		{
-			pop = head.getValue();
+			Object pop = head.getValue();
 			head = null;
 			tail = null;
+			return pop;
 		}
 		else
 		{
-			pop = head.getValue();
+			Object pop = head.getValue();
 			head = head.next;
-			head.previous = null;			
+			head.previous = null;
+			return pop;
 		}
-		return pop;		
 	}
     /************************************************************
     IMPORT: none
@@ -144,24 +141,24 @@ public class DSALinkedList implements Iterable<DSALinkedList>, Serializable{
     ************************************************************/
 	public Object removeLast()
 	{
-		Object pop;
 		if(isEmpty())
 		{
 			throw new IllegalArgumentException("Can't remove, list is empty");
 		}
 		else if(head == tail)
 		{
-			pop = tail.getValue();
+			Object pop = tail.getValue();
 			head = null;
 			tail = null;
+			return pop;
 		}
 		else
 		{
-			pop = tail.getValue();
+			Object pop = tail.getValue();
 			tail = tail.previous;
 			tail.next = null;
+			return pop;
 		}
-		return pop;
 	}
 
     /************************************************************
@@ -192,7 +189,6 @@ public class DSALinkedList implements Iterable<DSALinkedList>, Serializable{
 		{
 			if(temp.data.equals(target))
 			{
-				//System.out.println("Found: "+ temp.data.toString()); //debug
 				return temp; //found
 			}
 			temp = temp.next;
@@ -256,7 +252,7 @@ public class DSALinkedList implements Iterable<DSALinkedList>, Serializable{
 		}
 
 		/************************************************************
-		*** GETTERS ***
+		*** ACCESSORS ***
 	    ************************************************************/
 		public DSAListNode getNext()
 		{

@@ -2,10 +2,12 @@ import java.io.Serializable;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 /**
- *
- * @author Caio Marteli
- * Adjacency List Graph
+ * DSAGraph.java
+ * @author Caio Marteli (19598552)
+ * Handles all graph operations, dependancies: DSALinked List, DSAQueue, DSAStack
  */
+// Marteli, C (2021) DSAPrac6 source code (Version 2.0) [Source code]. https://github.com/cMarteli/DSA
+// Modified and improved October 2021 for gameofcatz.java
 @SuppressWarnings("unchecked")
 public class DSAGraph implements Serializable
 {
@@ -25,35 +27,49 @@ public class DSAGraph implements Serializable
 	}
 
 	/************************************************************
-	MUTATORS
-	************************************************************/
-
-	/************************************************************
 	IMPORT: label (String), value (Object)
 	EXPORT: none
 	ASSERTION: adds new vertex to with label only and sets value to null
+	two or more vertices can not have the same label.
 	************************************************************/
-	public void addVertex(String label)
+	public boolean addVertex(String label)
 	{
-		DSAGraphVertex v = new DSAGraphVertex(label,null);
-		vertices.insertLast(v); //inserts into vertices list at end
+		if(!hasVertex(label)) //if edge does not already exist add it
+		{
+			DSAGraphVertex v = new DSAGraphVertex(label, null);
+			vertices.insertLast(v); //inserts into vertices list at end
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 
 	/************************************************************
 	IMPORT: label (String), value (Object)
-	EXPORT: none
-	ASSERTION: adds new vertex to with label and value
+	EXPORT: boolean (true if vertex was added, false if not)
+	ASSERTION: Overloaded method. Adds new vertex to with label and value,
+	two or more vertices can not have the same label.
 	************************************************************/
-	public void addVertex(String label, Object value)
+	public boolean addVertex(String label, Object value)
 	{
-		DSAGraphVertex v = new DSAGraphVertex(label, value);
-		vertices.insertLast(v); //inserts into vertices list at end
+		if(!hasVertex(label)) //if edge does not already exist add it
+		{
+			DSAGraphVertex v = new DSAGraphVertex(label, value);
+			vertices.insertLast(v); //inserts into vertices list at end
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 
 	/************************************************************
 	IMPORT: label1 (String), label2 (String)
 	EXPORT: boolean (true if edge was added, false if not)
-	ASSERTION: Adds edge between 2 parameter nodes
+	ASSERTION: Checks if an edge exists and then adds edge between 2 parameter nodes
 	************************************************************/
 
 	public boolean addEdge(String label1, String label2)
@@ -73,9 +89,29 @@ public class DSAGraph implements Serializable
 	}
 
 	/************************************************************
+	IMPORT: label (String)
+	EXPORT: none
+	ASSERTION: checks if a vetex exists by label then deletes it
+	************************************************************/
+	public boolean removeVertex(String label)
+	{
+		if(hasVertex(label)) //if vertex in in list
+		{
+			vertices.removeAt(getVertex(label));
+			System.out.println("Deleted: " + label); //debug
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+
+	/************************************************************
 	IMPORT: label1 (String), label2 (String)
 	EXPORT: boolean (true if edge was removed, false if not)
-	ASSERTION: Adds edge between 2 parameter nodes
+	ASSERTION: Checks if an edge exists and then removes edge between 2 parameter nodes
 	************************************************************/
 
 	public boolean removeEdge(String label1, String label2)
@@ -106,52 +142,36 @@ public class DSAGraph implements Serializable
 			getVertex(label);
 			sucess = true;
 		} catch (NoSuchElementException e) {
-			System.out.println(e.getMessage());
+			System.out.println(e.getMessage()); //prints message - vx doesn't exist
 		}
 		return sucess;
 	}
 
 	/************************************************************
 	IMPORT: label (String)
-	EXPORT: none
-	ASSERTION: deletes a vertex by label TODO: testing
+	EXPORT: bool (DSALinkedList)
+	ASSERTION: checks if two nodes are adjacent (if an edge exists)
 	************************************************************/
-	public void removeVertex(String label)
+	public boolean isAdjacent(String label1, String label2)
 	{
-		if(hasVertex(label)) //if vertex in in list
+		DSAGraphVertex temp, vx1 = getVertex(label1);
+		DSALinkedList adjList = vx1.getAdjacent();
+		Iterator<DSAGraphVertex> itr = adjList.iterator(); // - Maybe needs to check instance?
+		boolean found = false;
+		if(!adjList.isEmpty()) // if list is not empty
 		{
-			vertices.removeAt(getVertex(label));
-			System.out.println("Deleted: " + label); //debug
+			while(itr.hasNext()) //iterates until target is found
+			{
+				temp = itr.next();
+				if(temp.getLabel().equals(label2))
+				{
+					found = true;
+				}
+			}
 		}
+		return found;
 	}
 
-	/************************************************************
-	IMPORT: none
-	EXPORT: count (integer)
-	ASSERTION: iterates through vertices list and returns count
-	************************************************************/
-
-	public int getVertexCount()
-	{
-		int count = 0;
-		Iterator<DSAGraphVertex> itr = vertices.iterator();
-		while(itr.hasNext())
-		{
-			count++;
-			itr.next();
-		}
-		return count;
-	}
-
-	/************************************************************
-	IMPORT: none
-	EXPORT: edgeCount (integer)
-	ASSERTION: getter
-	************************************************************/
-	public int getEdgeCount()
-	{
-		return edgeCount;
-	}
 
 	/************************************************************
 	IMPORT: none
@@ -164,8 +184,95 @@ public class DSAGraph implements Serializable
 		return vertices.isEmpty();
 	}
 
+	/************************************************************
+	TRAVERSAL
+	************************************************************/
+	/************************************************************
+	IMPORT: label (String)
+	EXPORT: queue (DSAQueue)
+	ASSERTION: Wrapper for DEPTH FIRST SEARCH returns queue of objs in traversal order
+	************************************************************/
+	public DSAQueue depthFirstSearch()
+	{
+		if(!vertices.isEmpty())
+		{
+			DSAQueue queue = new DSAQueue();
+			clear(); //sets all visited on all vertices == false
+			DSAGraphVertex vx = (DSAGraphVertex)vertices.peekFirst(); //picks head of vertices list to start on
+			DSAStack visited = new DSAStack();	//creates empty stack
+			vx.setVisited(); // Marks vx visited == true
+			queue.enqueue(vx); //start point
 
-	//DEBUG method, iterates through vertices list and prints all edges
+			dfs(vx, visited, queue); //begin recursion
+
+			return queue;
+		}
+		else
+		{
+			throw new NoSuchElementException("List is empty");
+		}
+	}
+
+	/************************************************************
+	IMPORT: label (String)queue
+	EXPORT: bool (DSALinkedList)
+	ASSERTION: DEPTH FIRST SEARCH Recur for all the vertices adjacent
+	to vx while stack is not empty
+	************************************************************/
+	public void dfs(DSAGraphVertex vx, DSAStack visited, DSAQueue queue)
+	{
+		try {
+			if(vx != null) //base case if it's null end recursion
+			{
+				visited.push(vx); //push onto visited stack
+
+				Iterator<DSAGraphVertex> itr = vx.getAdjacent().iterator();
+
+				do{
+					while (itr.hasNext())
+					{
+						vx = itr.next();
+						if(!vx.getVisited()) //if not visited traverse here
+						{
+							queue.enqueue(vx); //adds to output queue
+							vx.setVisited(); //sets to visited
+							dfs(vx, visited, queue);
+						}
+					}
+					visited.pop();
+
+				} while(!visited.isEmpty());
+			}
+		}
+		catch (IllegalArgumentException e) //catches empty stack exceptions
+		{
+			//System.out.println(e.getMessage());
+		}
+
+	}
+
+	/************************************************************
+	IMPORT: none
+	EXPORT: count (integer)
+	ASSERTION: helper method for traversal methods
+	iterates through vertices list and clears visited from each
+	************************************************************/
+
+	public void clear()
+	{
+		Iterator<DSAGraphVertex> itr = vertices.iterator();
+		while(itr.hasNext())
+		{
+			itr.next().clearVisited();
+		}
+	}
+
+
+	/************************************************************
+	IMPORT: none
+	EXPORT: boolean
+	ASSERTION: DEBUG method, iterates through vertices list and prints all edges
+	************************************************************/
 	public void printEdges()
 	{
 		System.out.println("Printing all Edges:");
@@ -175,37 +282,10 @@ public class DSAGraph implements Serializable
 			itr.next().printAdjacent();
 		}
 	}
+
 	/************************************************************
-	IMPORT: label (String)
-	EXPORT: target (DSAGraphVertex)
-	ASSERTION: iterates through vertices list w/ a label and returns target if found; if not throws exception
+	MUTATORS
 	************************************************************/
-	public DSAGraphVertex getVertexByValue(String label)
-	{
-		DSAGraphVertex temp, target = null;
-		Iterator<DSAGraphVertex> itr = vertices.iterator();
-		if(vertices.isEmpty()) // case: list is empty
-		{
-			System.out.println("Vertices list is empty.");
-		}
-		else //searches for target
-		{
-			while(itr.hasNext()) //iterates until target is found
-			{
-				temp = itr.next();
-				if(temp.getValue().equals(label))
-				{
-					target = temp;
-				}
-			}
-		}
-		if(target == null) // case: not found
-		{
-			throw new NoSuchElementException("Value |" + label + "| not found");
-		}
-		//System.out.println("Value: " + target.getValue() + "\nLabel: " + target.getLabel()); // debug
-		return target;
-	}
 	/************************************************************
 	IMPORT: label (String)
 	EXPORT: target (DSAGraphVertex)
@@ -234,7 +314,6 @@ public class DSAGraph implements Serializable
 		{
 			throw new NoSuchElementException("Label |" + label + "| not found");
 		}
-		//System.out.println("Label: " + target.getLabel() + "\nValue: " + target.getValue()); // debug
 
 		return target;
 	}
@@ -242,7 +321,7 @@ public class DSAGraph implements Serializable
 	/************************************************************
 	IMPORT: label (String)
 	EXPORT: getAdjacent (DSALinkedList)
-	ASSERTION: returns the adjacency list from node w/ label
+	ASSERTION: returns the adjacency list from vxnode using label
 	************************************************************/
 	public DSALinkedList getAdjacent(String label)
 	{
@@ -251,117 +330,48 @@ public class DSAGraph implements Serializable
 	}
 
 	/************************************************************
-	IMPORT: label (String)
-	EXPORT: bool (DSALinkedList)
-	ASSERTION: checks if two nodes are adjacent
-	************************************************************/
-	public boolean isAdjacent(String label1, String label2)
-	{
-		DSAGraphVertex temp, vx1 = getVertex(label1);
-		DSALinkedList adjList = vx1.getAdjacent();
-		Iterator<DSAGraphVertex> itr = adjList.iterator(); // - Maybe needs to check instance?
-		boolean found = false;
-		if(!adjList.isEmpty()) // if list is not empty
-		{
-			while(itr.hasNext()) //iterates until target is found
-			{
-				temp = itr.next();
-				if(temp.getLabel().equals(label2))
-				{
-					found = true;
-				}
-			}
-		}
-		return found;
-	}
-	//TODO: add more to this method
-	public void displayAsList()
-	{
-		System.out.println("Printing all vertices");
-		vertices.show(); //only works currently if no values are null
-
-	}
-
-	/************************************************************
 	IMPORT: none
 	EXPORT: count (integer)
 	ASSERTION: iterates through vertices list and returns count
 	************************************************************/
 
-	public void clear()
+	public int getVertexCount()
 	{
+		int count = 0;
 		Iterator<DSAGraphVertex> itr = vertices.iterator();
 		while(itr.hasNext())
 		{
-			itr.next().clearVisited();
+			count++;
+			itr.next();
 		}
+		return count;
 	}
 
 	/************************************************************
-	IMPORT: label (String)queue
-	EXPORT: bool (DSALinkedList)
-	ASSERTION: DEPTH FIRST SEARCH Recur for all the vertices adjacent to vx while stack is not empty
+	IMPORT: none
+	EXPORT: edgeCount (integer)
+	ASSERTION: accessor for global var edgeCount
 	************************************************************/
-	public void DFSUtil(DSAGraphVertex vx, DSAStack visited, DSAQueue queue)
+	public int getEdgeCount()
 	{
-		try {
-			if(vx != null) //base case if it's null end recursion
-			{
-				visited.push(vx); //push onto visited stack
-
-				Iterator<DSAGraphVertex> itr = vx.getAdjacent().iterator();
-
-				do{
-					while (itr.hasNext())
-					{
-						vx = itr.next();
-						if(!vx.getVisited()) //if not visited traverse here
-						{
-							queue.enqueue(vx); //adds to output queue
-							vx.setVisited(); //sets to visited
-							DFSUtil(vx, visited, queue);
-						}
-					}
-					visited.pop();
-
-				} while(!visited.isEmpty());
-			}
-		}
-		catch (IllegalArgumentException e) //catches empty stack exceptions
-		{
-			//System.out.println(e.getMessage());
-		}
-
+		return edgeCount;
 	}
 
+
 	/************************************************************
-	IMPORT: label (String)
-	EXPORT: queue (DSAQueue)
-	ASSERTION: Wrapper DEPTH FIRST SEARCH returns q of objs in traversal order
+	IMPORT: none
+	EXPORT: none
+	ASSERTION: Display vertices list
 	************************************************************/
-	public DSAQueue depthFirstSearch()
+	public void displayAsList()
 	{
-		if(!vertices.isEmpty())
-		{
-			DSAQueue queue = new DSAQueue();
-			clear(); //sets all visited on all vertices == false
-			DSAGraphVertex vx = (DSAGraphVertex)vertices.peekFirst(); //picks head of vertices list to start on
-			DSAStack visited = new DSAStack();	//creates empty stack
-			vx.setVisited(); // Marks vx visited == true
-			queue.enqueue(vx); //start point
-
-			DFSUtil(vx, visited, queue); //begin recursion
-
-			return queue;
-		}
-		else
-		{
-			throw new NoSuchElementException("List is empty");
-		}
+		System.out.println("Printing all vertices");
+		vertices.show();
 	}
 
+
 	/************************************************************
-	PRIVATE INNER CLASS
+	PRIVATE INNER CLASS - DSAGraphVertex
 	************************************************************/
 	private class DSAGraphVertex implements Serializable
 	{
