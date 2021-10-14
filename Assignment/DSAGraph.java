@@ -52,11 +52,11 @@ public class DSAGraph implements Serializable
 
 	/************************************************************
 	IMPORT: label1 (String), label2 (String)
-	EXPORT: none
+	EXPORT: boolean (true if edge was added, false if not)
 	ASSERTION: Adds edge between 2 parameter nodes
 	************************************************************/
 
-	public void addEdge(String label1, String label2)
+	public boolean addEdge(String label1, String label2)
 	{
 		if(!isAdjacent(label1, label2)) //if edge does not already exist add it
 		{
@@ -64,6 +64,33 @@ public class DSAGraph implements Serializable
 			vx1.addEdge(vx2);
 			vx2.addEdge(vx1);
 			edgeCount++;
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	/************************************************************
+	IMPORT: label1 (String), label2 (String)
+	EXPORT: boolean (true if edge was removed, false if not)
+	ASSERTION: Adds edge between 2 parameter nodes
+	************************************************************/
+
+	public boolean removeEdge(String label1, String label2)
+	{
+		if(isAdjacent(label1, label2)) //if edge exists remove it
+		{
+			DSAGraphVertex vx1 = getVertex(label1), vx2 = getVertex(label2);
+			vx1.removeEdge(vx2);
+			vx2.removeEdge(vx1);
+			edgeCount--;
+			return true;
+		}
+		else
+		{
+			return false;
 		}
 	}
 
@@ -141,6 +168,7 @@ public class DSAGraph implements Serializable
 	//DEBUG method, iterates through vertices list and prints all edges
 	public void printEdges()
 	{
+		System.out.println("Printing all Edges:");
 		Iterator<DSAGraphVertex> itr = vertices.iterator();
 		while(itr.hasNext())
 		{
@@ -389,6 +417,10 @@ public class DSAGraph implements Serializable
 		public void addEdge(DSAGraphVertex inVertex)
 		{
 			links.insertLast(inVertex); //inserts at the end of links
+		}
+		public void removeEdge(DSAGraphVertex inVertex)
+		{
+			links.removeAt(inVertex); //Removes specific edge
 		}
 		public void setVisited()
 		{

@@ -44,14 +44,13 @@ import java.util.Scanner;
                 break;
 
                 case 2:
-                {  //TODO User choice: Node operations
+                {  //User choice: Node operations; get total # nodes add or remove nodes etc...
                     System.out.println("Node operations");
                     nodeOperations(graph);
-                    //get total # nodes add or remove nodes etc...
                 }
                 break;
 
-                case 3: //TODO User choice: Edge operations
+                case 3: //User choice: Edge operations
                 {
                     System.out.println("Edge operations");
                     edgeOperations(graph);
@@ -164,37 +163,28 @@ import java.util.Scanner;
             {
                 case 1: //Find
                 {
-                    Scanner sc = new Scanner(System.in);
-                    System.out.println("Enter label to locate node by:");
-                    String userLabel = sc.next();
-                    if(graph.hasVertex(userLabel))
+                    if(graph.hasVertex(getUsrStr("Enter label to locate node by:")))
                     {
-                        System.out.println("FOUND");
+                        System.out.println("Node is present");
                     }
                 }
                 break;
 
-                case 2: //Insert TODO allow EU to add in weight
+                case 2: //Insert TODO allow user to add in weight
                 {
-                    Scanner sc = new Scanner(System.in);
-                    System.out.println("Enter label:");
-                    String inLabel = sc.next();
                     try {
-                        graph.addVertex(inLabel);
+                        graph.addVertex(getUsrStr("Enter label:"));
                     } catch (IllegalArgumentException e) {
                         System.out.println(e.getMessage());
                     }
-                    
+
                 }
                 break;
 
                 case 3: //Allows user to delete a node
                 {
-                    Scanner sc = new Scanner(System.in);
-                    System.out.println("Enter label:");
-                    String inLabel = sc.next();
                     try {
-                        graph.removeVertex(inLabel);
+                        graph.removeVertex(getUsrStr("Enter label:"));
                     } catch (IllegalArgumentException e) {
                         System.out.println(e.getMessage());
                     }
@@ -202,9 +192,10 @@ import java.util.Scanner;
                 }
                 break;
 
-                case 4: //TODO Update
+                case 4: //TODO Update allows user to replace information on a node
                 {
                     graph.displayAsList();
+
                 }
                 break;
 
@@ -230,6 +221,7 @@ import java.util.Scanner;
         {
             do
             {
+                System.out.println("Current edge count: " + graph.getEdgeCount()); //prints edge count
                 userSelect = checkInteger(prompt);
             }
             while(userSelect != 1 && userSelect != 2 && userSelect != 3 && userSelect != 4 && userSelect != 5);
@@ -238,27 +230,56 @@ import java.util.Scanner;
             //case statement to choose required method
             switch (userSelect)
             {
-                case 1: //Find
+                case 1: //Find edge
                 {
+                    if(graph.isAdjacent(getUsrStr("Please enter first vertex"), getUsrStr("Please enter second vertex")))
+                    {
+                        System.out.println("Edge is present");
+                    }
+                    else
+                    {
+                        System.out.println("No edge found");
+                    }
 
                 }
                 break;
 
-                case 2: //TODO Add
+                case 2: //Adds Edge returns false if edge already exists and informs user
                 {
-
+                    try {
+                        if(graph.addEdge(getUsrStr("Please enter first vertex"), getUsrStr("Please enter second vertex")))
+                        {
+                            System.out.println("Added new edge");
+                        }
+                        else
+                        {
+                            System.out.println("Edge already exists");
+                        }
+                    } catch (IllegalArgumentException e) {
+                        System.out.println(e.getMessage());
+                    }
                 }
                 break;
 
-                case 3: //TODO Remove
+                case 3: //Removes an edge
                 {
-
+                    try {
+                        if(graph.removeEdge(getUsrStr("Please enter first vertex"), getUsrStr("Please enter second vertex")))
+                        {
+                            System.out.println("Removed edge");
+                        }
+                        else
+                        {
+                            System.out.println("Edge does not exist");
+                        }
+                    } catch (IllegalArgumentException e) {
+                        System.out.println(e.getMessage());
+                    }
                 }
                 break;
 
                 case 4: //TODO Update
                 {
-                    System.out.println("Testing Edges:");
                     graph.printEdges(); //debug method
                 }
                 break;
@@ -305,6 +326,19 @@ import java.util.Scanner;
         }
 
         return userInt;
+    }
+
+    /************************************************************
+    IMPORT: none
+    EXPORT: filename (String)
+    ASSERTION: Prompts user for a string
+    ************************************************************/
+    public String getUsrStr(String prompt)
+    {
+        Scanner sc = new Scanner(System.in);
+        System.out.println(prompt);
+        String usrStr = sc.next();
+        return usrStr;
     }
 
     /************************************************************
