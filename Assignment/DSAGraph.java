@@ -141,7 +141,7 @@ public class DSAGraph implements Serializable
 	************************************************************/
 	public boolean hasVertex(String label)
 	{
-		boolean sucess;
+		boolean sucess = false;
 		try {
 			getVertex(label);
 			sucess = true;

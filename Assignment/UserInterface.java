@@ -294,17 +294,20 @@ import java.util.Scanner;
         graph = FileReader.readFile(infile + ".txt"); //reads in file assumes it's a .txt
 
         int numOfSims = checkInteger("How many simulations to run?");
-        System.out.println("Generate routes");
+        //System.out.println("Generate routes");
+
         for(int i = 0; i < numOfSims; i++)
         {
             generateRoutes(graph, listOfRoutes, false, " "); //generates routes setting default to false
         }
-        System.out.println("Traversing Graph...");
+                System.out.println("Traversing Graph...");
+
         displayRoutes(listOfRoutes);
 
 
         System.out.println("Saving to file: " + saveFile+".out");
-        FileReader.saveOutput(listOfRoutes, saveFile+".out");
+
+        FileReader.saveOutput(saveFile+".out", listOfRoutes);
         //FileReader.save(graph, saveFile+".txt");
     }
 
@@ -382,19 +385,19 @@ import java.util.Scanner;
     {
         if(!list.isEmpty())
         {
-            System.out.println("Displaying routes:");
+            System.out.println("# All routes Traversed:");
             Iterator<DSAQueue> itr = list.iterator();
             int counter = 0;
             while(itr.hasNext())
             {
                 counter ++;
-                System.out.println("\nRoute number: [" + counter + "]");
+                System.out.println("\n# Route number: [" + counter + "]");
                 itr.next().show();
             }
         }
         else
         {
-            System.out.println("Route list is empty. Add some more!");
+            System.out.println("# Route list is empty. Add some more!");
         }
 
     }

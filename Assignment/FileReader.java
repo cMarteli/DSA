@@ -1,8 +1,10 @@
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.util.Iterator;
 import java.util.Scanner;
@@ -12,6 +14,7 @@ import java.util.Scanner;
 */
 // Marteli, C (2021) OOPD source code (Version 1.0) [Source code]. https://github.com/cMarteli/
 // # previously submitted for OOPD Modified and improved October 2021 for gameofcatz.java
+@SuppressWarnings("unchecked")
 public class FileReader {
 
     public static final String OUTPUT_FILENAME = "savefile.txt";
@@ -45,32 +48,40 @@ public class FileReader {
     EXPORT:
     ASSERTION:
     ************************************************************/
-    public static void saveOutput(DSALinkedList list, String filename)
+    public static void saveOutput(String filename, DSALinkedList list)
     {
        try
        {
-           PrintWriter out = new PrintWriter(filename);
+            PrintWriter out = new PrintWriter(filename);
+            //out.println(input);
 
-           out.println();
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            PrintStream ps = new PrintStream(baos);
+            PrintStream old = System.out;
+            System.setOut(ps);
+            //stuff goes here
 
-           if(!list.isEmpty())
-           {
-               System.out.println("Displaying routes:");
-               Iterator<DSAQueue> itr = list.iterator();
-               int counter = 0;
-               while(itr.hasNext())
-               {
-                   counter ++;
-                   out.println("\nRoute number: [" + counter + "]");
-                   itr.next().show();
-               }
-           }
-           else
-           {
-               out.println("Route list is empty.");
-           }
+            if(!list.isEmpty())
+            {
+                System.out.println("# All routes Traversed:");
+                Iterator<DSAQueue> itr = list.iterator();
+                int counter = 0;
+                while(itr.hasNext())
+                {
+                    counter ++;
+                    System.out.println("\n# Route number: [" + counter + "]");
+                    itr.next().show();
+                }
+            }
+            else
+            {
+                System.out.println("# Route list is empty. Add some more!");
+            }
+            System.out.flush();
+            System.setOut(old);
+            out.println(baos.toString());
 
-           out.close();
+            out.close();
        }
        catch (Exception e)
        {  //should do more here might not be needed
@@ -132,24 +143,18 @@ public static DSAGraph readFile(String filename)
 
                 if(command.equals("Node"))//case finds NODE
                 {
-                    //System.out.println("Found node");
                     String label = sc.next();
-                    //String code = sc.next();
-                    //System.out.println("Added label:" + label);
-                    //graph.addVertex(label,code);
                     graph.addVertex(label);
                 }
                 else if(command.equals("Edge")) //case finds EDGE
                 {
-                    //System.out.println("Found Edge");
                     String l1 = sc.next();
                     String l2 = sc.next();
-                    //System.out.println("Added edges:" + l1 + " and " + l2);
                     graph.addEdge(l1, l2);
                 }
                 else if(command.equals("#"))
                 {
-                    System.out.println("Comment line"); //TODO: currently crashes if there's a comment after the '#'
+                    System.out.println("Comment line"); //may crash if there's a comment after the '#'
                 }
 
             }

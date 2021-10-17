@@ -1,49 +1,49 @@
 #
-Node A -
-Node B T
-Node C -
-Node D -
-Node E -
-Node F -
-Node G F
-Node H D
-Node I F
-Node J -
+Node A
+Node B
+Node C
+Node D
+Node E
+Node F
+Node G
+Node H
+Node I
+Node J
 #
-Edge A B -
-Edge A E -
-Edge B A -
-Edge B E -
-Edge B F -
-Edge B C -
-Edge C B -
-Edge C F -
-Edge C G -
-Edge C D -
-Edge D C -
-Edge D G -
-Edge E A -
-Edge E B -
-Edge E F -
-Edge E H -
-Edge F B -
-Edge F C -
-Edge F E -
-Edge F G -
-Edge F H -
-Edge F I -
-Edge G C -
-Edge G D -
-Edge G F -
-Edge G I -
-Edge H E -
-Edge H F -
-Edge H I -
-Edge H J -
-Edge I F -
-Edge I G -
-Edge I H -
-Edge I J -
-Edge J I -
-Edge J H -
+Edge A B
+Edge A E
+Edge B A
+Edge B E
+Edge B F
+Edge B C
+Edge C B
+Edge C F
+Edge C G
+Edge C D
+Edge D C
+Edge D G
+Edge E A
+Edge E B
+Edge E F
+Edge E H
+Edge F B
+Edge F C
+Edge F E
+Edge F G
+Edge F H
+Edge F I
+Edge G C
+Edge G D
+Edge G F
+Edge G I
+Edge H E
+Edge H F
+Edge H I
+Edge H J
+Edge I F
+Edge I G
+Edge I H
+Edge I J
+Edge J I
+Edge J H
 #
