@@ -1,4 +1,5 @@
 import java.util.InputMismatchException;
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 /**
@@ -7,11 +8,12 @@ import java.util.Scanner;
  * @author Caio Marteli (19598552)
  */
 // Marteli, C (2021) OOPD source code (Version 1.0) [Source code]. https://github.com/cMarteli/
-// Modified and improved October 2021 for gameofcatz.java
-@SuppressWarnings("resource")
+// Some methods previously submitted for OOPD final assignment Modified and improved October 2021 for gameofcatz.java
+@SuppressWarnings("unchecked")
  public class UserInterface
  {
     public static final String SERIAL_FILENAME = "serial.txt", INPUT_FILENAME = "input.txt";
+    public static final int ROUTE_LIST_MAX_SIZE = 10; //max size of route list
 
     /************************************************************
     IMPORT: none
@@ -24,7 +26,10 @@ import java.util.Scanner;
         "What would you like to do?\n[1]Load input file\n[2]Node operations\n[3]Edge operations\n[4]Parameter Tweaks\n" +
             "[5]Display Graph\n[6]Display World\n[7]Generate routes\n[8]Display routes\n[9]Save network\n[0]Exit";
         DSAGraph graph = new DSAGraph();
-        int userSelect = 10;
+        String end = " "; //init default end parameter
+        boolean userDefault = false; //has the user changed the default parameters?
+        DSALinkedList listOfRoutes = new DSALinkedList(); //list of all traversed routes
+        int userSelect = ROUTE_LIST_MAX_SIZE;
         while(userSelect != 0)
         {
             do
@@ -39,9 +44,8 @@ import java.util.Scanner;
             switch (userSelect)
             {
                 case 1:
-                {   //User choice: Read in a text file
-                    String filename = checkFileName(); //gets filename from user
-                    graph = FileReader.readFile(filename);
+                {   //User choice: Asks to Read in a text file or serialized
+                    graph = loadFile();
                 }
                 break;
 
@@ -52,7 +56,7 @@ import java.util.Scanner;
                 }
                 break;
 
-                case 3: //User choice: Edge operations
+                case 3: //User choice: Allows user to a add links between areas
                 {
                     System.out.println("Edge operations");
                     edgeOperations(graph);
@@ -61,56 +65,50 @@ import java.util.Scanner;
                 break;
 
                 case 4:
-                {   //TODO User choice: Parameter tweaks
-                    System.out.println("Parameter tweaks");
+                {   //User choice: Parameter Tweaks Sets an end point for cat
+                    System.out.println("Set a default end point");
+                    do
+                    {
+                        end = getUsrStr("End:");
+                    }
+                    while(!graph.hasVertex(end));
+                    userDefault = true;
 
                 }
                 break;
 
                 case 5:
-                {   //TODO User choice: Display graph
+                {   //User choice: Display all vertices in no particular order
+                    System.out.println("All cages in the zoo:");
                     graph.displayAsList();
                 }
                 break;
 
                 case 6:
-                {   //TODO User choice: Display world
-                    System.out.println("Display world");
-                    System.out.println("Traversing Graph...");
-                    try
-                    {
-                        graph.depthFirstSearch().show();
-
-                    }
-                    catch (NoSuchElementException ex)
-                    {
-                        //Not found
-                        System.out.println(ex.getMessage());
-                    }
-
-
+                {   //User choice: DISPLAY WORLD - Displays all links in the world
+                    System.out.println("Displaying world");
+                    graph.printEdges();
                 }
                 break;
 
                 case 7:
-                {   //TODO User choice: Generate routes
+                {   //User choice: Generate routes
                     System.out.println("Generate routes");
-
+                    generateRoutes(graph, listOfRoutes, userDefault, end);
                 }
                 break;
 
                 case 8:
-                {   //TODO User choice: Display routes
-                    System.out.println("Display routes");
-
+                {   //User choice: Displays all routes created in simulation so far
+                    displayRoutes(listOfRoutes);
                 }
                 break;
 
                 case 9:
                 {   //TODO User choice: Save network SAVES SERIALIAZABLE
-                    System.out.println("Save network");
+                    System.out.println("Saving network");
                     FileReader.save(graph, SERIAL_FILENAME);
-
+                    System.out.println("Saved as " + SERIAL_FILENAME);
                 }
                 break;
 
@@ -121,24 +119,6 @@ import java.util.Scanner;
             }
         }
     }//end mainMenu
-
-    /************************************************************
-    IMPORT: infile (String), savefile (String)
-    EXPORT: none
-    ASSERTION: runs when program is booted into simulation mode
-    ************************************************************/
-    public void simulation(String infile, String saveFile)
-    {
-        DSAGraph graph = new DSAGraph();
-        graph = FileReader.readFile(infile);
-
-        System.out.println("Traversing Graph...");
-        graph.depthFirstSearch().show();
-
-
-        System.out.println("Saving to file: " + saveFile+".out");
-        FileReader.save(graph, saveFile+".out");
-    }
 
     /************************************************************
     IMPORT: graph (DSAGraph)
@@ -165,38 +145,51 @@ import java.util.Scanner;
             {
                 case 1: //Find
                 {
-                    if(graph.hasVertex(getUsrStr("Enter label to locate node by:")))
+                    String nodeTOfind = getUsrStr("Enter label to locate node by:");
+                    if(graph.hasVertex(nodeTOfind))
                     {
-                        System.out.println("Node is present");
+                        System.out.println("|" + nodeTOfind + "| is present");
+                    }
+                    else
+                    {
+                        System.out.println("|"  + nodeTOfind + "| not found");
                     }
                 }
                 break;
 
-                case 2: //Insert TODO allow user to add in weight
+                case 2: //Insert - allows user to add in a node
                 {
                     try {
-                        graph.addVertex(getUsrStr("Enter label:"));
-                    } catch (IllegalArgumentException e) {
+                        graph.addVertex(getUsrStr("Enter label:"), getUsrStr("Enter Code:"));
+                    } catch (IllegalArgumentException e)
+                    {
                         System.out.println(e.getMessage());
                     }
 
                 }
                 break;
 
-                case 3: //Allows user to delete a node
+                case 3: //Delete a node
                 {
                     try {
                         graph.removeVertex(getUsrStr("Enter label:"));
-                    } catch (IllegalArgumentException e) {
+                    } catch (IllegalArgumentException e)
+                    {
                         System.out.println(e.getMessage());
                     }
 
                 }
                 break;
 
-                case 4: //TODO Update allows user to replace information on a node
+                case 4: //Update - allows user to replace label information on a node
                 {
-                    graph.displayAsList();
+                    try {
+                        graph.changeVxLabel(getUsrStr("Enter label to Change:"), getUsrStr("Enter new label:"));
+                    } catch (IllegalArgumentException e)
+                    {
+                        //handles exception
+                        System.out.println(e.getMessage() + "\nNothing was changed");
+                    }
 
                 }
                 break;
@@ -217,16 +210,16 @@ import java.util.Scanner;
     public void edgeOperations(DSAGraph graph)
     {
         String prompt =
-        "[1]Find\n[2]Add\n[3]Remove\n[4]Update\n[5]Back to menu";
+        "[1]Find\n[2]Add\n[3]Remove\n[4]Back to menu";
         int userSelect = 0;
-        while(userSelect != 5)
+        while(userSelect != 4)
         {
             do
             {
                 System.out.println("Current edge count: " + graph.getEdgeCount()); //prints edge count
                 userSelect = checkInteger(prompt);
             }
-            while(userSelect != 1 && userSelect != 2 && userSelect != 3 && userSelect != 4 && userSelect != 5);
+            while(userSelect != 1 && userSelect != 2 && userSelect != 3 && userSelect != 4);
 
 
             //case statement to choose required method
@@ -280,12 +273,6 @@ import java.util.Scanner;
                 }
                 break;
 
-                case 4: //TODO Update
-                {
-                    graph.printEdges(); //debug method
-                }
-                break;
-
                 default: //User choice: Exit
                 {
                     System.out.println("...Returning");
@@ -293,6 +280,125 @@ import java.util.Scanner;
             }
         }
     }
+
+    /************************************************************
+    IMPORT: infile (String), savefile (String)
+    EXPORT: none
+    ASSERTION: runs when program is booted into simulation mode
+    ************************************************************/
+    public void simulation(String infile, String saveFile)
+    {
+        DSAGraph graph = new DSAGraph();
+        DSALinkedList listOfRoutes = new DSALinkedList(); //list of all traversed routes
+
+        graph = FileReader.readFile(infile + ".txt"); //reads in file assumes it's a .txt
+
+        int numOfSims = checkInteger("How many simulations to run?");
+        System.out.println("Generate routes");
+        for(int i = 0; i < numOfSims; i++)
+        {
+            generateRoutes(graph, listOfRoutes, false, " "); //generates routes setting default to false
+        }
+        System.out.println("Traversing Graph...");
+        displayRoutes(listOfRoutes);
+
+
+        System.out.println("Saving to file: " + saveFile+".out");
+        FileReader.saveOutput(listOfRoutes, saveFile+".out");
+        //FileReader.save(graph, saveFile+".txt");
+    }
+
+
+    /************************************************************
+    IMPORT: prompt (String)
+    EXPORT: userInt (integer)
+    ASSERTION: Validator Method. Gets user integer and repeats until it's a valid input
+    ************************************************************/
+    public DSAGraph loadFile()
+    {
+        DSAGraph g = new DSAGraph();
+        int temp = checkInteger("Read a [1]Text file or [2]Serialized file?");
+        if(temp == 1) //[1]Text file
+        {
+            String filename = checkFileName(); //gets filename from user
+            try
+            {
+                g = FileReader.readFile(filename);
+
+            } catch (IllegalArgumentException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
+        else if(temp == 2) //[2]Serialized file
+        {
+            String filename = checkFileName(); //gets filename from user
+            try
+            {
+                g = FileReader.load(filename);
+
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        else
+        {
+            System.out.println("Back to menu...");
+        }
+        return g;
+    }
+
+    /************************************************************
+    IMPORT: prompt (String)
+    EXPORT: userInt (integer)
+    ASSERTION: Validator Method. Gets user integer and repeats until it's a valid input
+    ************************************************************/
+    public void generateRoutes(DSAGraph g, DSALinkedList list, boolean udefault, String end)
+    {
+        try
+        {
+            if(!udefault) //if there's not end destination cat will just traverse every point
+            {
+                list.insertLast(g.depthFirstSearch(getUsrStr("Enter label to serve as starting point:"))); //Inserts queue into list
+            }
+            else
+            {
+                list.insertLast(g.breadthFirstSearch(getUsrStr("Enter label to serve as starting point:"),end));  //Inserts into list TODO: incomplete this is not BFS
+            }
+
+        }
+        catch (NoSuchElementException ex)
+        {
+            //Not found
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    /************************************************************
+    IMPORT: prompt (String)
+    EXPORT: userInt (integer)
+    ASSERTION: Validator Method. Gets user integer and repeats until it's a valid input
+    ************************************************************/
+    public void displayRoutes(DSALinkedList list)
+    {
+        if(!list.isEmpty())
+        {
+            System.out.println("Displaying routes:");
+            Iterator<DSAQueue> itr = list.iterator();
+            int counter = 0;
+            while(itr.hasNext())
+            {
+                counter ++;
+                System.out.println("\nRoute number: [" + counter + "]");
+                itr.next().show();
+            }
+        }
+        else
+        {
+            System.out.println("Route list is empty. Add some more!");
+        }
+
+    }
+
 
     /************************************************************
     IMPORT: prompt (String)

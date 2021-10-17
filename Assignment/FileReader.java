@@ -1,16 +1,17 @@
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
+import java.util.Iterator;
 import java.util.Scanner;
 /**
  * FileReader.java
  * @author Caio Marteli (19598552)
 */
 // Marteli, C (2021) OOPD source code (Version 1.0) [Source code]. https://github.com/cMarteli/
-// Modified and improved October 2021 for gameofcatz.java
+// # previously submitted for OOPD Modified and improved October 2021 for gameofcatz.java
 public class FileReader {
 
     public static final String OUTPUT_FILENAME = "savefile.txt";
@@ -35,9 +36,48 @@ public class FileReader {
       }
       catch (Exception e)
       {  //should do more here
-         throw new IllegalArgumentException("Unable to save object to file" + e);
+         throw new IllegalArgumentException("Unable to save object to file: " + e);
       }
    }
+
+    /************************************************************
+    IMPORT: objToSave(ContainerClass), filename(String)
+    EXPORT:
+    ASSERTION:
+    ************************************************************/
+    public static void saveOutput(DSALinkedList list, String filename)
+    {
+       try
+       {
+           PrintWriter out = new PrintWriter(filename);
+
+           out.println();
+
+           if(!list.isEmpty())
+           {
+               System.out.println("Displaying routes:");
+               Iterator<DSAQueue> itr = list.iterator();
+               int counter = 0;
+               while(itr.hasNext())
+               {
+                   counter ++;
+                   out.println("\nRoute number: [" + counter + "]");
+                   itr.next().show();
+               }
+           }
+           else
+           {
+               out.println("Route list is empty.");
+           }
+
+           out.close();
+       }
+       catch (Exception e)
+       {  //should do more here might not be needed
+          throw new IllegalArgumentException("Unable to print object to file: " + e);
+       }
+
+    }
 
    /************************************************************
     IMPORT: filename(String)
@@ -63,7 +103,7 @@ public class FileReader {
       }
       catch (Exception e)
       {
-         throw new IllegalArgumentException("Unable to load object from file");
+        throw new IllegalArgumentException("Unable to load object from file: " + e.getMessage());
       }
       return inObj;
 
@@ -94,7 +134,9 @@ public static DSAGraph readFile(String filename)
                 {
                     //System.out.println("Found node");
                     String label = sc.next();
+                    //String code = sc.next();
                     //System.out.println("Added label:" + label);
+                    //graph.addVertex(label,code);
                     graph.addVertex(label);
                 }
                 else if(command.equals("Edge")) //case finds EDGE
@@ -112,9 +154,9 @@ public static DSAGraph readFile(String filename)
 
             }
             sc.close();
-        } catch (FileNotFoundException e) //file not found
+        } catch (Exception e) //file not found
         {
-            System.out.println(e.getMessage());
+            throw new IllegalArgumentException("Unable to load object from file" + e.getMessage());
         }
 
         return graph;
@@ -122,33 +164,4 @@ public static DSAGraph readFile(String filename)
 
     }//end readfile()
 
-    //Manual file name option
-    public static String enterFileName()
-    {
-        String prompt = "Would you like to enter a file name? Y/N";
-        Scanner sc1 = new Scanner(System.in);
-        String fileName;
-        char userAnswer;
-        do
-        {
-            System.out.println(prompt);
-            prompt = "Please enter Y or N";
-            userAnswer = Character.toUpperCase(sc1.next().charAt(0));
-        }
-        while (userAnswer != 'Y' && userAnswer != 'N');
-
-        if (userAnswer == 'Y')
-        {
-            prompt = "Enter file Name:";
-            System.out.println(prompt);
-            fileName = sc1.next() + ".csv";
-            sc1.close();
-
-        }
-        else
-        {
-            fileName = OUTPUT_FILENAME; //Sets filename to default
-        }
-        return fileName;
-    }
 }

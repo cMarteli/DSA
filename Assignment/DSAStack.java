@@ -7,7 +7,7 @@ import java.util.Iterator;
  * @author Caio Marteli 19598552
  */
 // Marteli, C (2021) DSAPrac4 source code (Version 2.0) [Source code]. https://github.com/cMarteli/DSA
-// Modified and improved October 2021 for gameofcatz.java
+// previously submitted for DSAPrac4 Modified and improved October 2021 for gameofcatz.java
 public class DSAStack implements Iterable, Serializable{
 
 	private DSALinkedList stack;

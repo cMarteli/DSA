@@ -98,7 +98,7 @@ public class DSAGraph implements Serializable
 		if(hasVertex(label)) //if vertex in in list
 		{
 			vertices.removeAt(getVertex(label));
-			System.out.println("Deleted: " + label); //debug
+			//System.out.println("Deleted: " + label); //debug
 			return true;
 		}
 		else
@@ -130,6 +130,10 @@ public class DSAGraph implements Serializable
 		}
 	}
 
+	/**************************************************
+	VALIDATORS
+	**************************************************/
+
 	/************************************************************
 	IMPORT: label (String)
 	EXPORT: boolean
@@ -137,12 +141,12 @@ public class DSAGraph implements Serializable
 	************************************************************/
 	public boolean hasVertex(String label)
 	{
-		boolean sucess = false;
+		boolean sucess;
 		try {
 			getVertex(label);
 			sucess = true;
 		} catch (NoSuchElementException e) {
-			System.out.println(e.getMessage()); //prints message - vx doesn't exist
+			sucess = false;
 		}
 		return sucess;
 	}
@@ -150,26 +154,58 @@ public class DSAGraph implements Serializable
 	/************************************************************
 	IMPORT: label (String)
 	EXPORT: bool (DSALinkedList)
-	ASSERTION: checks if two nodes are adjacent (if an edge exists)
+	ASSERTION: checks if two nodes are adjacent (if an edge exists) returns true if it does
 	************************************************************/
 	public boolean isAdjacent(String label1, String label2)
 	{
-		DSAGraphVertex temp, vx1 = getVertex(label1);
-		DSALinkedList adjList = vx1.getAdjacent();
-		Iterator<DSAGraphVertex> itr = adjList.iterator(); // - Maybe needs to check instance?
 		boolean found = false;
-		if(!adjList.isEmpty()) // if list is not empty
-		{
-			while(itr.hasNext()) //iterates until target is found
+		try {
+			DSAGraphVertex temp, vx1 = getVertex(label1);
+			DSALinkedList adjList = vx1.getAdjacent();
+			Iterator<DSAGraphVertex> itr = adjList.iterator(); // - Maybe needs to check instance?
+			if(!adjList.isEmpty()) // if list is not empty
 			{
-				temp = itr.next();
-				if(temp.getLabel().equals(label2))
+				while(itr.hasNext()) //iterates until target is found
 				{
-					found = true;
+					temp = itr.next();
+					if(temp.getLabel().equals(label2))
+					{
+						found = true;
+					}
 				}
 			}
+		} catch (NoSuchElementException e) {
+			//Handles exception thrown by getVertex()
+			found = false;
 		}
 		return found;
+	}
+
+	/************************************************************
+	IMPORT: oldLabel (String), newLabel (String)
+	EXPORT: boolean
+	ASSERTION: rename label if vertices list has the label given
+	Throws: IllegalArgumentException
+	************************************************************/
+	public boolean changeVxLabel(String oldLabel, String newLabel)
+	{
+		boolean sucess = false;
+		try {
+			DSAGraphVertex vx = getVertex(oldLabel);
+			if(!hasVertex(newLabel)) //replace only if new label isn't already taken
+			{
+				vx.label = newLabel;
+				sucess = true;
+			}
+			else
+			{
+				throw new IllegalArgumentException("|" + newLabel + "| already exists");
+			}
+
+		} catch (NoSuchElementException e) {
+			throw new IllegalArgumentException(e.getMessage()); //vx doesn't exist
+		}
+		return sucess;
 	}
 
 
@@ -190,17 +226,19 @@ public class DSAGraph implements Serializable
 	/************************************************************
 	IMPORT: label (String)
 	EXPORT: queue (DSAQueue)
-	ASSERTION: Wrapper for DEPTH FIRST SEARCH returns queue of objs in traversal order
+	ASSERTION: Wrapper for DEPTH FIRST SEARCH Imports start point, Exports queue of objs in traversal order
+	Throws: NoSuchElementException
 	************************************************************/
-	public DSAQueue depthFirstSearch()
+	public DSAQueue depthFirstSearch(String start)
 	{
 		if(!vertices.isEmpty())
 		{
 			DSAQueue queue = new DSAQueue();
-			clear(); //sets all visited on all vertices == false
-			DSAGraphVertex vx = (DSAGraphVertex)vertices.peekFirst(); //picks head of vertices list to start on
+			DSAGraphVertex vx = getVertex(start); //vertex to start on (root)
 			DSAStack visited = new DSAStack();	//creates empty stack
-			vx.setVisited(); // Marks vx visited == true
+
+			clear(); //sets all vertices as not visited
+			vx.setVisited(); // Marks root as visited
 			queue.enqueue(vx); //start point
 
 			dfs(vx, visited, queue); //begin recursion
@@ -252,6 +290,79 @@ public class DSAGraph implements Serializable
 	}
 
 	/************************************************************
+	TRAVERSAL2
+	************************************************************/
+
+	/************************************************************
+	IMPORT: label (String)
+	EXPORT: queue (DSAQueue)
+	ASSERTION: TODO
+	Throws: NoSuchElementException
+	************************************************************/
+	public DSAQueue breadthFirstSearch(String start, String target)
+	{
+		if(!vertices.isEmpty())
+		{
+			DSAQueue queue = new DSAQueue();
+			DSAStack visited = new DSAStack();	//creates empty stack
+			DSAGraphVertex vx = getVertex(start); //vertex to start on (root)
+			DSAGraphVertex dest = getVertex(target); //vertex to start on (dest)
+
+			clear(); //sets all visited on all vertices == false
+			vx.setVisited(); // Marks root as visited
+			queue.enqueue(vx); //adds start point to queue
+
+			bfs(vx, visited, queue, dest); //begin recursion
+
+			queue.enqueue(dest); //if successful adds destination to queue
+
+			return queue;
+		}
+		else
+		{
+			throw new NoSuchElementException("List is empty or start or end elements don't exist");
+		}
+	}
+
+	/************************************************************
+	IMPORT: label (String)queue
+	EXPORT: bool (DSALinkedList)
+	ASSERTION:
+	************************************************************/
+	public void bfs(DSAGraphVertex vx, DSAStack visited, DSAQueue queue, DSAGraphVertex target)
+	{
+
+		try {
+			if(vx != null) //base case if it's null end recursion
+			{
+				visited.push(vx); //push onto visited stack
+				Iterator<DSAGraphVertex> itr = vx.getAdjacent().iterator();
+
+				do{
+					while (itr.hasNext())
+					{
+						vx = itr.next();
+						if(!vx.getVisited() && !vx.equals(target)) //if not visited and is not target traverse here
+						{
+							queue.enqueue(vx); //adds to output queue
+							vx.setVisited(); //sets to visited
+							bfs(vx, visited, queue, target);
+						}
+					}
+					visited.pop();
+
+				} while(!visited.isEmpty());
+			}
+		}
+		catch (IllegalArgumentException e) //catches empty stack exceptions
+		{
+			//System.out.println(e.getMessage());
+		}
+
+
+	}
+
+	/************************************************************
 	IMPORT: none
 	EXPORT: count (integer)
 	ASSERTION: helper method for traversal methods
@@ -271,7 +382,7 @@ public class DSAGraph implements Serializable
 	/************************************************************
 	IMPORT: none
 	EXPORT: boolean
-	ASSERTION: DEBUG method, iterates through vertices list and prints all edges
+	ASSERTION: Iterates through vertices list and prints all edges
 	************************************************************/
 	public void printEdges()
 	{
@@ -289,7 +400,8 @@ public class DSAGraph implements Serializable
 	/************************************************************
 	IMPORT: label (String)
 	EXPORT: target (DSAGraphVertex)
-	ASSERTION: iterates through vertices list w/ a label and returns target if found; if not throws exception
+	ASSERTION: iterates through vertices list w/ a label and returns target if found
+	Throws: NoSuchElementException
 	************************************************************/
 	public DSAGraphVertex getVertex(String label)
 	{
@@ -297,7 +409,7 @@ public class DSAGraph implements Serializable
 		Iterator<DSAGraphVertex> itr = vertices.iterator();
 		if(vertices.isEmpty()) // case: list is empty
 		{
-			System.out.println("Vertices list is empty.");
+			throw new NoSuchElementException("Vertices list is empty.");
 		}
 		else //searches for target
 		{
@@ -413,7 +525,11 @@ public class DSAGraph implements Serializable
 
 		public void printAdjacent()
 		{
-			System.out.println("Edges of: " + label);
+			System.out.println("Links to: " + label);
+			if(links.isEmpty())
+			{
+				System.out.println("NONE");
+			}
 			links.show();
 		}
 
