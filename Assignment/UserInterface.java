@@ -12,9 +12,6 @@ import java.util.Scanner;
 @SuppressWarnings("unchecked")
  public class UserInterface
  {
-    public static final String SERIAL_FILENAME = "serial.txt", INPUT_FILENAME = "input.txt";
-    public static final int ROUTE_LIST_MAX_SIZE = 10; //max size of route list
-
     /************************************************************
     IMPORT: none
     EXPORT: none
@@ -29,7 +26,7 @@ import java.util.Scanner;
         String end = " "; //init default end parameter
         boolean userDefault = false; //has the user changed the default parameters?
         DSALinkedList listOfRoutes = new DSALinkedList(); //list of all traversed routes
-        int userSelect = ROUTE_LIST_MAX_SIZE;
+        int userSelect = 10;
         while(userSelect != 0)
         {
             do
@@ -94,7 +91,14 @@ import java.util.Scanner;
                 case 7:
                 {   //User choice: Generate routes
                     System.out.println("Generate routes");
-                    generateRoutes(graph, listOfRoutes, userDefault, end);
+
+                    int numOfSims = checkInteger("How many simulations to run?");
+
+                    for(int i = 0; i < numOfSims; i++)
+                    {
+                        generateRoutes(graph, listOfRoutes, userDefault, end);
+                    }
+
                 }
                 break;
 
@@ -105,10 +109,11 @@ import java.util.Scanner;
                 break;
 
                 case 9:
-                {   //TODO User choice: Save network SAVES SERIALIAZABLE
+                {   //Save network SAVES SERIALIAZABLE
                     System.out.println("Saving network");
-                    FileReader.save(graph, SERIAL_FILENAME);
-                    System.out.println("Saved as " + SERIAL_FILENAME);
+                    String filename = checkFileName(".out"); //saves as .out
+                    FileReader.save(graph, filename);
+                    System.out.println("Saved as " + filename);
                 }
                 break;
 
@@ -290,25 +295,17 @@ import java.util.Scanner;
     {
         DSAGraph graph = new DSAGraph();
         DSALinkedList listOfRoutes = new DSALinkedList(); //list of all traversed routes
-
         graph = FileReader.readFile(infile + ".txt"); //reads in file assumes it's a .txt
-
-        int numOfSims = checkInteger("How many simulations to run?");
-        //System.out.println("Generate routes");
+        int numOfSims = checkInteger("How many simulations to run?"); //get amount of sims
 
         for(int i = 0; i < numOfSims; i++)
         {
             generateRoutes(graph, listOfRoutes, false, " "); //generates routes setting default to false
         }
-                System.out.println("Traversing Graph...");
+        displayRoutes(listOfRoutes); //displays output to user
 
-        displayRoutes(listOfRoutes);
-
-
-        System.out.println("Saving to file: " + saveFile+".out");
-
-        FileReader.saveOutput(saveFile+".out", listOfRoutes);
-        //FileReader.save(graph, saveFile+".txt");
+        System.out.println("Saving to file: " + saveFile+".txt");
+        FileReader.saveOutput(saveFile+".txt", listOfRoutes); //saves as .txt
     }
 
 
@@ -323,7 +320,7 @@ import java.util.Scanner;
         int temp = checkInteger("Read a [1]Text file or [2]Serialized file?");
         if(temp == 1) //[1]Text file
         {
-            String filename = checkFileName(); //gets filename from user
+            String filename = checkFileName(".txt"); //gets filename from user assumes <.txt>
             try
             {
                 g = FileReader.readFile(filename);
@@ -334,7 +331,7 @@ import java.util.Scanner;
         }
         else if(temp == 2) //[2]Serialized file
         {
-            String filename = checkFileName(); //gets filename from user
+            String filename = checkFileName(".out"); //gets filename from user assumes <.out>
             try
             {
                 g = FileReader.load(filename);
@@ -365,7 +362,7 @@ import java.util.Scanner;
             }
             else
             {
-                list.insertLast(g.breadthFirstSearch(getUsrStr("Enter label to serve as starting point:"),end));  //Inserts into list TODO: incomplete this is not BFS
+                list.insertLast(g.breadthFirstSearch(getUsrStr("Enter label to serve as starting point:"),end));  //Inserts into list
             }
 
         }
@@ -453,18 +450,18 @@ import java.util.Scanner;
     }
 
     /************************************************************
-    IMPORT: none
+    IMPORT: ext (String)
     EXPORT: filename (String)
     ASSERTION: Lets user enter the file name
     ************************************************************/
-    public String checkFileName()
+    public String checkFileName(String ext)
     {
         Scanner sc = new Scanner(System.in);
         String prompt = "Please enter a file name:", filename = "";
         int ans = 0;
 
         System.out.println(prompt);
-        filename = sc.next() + ".txt";
+        filename = sc.next() + ext;
         prompt = "File name: <" + filename + ">\nIs this correct? [1]Confirm [2]Cancel\n";
         do
         {
@@ -478,7 +475,7 @@ import java.util.Scanner;
         }
         else
         {
-            return checkFileName();
+            return checkFileName(ext);
         }
     }
 

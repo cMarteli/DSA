@@ -152,10 +152,10 @@ public static DSAGraph readFile(String filename)
                     String l2 = sc.next();
                     graph.addEdge(l1, l2);
                 }
-                else if(command.equals("#"))
-                {
-                    System.out.println("Comment line"); //may crash if there's a comment after the '#'
-                }
+                // else if(command.equals("#"))
+                // {
+                //     System.out.println("Comment line"); //may crash if there's a comment after the '#'
+                // }
 
             }
             sc.close();

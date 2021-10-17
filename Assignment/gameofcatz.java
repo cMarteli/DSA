@@ -1,6 +1,5 @@
 /**
  * gameofcatz.java
- *
  * Main class Game of Cats, handles command line parameters
  * and catches any unhandled exceptions that may have fallen through.
  * 2021/October DSA Assignment

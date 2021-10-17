@@ -296,7 +296,7 @@ public class DSAGraph implements Serializable
 	/************************************************************
 	IMPORT: label (String)
 	EXPORT: queue (DSAQueue)
-	ASSERTION: TODO
+	ASSERTION: breadthFirstSearch takes start and target parameters TODO: not correct algorithm
 	Throws: NoSuchElementException
 	************************************************************/
 	public DSAQueue breadthFirstSearch(String start, String target)
@@ -327,7 +327,8 @@ public class DSAGraph implements Serializable
 	/************************************************************
 	IMPORT: label (String)queue
 	EXPORT: bool (DSALinkedList)
-	ASSERTION:
+	ASSERTION: DEPTH FIRST SEARCH Recur for all the vertices adjacent
+	to vx while stack is not empty
 	************************************************************/
 	public void bfs(DSAGraphVertex vx, DSAStack visited, DSAQueue queue, DSAGraphVertex target)
 	{
