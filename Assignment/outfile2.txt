@@ -1,0 +1,38 @@
+# All routes Traversed:
+
+# Route number: [1]
+|B|
+|A|
+|E|
+|F|
+|C|
+|G|
+|D|
+|I|
+|H|
+|J|
+
+# Route number: [2]
+|C|
+|B|
+|A|
+|E|
+|F|
+|G|
+|D|
+|I|
+|H|
+|J|
+
+# Route number: [3]
+|F|
+|B|
+|A|
+|E|
+|H|
+|I|
+|G|
+|C|
+|D|
+|J|
+
