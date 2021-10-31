@@ -1,27 +1,13 @@
-import java.util.Stack;
 /**
  * DSAStack.java
  * @author Caio Marteli 19598552
  */
 public class DSAStack {
 
-	protected int DEFAULT_CAPACITY = 5;
 	protected Object stack[];
 	protected int count; //keeps index of last element in stack
-
     /************************************************************
-    Default Constructor:
-    IMPORT: none
-    EXPORT: address of new DSAStack object
-    ASSERTION: count = 0 are default states
-    ************************************************************/ 
-    public DSAStack()
-	{
-		stack = new Object[DEFAULT_CAPACITY];
-		count = 0;
-	}
-    /************************************************************
-    OVERLOADED CONSTRUCTOR:
+    CONSTRUCTOR:
     IMPORT: maxCapacity (integer)
     EXPORT: address of new DSAStack object
     ASSERTION: imports maxCapacity passes it to parent class contructor
@@ -31,7 +17,7 @@ public class DSAStack {
 		stack = new Object[maxCapacity];
 		count = 0;
 	}
-    
+
     /************************************************************
     IMPORT: data (real)
     EXPORT: none
@@ -50,37 +36,35 @@ public class DSAStack {
     ************************************************************/
     public Object pop()
     {
-    	Object data = null;
     	if (isEmpty())
     	{
             throw new IllegalArgumentException("Stack is Empty.");
     	}
     	else
     	{
-	    	count--;//changes position of count to one back
-	    	data = stack[count];
-	    	stack[count] = 0.0;//resets element to zero
+            Object data = stack[count-1]; //stores object to pop
+	    	stack[count-1] = null; //deletes top of stack
+            count--; //moves count back by one
+            return data;
     	}
-    	return data;
+
     }
 
     /************************************************************
     IMPORT: none
     EXPORT: (real)
-    ASSERTION: Returns count of stack but makes no changes
+    ASSERTION: Returns top of stack but makes no changes
     ************************************************************/
     public Object peek()
     {
-    	Object data = null;
     	if (isEmpty())
     	{
-    		System.out.println("Stack is Empty.");
+    		throw new IllegalArgumentException("Stack is Empty.");
     	}
     	else
     	{
-			data = stack[count-1];
-    	}    	
-		return data;		
+		    return stack[count-1];
+    	}
     }
 
     /************************************************************
@@ -90,11 +74,18 @@ public class DSAStack {
     ************************************************************/
     public void show()
     {
-    	System.out.print("Stack ");
-        for(int n = 0 ; n < stack.length ; n++)
-    	{
-    		System.out.print(stack[n] + "|");
-    	}    	
+        if(!isEmpty())
+        {
+            System.out.print("Printing Stack:");
+            for(int n = 0 ; n < count ; n++)
+            {
+                System.out.print(stack[n] + "|");
+            }
+        }
+        else
+        {
+            System.out.println("Stack is empty");
+        }
     }
 
     /************************************************************
@@ -105,7 +96,7 @@ public class DSAStack {
 
     public boolean isEmpty()
     {
-    	boolean pass = false;    	
+    	boolean pass = false;
     	if(count == 0)
     	{
     		pass = true;

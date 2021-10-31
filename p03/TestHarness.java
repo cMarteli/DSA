@@ -7,14 +7,14 @@
 public class TestHarness {
 
 
-    public static void main(String[] args) 
+    public static void main(String[] args)
     {
         //Testing Stack
         DSAStack callStack = new DSAStack(20); //string stack to emulate how a call stack works
         callStack.push("public static void main(String[] args)"); //Main gets put on stack
 
-        DSAStack nums = new DSAStack(); //Using default, size 5 
-        DSAStack nums2 = new DSAStack(8); //Using alternate size 8
+        DSAStack nums = new DSAStack(5); //Using default, size 5
+        //DSAStack nums2 = new DSAStack(8); //Using alternate size 8
         System.out.println("Checking if stack is empty, expected: |TRUE| \nResult: "+ nums.isEmpty());
         //nums.pop(); //Should throw exception
         nums.push(12.0);
@@ -23,17 +23,29 @@ public class TestHarness {
         callStack.push("nums.push(8.0)");
         nums.push(10.0);
         callStack.push("nums.push(10.0)");
-        System.out.println("Current top of Stack:"+ nums.peek());
+
+        try {
+            System.out.println("Current top of Stack:"+ nums.peek());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
         System.out.println("Checking if stack is empty, expected: |FALSE| \nResult: "+ nums.isEmpty());
-        
+
         System.out.println("Pop ->" + nums.pop());
-        System.out.println("Current top of Stack:"+ nums.peek());
+        System.out.println("Pop ->" + nums.pop());
+
+        try {
+            System.out.println("Current top of Stack:"+ nums.peek());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        System.out.println("Pop ->" + nums.pop());
 
         nums.show();
-        
+
         //Testing Circular Queue
 
-        DSACircularQueue cq = new DSACircularQueue(); //Using default, size 5 
+        DSACircularQueue cq = new DSACircularQueue(); //Using default, size 5
         DSACircularQueue cq2 = new DSACircularQueue(8); //Using alternate size 8
         System.out.println("Checking if Circular queue is empty, expected: |TRUE| \nResult: "+ cq.isEmpty());
         cq.enqueue(1.7);
@@ -54,7 +66,7 @@ public class TestHarness {
 
         //Testing Shuffling Queue
 
-        DSAShufflingQueue sq = new DSAShufflingQueue(); //Using default, size 5 
+        DSAShufflingQueue sq = new DSAShufflingQueue(); //Using default, size 5
         DSAShufflingQueue sq2 = new DSAShufflingQueue(8); //Using alternate size 8
         System.out.println("Checking if Shuffling queue is empty, expected: |TRUE| \nResult: "+ sq.isEmpty());
         sq.enqueue(1.7);
