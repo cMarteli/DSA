@@ -41,6 +41,8 @@ public class FactnFib {
     EXPORT:(Integer)
     ASSERTION: Recursive method to calculate the nth fibonacci number.
     NOTE! Slowdowns after n = 38 with more pronounced slowdowns at n = 40+
+    Time complexity - O(n^2)
+    Space complexity - O(1)
     ************************************************************/
     public int fibonacci(int n)
     {        
@@ -60,6 +62,41 @@ public class FactnFib {
         }
 
         return result;        
+    }
+
+    /************************************************************
+    IMPORT: n (Integer)
+    EXPORT:(Integer)
+    ASSERTION: Iterative method to calculate the nth fibonacci number.
+    NOTE! Much faster than recursive implementation
+    Time complexity - O(n)
+    Space complexity - O(1)
+    ************************************************************/
+    public static int fibonacci2(int n)
+    {
+        int result = 0;
+
+        if(n == 0)
+        {
+            result = 0;
+        }
+        else if(n == 1)
+        {
+            result = 1;
+        }
+        else
+        {
+            result = 1;
+            int prev = 1;
+
+            for(int i = 2; i < n; i++) {
+                int temp = result;
+                result += prev;
+                prev = temp;
+            }
+        }
+
+        return result;
     }
 
 }
