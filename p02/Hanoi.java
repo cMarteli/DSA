@@ -11,15 +11,15 @@ public class Hanoi {
 
     /**
      * @param args the command line arguments
-     */    
-    
+     */
+
     public static void main(String[] args) {
         //Initialize variables
         int diskNum = 1;
         System.out.println("**Testing Tower of Hanoi method**");
         diskNum = (checkInteger("Enter number of disks:"));
 
-        towers(diskNum, 1, 3, 0);
+        towers(diskNum, 'A', 'C', 'B', " ");
 
 
     }//end main
@@ -30,41 +30,22 @@ public class Hanoi {
     EXPORT: userInt (integer)
     ASSERTION: Move n disks from peg src to peg dest
     ************************************************************/
-    public static void moveDisk(int src, int dest, int numOfMoves)
+    public static void towers(int n, char src, char dest, char aux, String spaces)
     {
-        for(int i = 0; i < numOfMoves; i++)
-        {
-            System.out.print("   ");//prints 3 spaces for every recursion
-        }       
-        System.out.println("Moving  top  disk  from  peg  " + src + "  to  peg " + dest);        
-    }
-
-    /************************************************************
-    IMPORT: prompt (String)
-    EXPORT: userInt (integer)
-    ASSERTION: Move n disks from peg src to peg dest
-    ************************************************************/
-    public static void towers(int n, int src, int dest, int numOfMoves)
-    {        
-        numOfMoves++;
-        int tmp = 0;        
-
+        spaces += ">"; //visualization of every recursive call
         if (n == 1)
         {
-            moveDisk(src, dest, numOfMoves); //Base case: move one disk from peg src to peg dest
+            //moveDisk(src, dest, numOfMoves); //Base case: move one disk from peg src to peg dest
+            System.out.println(spaces + "Move disk 1 from peg " + src + " to peg " + dest);
         }
         else
         {
-            tmp = 6 - src - dest; //tmp is the ‘other’ (non-target) peg, since src+dest+tmp = 6
-
-            towers(n-1, src, tmp, numOfMoves); //Move all but bottom disk to temp peg tmp, This is a smaller (n-1) version of the current problem
-        
-            moveDisk(src, dest, numOfMoves); //Move bottom disk to target peg dest
-        
-            towers(n-1, tmp, dest, numOfMoves); //Move the rest from temp peg tmp to target peg dest        
+            towers(n-1, src, aux, dest, spaces); //Move all but bottom disk to temp peg tmp, This is a smaller (n-1) version of the current problem
+            System.out.println(spaces +"Move disk " + n + " from peg " + src + " to peg " + dest);
+            towers(n-1, aux, dest, src, spaces); //Move the rest from temp peg tmp to target peg dest
         }
 
-        
+
     }
 
 
@@ -81,7 +62,7 @@ public class Hanoi {
         String error = "(Invalid Input)\n";
         String outStr = prompt;
         boolean isValid = false;
-        
+
         while (isValid == false || isNegative(userInt))
         {
             try
@@ -91,7 +72,7 @@ public class Hanoi {
                 userInt = sc.nextInt();
                 isValid = true;
             }
-            catch(InputMismatchException e) 
+            catch(InputMismatchException e)
             {
                 System.out.print(error);
                 sc = new Scanner(System.in);
