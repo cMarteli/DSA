@@ -9,9 +9,9 @@ public class TestHarness {
      */
     public static void main(String[] args) {
         //Initialize variables
-        DSATree tree = new DSATree();
-     
-        FileReader.menu(tree);
+        UserInterface UI = new UserInterface();
+
+        UI.menu();
 
     }//end main
 }

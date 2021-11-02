@@ -5,7 +5,7 @@ import java.util.NoSuchElementException;
  * @author Caio Marteli
  */
 public class DSATree implements Serializable{
-	
+
 	private DSATreeNode root;
 	/************************************************************
     Default Constructor:
@@ -15,17 +15,17 @@ public class DSATree implements Serializable{
     ************************************************************/
 	public DSATree()
 	{
-		root = null; //Start with an empty tree    
-	} 
-	
+		root = null; //Start with an empty tree
+	}
+
 	/************************************************************
     IMPORT: key(String)
     EXPORT: Object
     ASSERTION: wrapper method, will call private recursive implementations
     ************************************************************/
-	public Object find(String key) 
+	public Object find(String key)
 	{
-		return findRec(key, root);		
+		return findRec(key, root);
 	}
 
 	/************************************************************
@@ -33,39 +33,39 @@ public class DSATree implements Serializable{
     EXPORT: Object
     ASSERTION: find by key method, returns value in node associated to given key
     ************************************************************/
-	private Object findRec(String key, DSATreeNode currNode) 
-	{ 
+	private Object findRec(String key, DSATreeNode currNode)
+	{
 		Object value = null;
-		
+
 		if(currNode == null) // Base case: not found
 		{
 			throw new NoSuchElementException("Key " + key + " not found");
 		}
-		
+
 		else if (key.equals(currNode.getKey())) // Base case: found
 		{
 			value = currNode.getValue();
 		}
-		
+
 		else if (key.compareTo(currNode.getKey()) < 0) // Go left (recursive)
 		{
 			value = findRec(key, currNode.getLeft());
 		}
-		
+
 		else // Go right (recursive)
 		{
 			value = findRec(key, currNode.getRight());
 		}
 
 		return value;
-	} 
+	}
 
 	/************************************************************
     IMPORT: key(String), value(Object)
     EXPORT: none
     ASSERTION: wrapper method, inserts value in node associated to given key
     ************************************************************/
-	public void insert(String key, Object value) 
+	public void insert(String key, Object value)
 	{
 		root = insertRec(key, value, root);
 	}
@@ -78,7 +78,7 @@ public class DSATree implements Serializable{
 	private DSATreeNode insertRec(String inKey, Object value, DSATreeNode currNode)
 	{
 		DSATreeNode updateNode = currNode;
-		
+
 		if(currNode == null)
 		{
 			updateNode = new DSATreeNode(inKey, value); //insertion point
@@ -88,7 +88,7 @@ public class DSATree implements Serializable{
 			throw new IllegalArgumentException("Data already exists in the tree.");
 		}
 		else if((inKey.compareTo(currNode.getKey())) < 0)
-		{ 
+		{
 			currNode.setLeft(insertRec(inKey, value, currNode.getLeft())); //recurse left
 		}
 		else
@@ -99,11 +99,11 @@ public class DSATree implements Serializable{
 	}
 
 	/************************************************************
-    IMPORT: key(String), node(DSATreeNode)
+    IMPORT: key(String), root(DSATreeNode)
     EXPORT: none
     ASSERTION: wrapper method, deletes value in node associated to given key
     ************************************************************/
-	public void delete(String key, DSATreeNode delNode) 
+	public void delete(String key, DSATreeNode delNode)
 	{
 		deleteRec(key, delNode);
 	}
@@ -186,39 +186,38 @@ public class DSATree implements Serializable{
 		return successor;
 	}
 
-
-	//DISPLAYS IN ORDER ONLY
-	public void display() 
-	{ 
-	//...
-	if(root == null)
-	{
-		System.out.println("Tree is empty");
-	}
-	else
-	{
-		System.out.print("Printing:\n");
-		printInOrder(this.getRoot());
-	}
-		
-	}
-
-	public void printInOrder(DSATreeNode currNode) 
-	{ 
-	//...
-		DSATreeNode printNode = currNode;
-		if (printNode.getLeft() != null)
-		{
-			printInOrder(printNode.getLeft());
-		}
-		System.out.println(printNode.getValue());
-		if(printNode.getRight() != null)
-		{
-			printInOrder(printNode.getRight());
+	// All nodes are visited in ascending order
+	// Recursion is used to go to one node and
+	// then go to its child nodes and so forth
+	public void inOrderTraverseTree(DSATreeNode n) {
+		if (n != null) {
+			// Traverse the left node
+			inOrderTraverseTree(n.leftChild);
+			// Visit the currently focused on node
+			System.out.println(n.toString());
+			// Traverse the right node
+			inOrderTraverseTree(n.rightChild);
 		}
 	}
 
-	
+	public void preorderTraverseTree(DSATreeNode n)
+	{
+		if (n != null){
+			System.out.println(n.toString());
+			preorderTraverseTree(n.leftChild);
+			preorderTraverseTree(n.rightChild);
+		}
+	}
+
+	public void postOrderTraverseTree(DSATreeNode n)
+	{
+		if (n != null) {
+			System.out.println(n.toString());
+			postOrderTraverseTree(n.leftChild);
+			postOrderTraverseTree(n.rightChild);
+			System.out.println(n);
+		}
+	}
 
 	/************************************************************
     IMPORT: currNode(DSATreeNode)
@@ -240,6 +239,7 @@ public class DSATree implements Serializable{
 		if(currNode != null)
 		{
 			//do prefix stuff
+			System.out.println(currNode.toString());
 			traverseTreeRec(currNode.getLeft());
 			//do infix stuff
 			traverseTreeRec(currNode.getRight());
@@ -253,7 +253,7 @@ public class DSATree implements Serializable{
     ASSERTION: STUB method; balances tree!!!!!!!!!!!!!!!!!
     ************************************************************/
 	public void balance()
-	{		
+	{
 		System.out.println("STUB!");
 	}
 
@@ -263,7 +263,7 @@ public class DSATree implements Serializable{
     ASSERTION: Wrapper method; Returns height of tree as int
     ************************************************************/
 	public int height()
-	{		
+	{
 		return heightRec(root);
 	}
 
@@ -280,7 +280,7 @@ public class DSATree implements Serializable{
 		{
 			htSoFar = -1; // Base case – no more along this branch
 		}
-		else  
+		else
 		{
 			iLeftHt = heightRec(currNode.getLeft()); // Calc left height from here
 			iRightHt = heightRec(currNode.getRight()); // Calc right height from here
@@ -290,11 +290,11 @@ public class DSATree implements Serializable{
 			{
 				htSoFar = iLeftHt + 1;
 			}
-			else 
+			else
 			{
 				htSoFar = iRightHt + 1;
-			}			
-		}		
+			}
+		}
 		return htSoFar;
 
 	}
@@ -320,7 +320,7 @@ public class DSATree implements Serializable{
 		{
 			currNode = currNode.getLeft();
 		}
-		minKey = currNode.getKey();		
+		minKey = currNode.getKey();
 		return minKey;
 	}
 
@@ -336,7 +336,7 @@ public class DSATree implements Serializable{
 		{
 			currNode = currNode.getRight();
 		}
-		maxKey = currNode.getKey();		
+		maxKey = currNode.getKey();
 		return maxKey;
 	}
 
@@ -361,7 +361,7 @@ public class DSATree implements Serializable{
     Private inner Cass
     ************************************************************/
 	private class DSATreeNode implements Serializable
-	{	
+	{
 
 	    private String key;
 	    private Object value;
@@ -374,7 +374,7 @@ public class DSATree implements Serializable{
 	    IMPORT: none
 	    EXPORT: address of new DSATreeNode object
 	    ASSERTION: sets key and value only
-	    ************************************************************/ 
+	    ************************************************************/
 		public DSATreeNode(String inKey, Object inValue)
 		{
 			if(inKey == null)
@@ -417,8 +417,7 @@ public class DSATree implements Serializable{
 		@Override
 		public String toString()
 		{
-			return "Key: "+ key + "\nValue: " + value.toString() +
-			"\nLeft: " + leftChild.getKey() + "Right: " + rightChild.getKey();
+			return "Key: |"+ key + "| Value: |" + value.toString();
 		}
 
 		/************************************************************
@@ -435,7 +434,7 @@ public class DSATree implements Serializable{
 			rightChild = newRight;
 		}
 
-	}//End of DSATreeNode class	
+	}//End of DSATreeNode class
 
 }
 
