@@ -127,71 +127,68 @@ public static void selectionSort(int[] A){
                 }
     }//merge()
 
-    // quickSort - front-end for kick-starting the recursive algorithm
+    // quickSort med of 3 - front-end for kick-starting the recursive algorithm
     // adapted from
-    // geeksforgeeks source code (Version 2.0) [Web code]. https://www.geeksforgeeks.org/quick-sort/
-    // Function to find the middle of three number
-    public static int middleOfThree(int a, int b, int c)
-    {
-        // Checking for b
-        if ((a < b && b < c) || (c < b && b < a)){
-            return b;
-        }
-        // Checking for a
-        else if((b < a && a < c) || (c < a && a < b)){
-            return a;
-        }
-        else{
-            return c;
-        }
-    }
+    // linuxhint source code (Version 2.0) [Web code]. https://linuxhint.com/quick-sort-java-explained/
     public static void quickSort(int[] A)
     {
         quickSortRecurse(A, 0, A.length-1);
     }//quickSort()
-    private static void quickSortRecurse(int[] A, int leftIdx, int rightIdx)
-    {
-        if (leftIdx < rightIdx)
-        {
-            /* pi is partitioning index, arr[pi] is
-                now at right place */
-            int pivot = A[rightIdx]; //chooses initial pivot -RIGHTMOST
-            //System.out.println("pivot: " + pivot);
 
-            int pi = doPartitioning(A, leftIdx, rightIdx, pivot); //new pivot
-
-            // Recursively sort elements before
-            // partition and after partition
-            quickSortRecurse(A, leftIdx, pi-1);
-            quickSortRecurse(A, pi+1, rightIdx);
-
+    private static void quickSortRecurse(int arr[], int low, int high) {
+        if (low < high) {
+            pivot(arr, low, high);
+            int p = partition(arr, low, high);
+            quickSortRecurse(arr, low, p - 1);
+            quickSortRecurse(arr, p + 1, high);
         }
     }//quickSortRecurse()
-    private static int doPartitioning(int[] A, int leftIdx, int rightIdx, int pivotIdx)
-    {
-        int i = (leftIdx-1); // index of smaller element
-        for (int j = leftIdx; j < rightIdx; j++)
-        {
-            // If current element is smaller than or
-            // equal to pivot
-            if (A[j] <= pivotIdx)
-            {
-                i++;
 
-                // swap arr[i] and arr[j]
-                int temp = A[i];
-                A[i] = A[j];
-                A[j] = temp;
+    private static int partition(int A[], int low, int high) {
+        int pivot = A[high];
+        int i = low;
+        int j = high;
+        do {
+            do {
+                ++i;
+            } while(A[i] < pivot);
+            do {
+                --j;
+            } while (A[j] > pivot);
+            if (i < j)
+            {
+                swap(A, i, j);
+            }
+        } while (i < j);
+        swap (A, i, high);
+        return i;
+    }
+
+    public static void pivot(int A[], int low, int high)
+    {
+        int mid = (low + high) / 2;
+        if (A[mid] < A[low])
+        {
+            swap(A, low, mid);
+        }
+        if (A[high] < A[low])
+        {
+            swap(A, low, high);
+        }
+        if ((high - low) > 2)
+        {
+            if (A[mid] < A[high])
+            {
+                swap (A, mid, high);
             }
         }
+    }
 
-        // swap arr[i+1] and arr[high] (or pivot)
-        int temp = A[i+1];
-        A[i+1] = A[rightIdx];
-        A[rightIdx] = temp;
-
-        return i+1;
-    }//doPartitioning
+    public static void swap (int A[], int x, int y) {
+        int temp = A[x];
+        A[x] = A[y];
+        A[y] = temp;
+    }
 
 
-}//end Sorts class
+}//end Sorts calss

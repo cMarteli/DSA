@@ -4,15 +4,15 @@ import java.util.Arrays;
 ** Testharness to generate various different types of arrays of integers
 ** and then sort them using various sorts.
 **
-** Each sort is run REPEATS times, with the first result discarded,
+** Each sort is run REPEATS times, with the first result discarded, 
 ** and the last REPEATS-1 runs averaged to give the running time.
 **
-** Authour: Andrew Turpin (andrew@cs.curtin.edu.au)0
+** Authour: Andrew Turpin (andrew@cs.curtin.edu.au)
 ** Date:    August 2004
 ** Modified: Patrick Peursum
 ** Date:     Sep 2009
 */
-class SortsTestHarness
+class SortsTestHarness 
 {
     /** No of times to run sorts to get mean time */
     private static final int    REPEATS   = 4;
@@ -23,7 +23,7 @@ class SortsTestHarness
     /** No of times (*n) to randomly swap elements to get random array */
     private static final int    RANDOM_TIMES   = 100;
 
-    private static void usage()
+    private static void usage() 
     {
         System.out.println(" Usage: java TestHarness n xy [xy ...]");
         System.out.println("        where");
@@ -58,18 +58,18 @@ class SortsTestHarness
                 {
                 sortType  = args[numSorts].charAt(0);
                 arrayType = args[numSorts].charAt(1);
-
+               
                 double runningTotal = 0;
                 for (int repeat = 0 ; repeat < REPEATS ; repeat++)
                 {
-                    //
+                    // 
                     // Create array
-                    //
+                    // 
 
                     // Create initial ascending-order array
                     for(int i = 0 ; i < n ; i++)
                         A[i] = i+1;
-
+                   
                     switch (arrayType)
                     {
                         case 'a' : break; // already ascending!
@@ -96,10 +96,10 @@ class SortsTestHarness
                         default :
                             System.err.println("Unsupported array type "+arrayType);
                     }
-
-                    //
+              
+                    // 
                     // Do the sorting
-                    //
+                    // 
 //                    long startTime = System.currentTimeMillis();
                     long startTime = System.nanoTime();
                     switch (sortType)
@@ -117,13 +117,13 @@ class SortsTestHarness
 //                    long endTime = System.currentTimeMillis();
                     long endTime = System.nanoTime();
 
-
+                   
 
                     if (repeat == 0) {
                         // Check that it actually sorted correctly!
                         for(int i = 1 ; i < A.length; i++) {
                             if (A[i] < A[i-1])
-                                throw new IllegalStateException("Array is not in sorted order! At element: " + i);
+                                throw new IllegalStateException("Array is not in sorted order! At element: " + i);                        
                         }
                     }
                     else {
@@ -132,7 +132,7 @@ class SortsTestHarness
                         runningTotal += (int)((double)(endTime - startTime) / 1000.0);	// Convert to microsecs
                     }
                 }// repeat sort
-
+              
                 System.out.print(args[numSorts]+ " " + n);
                 System.out.println(" " + (runningTotal/(REPEATS-1)));
             }// end for numSorts

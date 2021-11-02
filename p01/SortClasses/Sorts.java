@@ -136,11 +136,13 @@ public static void selectionSort(int[] A){
     }//quickSort()
     private static void quickSortRecurse(int[] A, int leftIdx, int rightIdx)
     {
+
         if (leftIdx < rightIdx)
         {
             /* pi is partitioning index, arr[pi] is
                 now at right place */
             int pivot = A[rightIdx]; //chooses pivot
+            //int pivot = A[medianOfThree(A)]; //chooses pivot
             int pi = doPartitioning(A, leftIdx, rightIdx, pivot);
 
             // Recursively sort elements before
@@ -175,6 +177,23 @@ public static void selectionSort(int[] A){
 
         return i+1;
     }//doPartitioning
+
+    public static int medianOfThree(int[] A)
+    {
+        // int left = 0;
+        // int mid = (A.length-1)/2;
+        // int right = A.length-1;
+        return A.length-1;
+        // if((A[left] < A[mid] || A[left] < A[right]) && (A[left] > A[mid] || A[left] > A[right])){
+        //     return left;
+        // }
+        // else if((A[mid] < A[left] || A[mid] < A[right]) && (A[mid] > A[left] || A[mid] > A[right])){
+        //     return mid;
+        // }
+        // else{
+        //     return right;
+        // }
+    }
 
 
 }//end Sorts calss
