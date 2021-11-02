@@ -283,6 +283,16 @@ public class DSATree implements Serializable{
     ************************************************************/
 	private void balanceRec(int low, int high)
 	{
+		if(low == high)
+        return;
+
+		int midpoint = (low + high)/2;
+
+		insert(values[midpoint]);
+		insertItem(insert);
+
+		balanceRec(midpoint+1, high);
+		balanceRec(low, midpoint);
 
 	}
 
