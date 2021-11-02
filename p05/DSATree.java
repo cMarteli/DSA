@@ -79,11 +79,11 @@ public class DSATree implements Serializable{
 	{
 		DSATreeNode updateNode = currNode;
 
-		if(currNode == null)
+		if(currNode == null) //base case empty node found
 		{
 			updateNode = new DSATreeNode(inKey, value); //insertion point
 		}
-		else if(inKey.equals(currNode.getKey())) //in the tree
+		else if(inKey.equals(currNode.getKey())) //collision data already the tree
 		{
 			throw new IllegalArgumentException("Data already exists in the tree.");
 		}
@@ -122,7 +122,7 @@ public class DSATree implements Serializable{
 		}
 		else if(key.equals(currNode.getKey()))
 		{
-			updateNode = deleteNode(key, currNode); //base case - found
+			updateNode = deleteNode(currNode); //base case - found
 		}
 		else if(key.compareTo(currNode.getKey()) < 0)
 		{
@@ -139,9 +139,9 @@ public class DSATree implements Serializable{
 	/************************************************************
     IMPORT: key(String), delNode(DSATreeNode)
     EXPORT: DSATreeNode
-    ASSERTION: NON-RECURSIVE DELETE; deletes value in node associated to given key
+    ASSERTION: Helper method to delete; deletes value in node associated to given key
     ************************************************************/
-	public DSATreeNode deleteNode(String key, DSATreeNode delNode)
+	private DSATreeNode deleteNode(DSATreeNode delNode)
 	{
 		DSATreeNode updateNode = null;
 
@@ -186,85 +186,114 @@ public class DSATree implements Serializable{
 		return successor;
 	}
 
-	// All nodes are visited in ascending order
-	// Recursion is used to go to one node and
-	// then go to its child nodes and so forth
-	public void inOrderTraverseTree(DSATreeNode n) {
-		if (n != null) {
-			// Traverse the left node
-			inOrderTraverseTree(n.leftChild);
-			// Visit the currently focused on node
-			System.out.println(n.toString());
-			// Traverse the right node
-			inOrderTraverseTree(n.rightChild);
-		}
-	}
-
-	public void preorderTraverseTree(DSATreeNode n)
+	/************************************************************
+    IMPORT: nont
+    EXPORT: none
+    ASSERTION: Wrapper method; uses root for traversal
+    ************************************************************/
+	public void inOrderTraverseTree()
 	{
-		if (n != null){
-			System.out.println(n.toString());
-			preorderTraverseTree(n.leftChild);
-			preorderTraverseTree(n.rightChild);
-		}
-	}
-
-	public void postOrderTraverseTree(DSATreeNode n)
-	{
-		if (n != null) {
-			System.out.println(n.toString());
-			postOrderTraverseTree(n.leftChild);
-			postOrderTraverseTree(n.rightChild);
-			System.out.println(n);
-		}
+		inOrderRec(root);
 	}
 
 	/************************************************************
     IMPORT: currNode(DSATreeNode)
     EXPORT: none
-    ASSERTION: Wrapper method; Parse root into it for traversal!
+    ASSERTION: in-order traversal of tree - Recursive
     ************************************************************/
-	public void traverseTree(DSATreeNode currNode)
+	private void inOrderRec(DSATreeNode currNode)
 	{
-		traverseTreeRec(currNode);
+		if(currNode != null)
+		{
+			inOrderRec(currNode.getLeft());
+			//do infix stuff
+			System.out.println(currNode.toString());
+			inOrderRec(currNode.getRight());
+		}
+	}
+
+	/************************************************************
+    IMPORT: none
+    EXPORT: none
+    ASSERTION: Wrapper method; uses root for traversal
+    ************************************************************/
+	public void postOrderTraverseTree()
+	{
+		postOrderRec(root);
 	}
 
 	/************************************************************
     IMPORT: currNode(DSATreeNode)
     EXPORT: none
-    ASSERTION: TRAVERSAL!
+    ASSERTION: post-order traversal of tree - Recursive
     ************************************************************/
-	private void traverseTreeRec(DSATreeNode currNode)
+	private void postOrderRec(DSATreeNode currNode)
+	{
+		if(currNode != null)
+		{
+			postOrderRec(currNode.getLeft());
+			postOrderRec(currNode.getRight());
+			//do postfix stuff
+			System.out.println(currNode.toString());
+		}
+	}
+
+	/************************************************************
+    IMPORT: none
+    EXPORT: none
+    ASSERTION: Wrapper method; uses root for traversal
+    ************************************************************/
+	public void preorderTraverseTree()
+	{
+		preorderTraverseRec(root);
+	}
+
+	/************************************************************
+    IMPORT: currNode(DSATreeNode)
+    EXPORT: none
+    ASSERTION: pre-order traversal of tree - Recursive
+    ************************************************************/
+	private void preorderTraverseRec(DSATreeNode currNode)
 	{
 		if(currNode != null)
 		{
 			//do prefix stuff
 			System.out.println(currNode.toString());
-			traverseTreeRec(currNode.getLeft());
-			//do infix stuff
-			traverseTreeRec(currNode.getRight());
-			//do postfix stuff
+			preorderTraverseRec(currNode.getLeft());
+			preorderTraverseRec(currNode.getRight());
 		}
 	}
+
 
 	/************************************************************
     IMPORT: none
     EXPORT: none
-    ASSERTION: STUB method; balances tree!!!!!!!!!!!!!!!!!
+    ASSERTION: TODO: STUB method; balances tree
     ************************************************************/
 	public void balance()
 	{
-		System.out.println("STUB!");
+		int lh = height(root.leftChild);
+		int rh = height(root.rightChild);
+		balanceRec(lh,rh);
+	}
+	/************************************************************
+    IMPORT: none
+    EXPORT: none
+    ASSERTION: TODO: STUB method; balances tree
+    ************************************************************/
+	private void balanceRec(int low, int high)
+	{
+
 	}
 
 	/************************************************************
-    IMPORT: none
+    IMPORT: currNode(DSATreeNode)
     EXPORT: int
     ASSERTION: Wrapper method; Returns height of tree as int
     ************************************************************/
-	public int height()
+	public int height(DSATreeNode n)
 	{
-		return heightRec(root);
+		return heightRec(n);
 	}
 
 	/************************************************************
@@ -345,7 +374,8 @@ public class DSATree implements Serializable{
 		{
 			if(root != null)
 			{
-				System.out.println(root.getValue());
+
+				System.out.println("Current root node: " + root.getValue());
 			}
 			else
 			{

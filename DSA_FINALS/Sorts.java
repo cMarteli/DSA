@@ -130,7 +130,7 @@ public static void selectionSort(int[] A){
     // quickSort - front-end for kick-starting the recursive algorithm
     // adapted from
     // geeksforgeeks source code (Version 2.0) [Web code]. https://www.geeksforgeeks.org/quick-sort/
-        // Function to find the middle of three number
+    // Function to find the middle of three number
     public static int middleOfThree(int a, int b, int c)
     {
         // Checking for b
@@ -155,10 +155,10 @@ public static void selectionSort(int[] A){
         {
             /* pi is partitioning index, arr[pi] is
                 now at right place */
-            int pivot = A[rightIdx]; //chooses pivot -RIGHTMOST
+            int pivot = A[rightIdx]; //chooses initial pivot -RIGHTMOST
             //System.out.println("pivot: " + pivot);
 
-            int pi = doPartitioning(A, leftIdx, rightIdx, pivot);
+            int pi = doPartitioning(A, leftIdx, rightIdx, pivot); //new pivot
 
             // Recursively sort elements before
             // partition and after partition

@@ -1,5 +1,4 @@
 import java.util.InputMismatchException;
-import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 /**
@@ -43,10 +42,10 @@ import java.util.Scanner;
                 }
                 break;
 
-                case 2:  //User choice: Write a csv file
+                case 2:  //User choice: Write a csv file TODO
                 {
                     //String filename = enterFileName(CSV_FILENAME); //enter name here
-                    System.out.println("Saved as: "+ "filename.out");
+                    System.out.println("STUB");
                     //saveCsv(tree, OUTPUT_CSV_FILENAME);
                 }
                 break;
@@ -60,19 +59,17 @@ import java.util.Scanner;
 
                 case 4:
                 {   //User choice: Display
-                    //User choice: Display the list in order
-                    // System.out.println("DISPLAY");
-                    tree.traverseTree(tree.getRoot());
-                    // System.out.println("Preorder:");
-                    // tree.preorderTraverseTree(tree.getRoot());
-                    // System.out.println("Postorder:");
-                    // tree.postOrderTraverseTree(tree.getRoot());
-                    // System.out.println("InOrder:");
-                    // tree.inOrderTraverseTree(tree.getRoot());
-                    try {
-                    System.out.println("Tree depth: "+ tree.height());
-                    System.out.println("Tree max: "+ tree.find(tree.max(tree.getRoot())));
-                    System.out.println("Tree min: "+ tree.find(tree.min(tree.getRoot())));
+
+                    try{
+                        System.out.println("Preorder:");
+                        tree.preorderTraverseTree();
+                        System.out.println("Postorder:");
+                        tree.postOrderTraverseTree();
+                        System.out.println("InOrder:");
+                        tree.inOrderTraverseTree();
+                        System.out.println("Tree depth: "+ tree.height(tree.getRoot()));
+                        System.out.println("Tree max: "+ tree.find(tree.max(tree.getRoot())));
+                        System.out.println("Tree min: "+ tree.find(tree.min(tree.getRoot())));
 
                     } catch (NoSuchElementException ex) {
                         //Not found
@@ -93,9 +90,9 @@ import java.util.Scanner;
     }//end mainMenu
 
     /************************************************************
-    IMPORT: graph (DSAGraph)
+    IMPORT: T (DSATree)
     EXPORT: none
-    ASSERTION: submenu gives user access to edge operations
+    ASSERTION: submenu gives user access to tree node operations
     ************************************************************/
     public void treeOperations(DSATree T)
     {
@@ -106,7 +103,7 @@ import java.util.Scanner;
         {
             do
             {
-                System.out.println("Current root node: " + T.getRoot()); //prints edge count
+                T.printRoot(); //prints root
                 userSelect = checkInteger(prompt);
             }
             while(userSelect != 1 && userSelect != 2 && userSelect != 3 && userSelect != 4);
@@ -119,8 +116,8 @@ import java.util.Scanner;
                 {
                     try {
                         System.out.println(T.find(getUsrStr("Please enter label").toString()));
-                    } catch (Exception e) {
-                        //TODO: handle exception
+                    } catch (IllegalArgumentException e) {
+                        //If data does not exist
                         System.out.println(e.getMessage());
                     }
 
@@ -130,7 +127,7 @@ import java.util.Scanner;
                 case 2: //Add
                 {
                     try {
-                        T.insert(getUsrStr("Please enter label"), checkInteger("Please enter value"));
+                        T.insert(getUsrStr("Please enter key"), checkInteger("Please enter data"));
                         System.out.println("Added new node");
 
                     } catch (Exception e) {
@@ -139,13 +136,13 @@ import java.util.Scanner;
                 }
                 break;
 
-                case 3: //Remove TODO
+                case 3: //Remove
                 {
                     try {
-                        T.deleteNode(getUsrStr("Please enter label"), T.getRoot());
+                        T.delete(getUsrStr("Please enter key"), T.getRoot());
                         System.out.println("removed node");
-
-                    } catch (Exception e) {
+                    } catch (IllegalArgumentException e) {
+                        //If data does not exist
                         System.out.println(e.getMessage());
                     }
                 }

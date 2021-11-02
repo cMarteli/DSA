@@ -80,7 +80,9 @@ public static DSATree readFile(String filename)
 
             while(sc.hasNextLine())
             {
-                T.insert(Character.toString(symbol), sc.next());
+                //this pads the string with 0s so the string comparison doesn't break
+                String key = String.format("%1$" + 2 + "s", sc.next()).replace(' ', '0');
+                T.insert(key, Character.toString(symbol));
                 symbol++;
             }
             sc.close();
