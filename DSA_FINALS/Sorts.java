@@ -156,7 +156,7 @@ public static void selectionSort(int[] A){
             /* pi is partitioning index, arr[pi] is
                 now at right place */
             int pivot = A[rightIdx]; //chooses pivot -RIGHTMOST
-            System.out.println("pivot: " + pivot);
+            //System.out.println("pivot: " + pivot);
 
             int pi = doPartitioning(A, leftIdx, rightIdx, pivot);
 
@@ -170,7 +170,7 @@ public static void selectionSort(int[] A){
     private static int doPartitioning(int[] A, int leftIdx, int rightIdx, int pivotIdx)
     {
         int i = (leftIdx-1); // index of smaller element
-        for (int j=leftIdx; j < rightIdx; j++)
+        for (int j = leftIdx; j < rightIdx; j++)
         {
             // If current element is smaller than or
             // equal to pivot
@@ -194,4 +194,4 @@ public static void selectionSort(int[] A){
     }//doPartitioning
 
 
-}//end Sorts calss
+}//end Sorts class
