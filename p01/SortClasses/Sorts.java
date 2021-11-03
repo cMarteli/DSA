@@ -136,64 +136,42 @@ public static void selectionSort(int[] A){
     }//quickSort()
     private static void quickSortRecurse(int[] A, int leftIdx, int rightIdx)
     {
-
         if (leftIdx < rightIdx)
         {
             /* pi is partitioning index, arr[pi] is
                 now at right place */
-            int pivot = A[rightIdx]; //chooses pivot
-            //int pivot = A[medianOfThree(A)]; //chooses pivot
+            int pivot = A[rightIdx]; //chooses pivot -RIGHTMOST
+            //System.out.println("pivot: " + pivot);
             int pi = doPartitioning(A, leftIdx, rightIdx, pivot);
 
             // Recursively sort elements before
             // partition and after partition
             quickSortRecurse(A, leftIdx, pi-1);
             quickSortRecurse(A, pi+1, rightIdx);
-
         }
-    }//quickSortRecurse()
+    }
+
     private static int doPartitioning(int[] A, int leftIdx, int rightIdx, int pivotIdx)
     {
         int i = (leftIdx-1); // index of smaller element
-        for (int j=leftIdx; j < rightIdx; j++)
+        for (int j = leftIdx; j < rightIdx; j++)
         {
             // If current element is smaller than or
             // equal to pivot
             if (A[j] <= pivotIdx)
             {
                 i++;
-
                 // swap arr[i] and arr[j]
                 int temp = A[i];
                 A[i] = A[j];
                 A[j] = temp;
             }
         }
-
         // swap arr[i+1] and arr[high] (or pivot)
         int temp = A[i+1];
         A[i+1] = A[rightIdx];
         A[rightIdx] = temp;
-
         return i+1;
     }//doPartitioning
-
-    public static int medianOfThree(int[] A)
-    {
-        // int left = 0;
-        // int mid = (A.length-1)/2;
-        // int right = A.length-1;
-        return A.length-1;
-        // if((A[left] < A[mid] || A[left] < A[right]) && (A[left] > A[mid] || A[left] > A[right])){
-        //     return left;
-        // }
-        // else if((A[mid] < A[left] || A[mid] < A[right]) && (A[mid] > A[left] || A[mid] > A[right])){
-        //     return mid;
-        // }
-        // else{
-        //     return right;
-        // }
-    }
-
 
 }//end Sorts calss
