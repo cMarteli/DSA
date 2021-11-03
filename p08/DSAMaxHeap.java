@@ -2,8 +2,8 @@ import java.io.Serializable;
 /**
  *
  * @author Caio Marteli
- * // adapted from geeksforgeeks (2021) web source code (Version 1.0) [Source code]. https://www.geeksforgeeks.org/max-heap-in-java/
- *  Some methods previously submitted for OOPD final assignment Modified and improved October 2021 for gameofcatz.java
+ * Code adapted from geeksforgeeks (2021) web source code (Version 1.0) [Source code]. https://www.geeksforgeeks.org/max-heap-in-java/
+ * Some methods previously submitted for DSA SEM2 - Modified and improved October 2021
  */
 public class DSAMaxHeap implements Serializable{
 	/************************************************************
@@ -14,32 +14,31 @@ public class DSAMaxHeap implements Serializable{
     private int maxsize;
 	/************************************************************
     Default Constructor:
-    IMPORT: none
-    EXPORT:
+    IMPORT: maxsize (int)
+    EXPORT: Address of a new DSAMaxHeap object
     ASSERTION: initializes an empty max heap with given maximum
     capacity
     ************************************************************/
 	public DSAMaxHeap(int maxsize)
 	{
-		// This keyword refers to current instance itself
 		this.maxsize = maxsize;
 		this.size = 0;
 		Heap = new int[this.maxsize];
 	}
 
 	/************************************************************
-    IMPORT: none
-    EXPORT:
+    IMPORT: pos (int)
+    EXPORT: integer
     ASSERTION: Returns position of parent
     ************************************************************/
     private int parent(int pos)
 	{
-		return (pos - 1) / 2;
+		return(pos - 1) / 2;
 	}
 
 	/************************************************************
-    IMPORT: none
-    EXPORT:
+    IMPORT: pos (int)
+    EXPORT: integer
     ASSERTION: Returning left children
     ************************************************************/
     private int leftChild(int pos)
@@ -48,8 +47,8 @@ public class DSAMaxHeap implements Serializable{
 	}
 
 	/************************************************************
-    IMPORT: none
-    EXPORT:
+    IMPORT: pos (int)
+    EXPORT: integer
     ASSERTION: Returning right children
     ************************************************************/
     private int rightChild(int pos)
@@ -58,13 +57,13 @@ public class DSAMaxHeap implements Serializable{
     }
 
 	/************************************************************
-    IMPORT: none
-    EXPORT:
+    IMPORT: pos (int)
+    EXPORT: boolean
     ASSERTION: Returning true of given node is leaf
     ************************************************************/
     private boolean isLeaf(int pos)
     {
-        if (pos > (size / 2) && pos <= size)
+        if(pos > (size / 2) && pos <= size)
 		{
             return true;
         }
@@ -91,13 +90,12 @@ public class DSAMaxHeap implements Serializable{
     ************************************************************/
     private void maxHeapify(int pos)
     {
-        if (isLeaf(pos))
+        if(!isLeaf(pos)) //if the node has children
         {
-        return;
-        }
-            if (Heap[pos] < Heap[leftChild(pos)] || Heap[pos] < Heap[rightChild(pos)]) //if current node is lower than it's children
+            //check if current node is lower than it's children
+            if(Heap[pos] < Heap[leftChild(pos)] || Heap[pos] < Heap[rightChild(pos)])
             {
-                if (Heap[leftChild(pos)] > Heap[rightChild(pos)]) // if left child is > right
+                if(Heap[leftChild(pos)] > Heap[rightChild(pos)]) // if left child is > right
                 {
                     swap(pos, leftChild(pos));
                     maxHeapify(leftChild(pos));
@@ -108,6 +106,7 @@ public class DSAMaxHeap implements Serializable{
                     maxHeapify(rightChild(pos));
                 }
             }
+        }
 
     }
 
@@ -121,9 +120,9 @@ public class DSAMaxHeap implements Serializable{
     {
         Heap[size] = element;
 
-        // Traverse up and fix violated property
+        // tickle up and fix heap
         int current = size;
-        while (Heap[current] > Heap[parent(current)])
+        while(Heap[current] > Heap[parent(current)])
         {
             swap(current, parent(current));
             current = parent(current);
@@ -158,7 +157,7 @@ public class DSAMaxHeap implements Serializable{
     ************************************************************/
     public void print()
     {
-        for (int i = 0; i <= size / 2; i++)
+        for(int i = 0; i <= size / 2; i++)
         {
             System.out.println(" PARENT : |" + Heap[i]
                 + "| LEFT CHILD : |" + Heap[2 * i + 1]
